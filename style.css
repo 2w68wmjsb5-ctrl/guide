@@ -155,6 +155,7 @@ h2.block-title {
 /* ---------- Lexicon table ---------- */
 table.lex-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   margin-bottom: 4mm;
   font-size: 9.7pt;
@@ -179,9 +180,9 @@ table.lex-table td {
 }
 table.lex-table tbody tr:nth-child(even) td { background: var(--row-tint); }
 table.lex-table tbody tr:last-child td { border-bottom: none; }
-table.lex-table td.col-de { font-weight: 700; color: var(--text-dark); white-space: nowrap; }
-table.lex-table td.col-phon { color: var(--accent-deep); font-style: italic; white-space: nowrap; }
-table.lex-table td.col-thai { font-family: 'PattoThai', serif; font-size: 11pt; white-space: nowrap; }
+table.lex-table td.col-de { font-weight: 700; color: var(--text-dark); overflow-wrap: break-word; }
+table.lex-table td.col-phon { color: var(--accent-deep); font-style: italic; overflow-wrap: break-word; }
+table.lex-table td.col-thai { font-family: 'PattoThai', serif; font-size: 11pt; overflow-wrap: break-word; }
 table.lex-table td.col-desc { color: var(--text-muted); font-size: 9.3pt; line-height: 1.42; }
 
 /* ---------- Cards (premium dark-on-light accents) ---------- */
@@ -255,6 +256,20 @@ table.lex-table td.col-desc { color: var(--text-muted); font-size: 9.3pt; line-h
 }
 .tip-box .tip-label { color: var(--accent); font-weight: 700; }
 .tip-box img { width: 6mm; height: 6mm; flex: 0 0 auto; display: block; }
+
+/* quote / proverb callout */
+.quote-block {
+  background: var(--card-bg);
+  border-left: 0.8mm solid var(--accent);
+  border-radius: 0 2mm 2mm 0;
+  padding: 5mm 7mm;
+  margin: 5mm 0 7mm 0;
+  break-inside: avoid;
+}
+.quote-block .q-mark { font-family: Georgia, serif; font-size: 24pt; color: var(--accent); line-height: 0.6; margin-bottom: 1.5mm; display: block; }
+.quote-block .q-thai { font-family: 'PattoThai', serif; font-size: 13pt; color: var(--text-dark); margin-bottom: 1.5mm; }
+.quote-block .q-text { font-size: 10.3pt; font-style: italic; color: var(--text-dark); line-height: 1.5; }
+.quote-block .q-source { font-size: 8.5pt; color: var(--text-muted); margin-top: 2mm; text-transform: uppercase; letter-spacing: 0.5px; }
 
 /* Table-of-contents style rows */
 .toc-row {

@@ -49,6 +49,11 @@ function brand(variant = "on-dark") {
   return `<span class="brand ${variant}">P<span class="turned-a">&Lambda;</span>TTO</span>`;
 }
 
+// The real client wordmark, cropped from the brand-supplied logo file.
+function brandLogo(widthMm = "90mm") {
+  return `<img class="brand-logo" src="brand/patto-logo-white.png" alt="PATTO" style="width:${widthMm}">`;
+}
+
 function bgCircle(size, pos, extraClass = "") {
   const style = Object.entries(pos).map(([k, v]) => `${k}:${v}`).join(";");
   return `<div class="bg-circle ${extraClass}" style="width:${size};height:${size};${style}"></div>`;
@@ -83,6 +88,28 @@ function tocRow(num, iconName, title, sub) {
 }
 
 function lexTable(rows, opts = {}) {
+  // noDesc: for tables whose source "Beschreibung" column is empty for every
+  // row (e.g. Zahlen, Körperteile) - render 3 columns instead of a blank one.
+  if (opts.noDesc) {
+    const colWidths = opts.colWidths || [34, 33, 33];
+    const headers = opts.headers || ["Deutsch", "Phonetik", "ภาษาไทย"];
+    const colgroup = colWidths.map(w => `<col style="width:${w}%">`).join("");
+    const thead = `<thead><tr>
+      <th class="col-de" style="width:${colWidths[0]}%">${headers[0]}</th>
+      <th class="col-phon" style="width:${colWidths[1]}%">${headers[1]}</th>
+      <th class="col-thai" style="width:${colWidths[2]}%">${headers[2]}</th>
+    </tr></thead>`;
+    const tbody = rows.map(([de, phon, thai]) => `<tr>
+      <td class="col-de">${de}</td>
+      <td class="col-phon">${phon}</td>
+      <td class="col-thai">${thai}</td>
+    </tr>`).join("\n");
+    return `<table class="lex-table">
+  <colgroup>${colgroup}</colgroup>
+  ${thead}
+  <tbody>${tbody}</tbody>
+</table>`;
+  }
   const colWidths = opts.colWidths || [22, 20, 18, 40];
   const headers = opts.headers || ["Deutsch", "Phonetik", "ภาษาไทย", "Beschreibung"];
   const colgroup = colWidths.map(w => `<col style="width:${w}%">`).join("");
@@ -149,8 +176,18 @@ function tipBox(iconName, label, text) {
 </div>`;
 }
 
+function quoteBlock({ thai, text, source }) {
+  const thaiLine = thai ? `<div class="q-thai">${thai}</div>` : "";
+  return `<div class="quote-block">
+  <span class="q-mark">&ldquo;</span>
+  ${thaiLine}
+  <div class="q-text">${text}</div>
+  <div class="q-source">${source}</div>
+</div>`;
+}
+
 module.exports = {
   icon, iconBadge, htmlShell, sectionHeader, legendCard, tocRow, lexTable,
-  ritualCard, kampfstilCard, techRow, catCard, tipBox,
-  brand, bgCircle, darkPage,
+  ritualCard, kampfstilCard, techRow, catCard, tipBox, quoteBlock,
+  brand, brandLogo, bgCircle, darkPage,
 };

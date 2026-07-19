@@ -1,10 +1,10 @@
 const fs = require("fs");
-const { htmlShell, brand, bgCircle, darkPage, iconBadge } = require("./htmlkit.js");
+const { htmlShell, brandLogo, bgCircle, darkPage, iconBadge } = require("./htmlkit.js");
 
 const EXTRA_CSS = `
 .cover-wrap { position: relative; height: 100%; }
 .cover-page { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; }
-.cover-brand { font-size: 46pt; margin-bottom: 3mm; }
+.brand-logo { display: block; margin: 0 auto 5mm auto; }
 .cover-sub { font-size: 13pt; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 10mm; }
 .cover-tagline { font-size: 10.5pt; color: #9AA3B0; letter-spacing: 1px; }
 .cover-foot { position: absolute; bottom: 0; left: 0; right: 0; text-align: center; font-size: 9pt; color: #6C7382; letter-spacing: 0.5px; }
@@ -29,7 +29,7 @@ const EXTRA_CSS = `
 .divider-list .li-num { color: var(--accent); font-weight: 700; font-size: 9.5pt; width: 6mm; flex: 0 0 auto; }
 
 .closing-page { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; }
-.closing-title { font-size: 24pt; font-weight: 700; margin-bottom: 6mm; }
+.closing-title { margin-bottom: 6mm; }
 .closing-text { font-size: 11pt; color: #C7CEDA; max-width: 120mm; line-height: 1.7; margin-bottom: 8mm; }
 .closing-signoff { font-size: 13pt; color: var(--accent); font-weight: 700; }
 `;
@@ -65,7 +65,7 @@ pages.push(darkPage(`
   ${bgCircle("100mm", { bottom: "-30mm", right: "-30mm" })}
   <div class="page-fg cover-wrap">
     <div class="cover-page">
-      <div class="cover-brand">${brand("on-dark")}</div>
+      ${brandLogo("95mm")}
       <div class="cover-sub">Muay Thai Lexikon</div>
       <div class="cover-tagline">Deutsch · Phonetik · ภาษาไทย</div>
     </div>
@@ -73,16 +73,16 @@ pages.push(darkPage(`
   </div>
 `));
 
-// 1 — Vorwort
+// 1 — Vorwort (Original-Text aus dem Guide)
 pages.push(darkPage(`
   ${bgCircle("90mm", { top: "-30mm", right: "-30mm" }, "accent-tint")}
   <div class="page-fg">
-    <div class="vorwort-tag">Vorwort</div>
+    <div class="vorwort-tag">Kapitel 1 · Vorwort</div>
     <h1 class="vorwort-title">Willkommen im PATTO Lexikon</h1>
     <div class="intro-text">
-      <p>Muay Thai ist mehr als ein Kampfsport – es ist eine Sprache für sich. Wer im Gym trainiert, hört schnell dieselben Thai-Begriffe immer wieder: von der Zahl der Runde bis zum Namen der nächsten Technik.</p>
-      <p>Dieses Lexikon sammelt genau dieses Vokabular – von Grundlagen wie Zahlen und Körperteilen bis zu den traditionellen Techniken des Muay Boran. Jeder Eintrag verbindet die deutsche Übersetzung, die gesprochene Phonetik und die Thai-Schrift.</p>
-      <p>Chok Dii – viel Glück auf deinem Weg durch die Sprache des Muay Thai.</p>
+      <p>Muay Thai – die Kunst der „acht Gliedmaßen“ – ist nicht nur eine Kampfsportart, sondern auch ein wesentlicher Bestandteil der thailändischen Kultur und Tradition. Dieser Guide soll dir dabei helfen, die wichtigsten Begriffe, Techniken und Bewegungen im Muay Thai in deutscher und thailändischer Sprache besser zu verstehen.</p>
+      <p>Neben der reinen Übersetzung findest du bei vielen Begriffen auch knappe und anschauliche Beschreibungen, die dir helfen, dir die Bewegungen direkt vorstellen zu können. Bitte beachte jedoch, dass diese Beschreibungen nur als Hilfestellung dienen. Die korrekte Ausführung der Techniken sollte stets unter Anleitung eines Trainers oder anhand von Videoanleitungen erlernt werden.</p>
+      <p>Ob im Training, beim Wettkampf oder während eines Aufenthalts in Thailand – dieser Guide unterstützt dich dabei, dich sowohl sprachlich als auch fachlich im Muay Thai besser zurechtzufinden. Er ist Nachschlagewerk, Lernhilfe und Kulturführer zugleich.</p>
     </div>
     <div class="audience-row">
       ${audienceItem("userGraduate", "Für Einsteiger", "Verstehe von der ersten Trainingseinheit an, was dein Trainer sagt.")}
@@ -102,15 +102,15 @@ pages.push(dividerPage(
 // 3 — Phrasen divider
 pages.push(dividerPage(
   "03", "Kapitel 3", "Phrasen, Training &amp; Wettkampf",
-  "Vom Alltagssatz über Trainingsvokabular und Ausrüstung bis zu Ritual, Ablauf und Kampfstilen am Wettkampftag.",
-  ["Allgemeine Phrasen", "Training: Einheiten &amp; Übungen", "Ausrüstung", "Wettkampf: Ritual &amp; Kultur", "Wettkampf: Ablauf &amp; Ergebnis", "Kämpferstatus &amp; Runden", "Kampfstile"]
+  "Die Sprache, die dich direkt durch den Trainingsalltag und den Wettkampf begleitet – von Sätzen fürs Gym bis zu Kampfstilen im Ring.",
+  ["Sätze, Fragen &amp; Aussagen", "Training &amp; Ausrüstung", "Wettkampf: Ritual &amp; Kultur", "Wettkampf", "Kampfstile"]
 ));
 
 // 4 — Techniken divider
 pages.push(dividerPage(
   "04", "Kapitel 4", "Techniken",
-  "Die sieben Grundkategorien des Muay Thai – von der Hand bis zum Fuß, von der Distanz bis in den Clinch.",
-  ["Schlag", "Kick", "Knie", "Ellbogen", "Clinch", "Block", "Schritte"]
+  "Hände, Ellbogen, Knie und Schienbeine – die Waffen, die die „Kunst der acht Gliedmaßen“ einzigartig machen.",
+  ["Generelle Techniken", "Schlag", "Kick", "Knie", "Ellbogen", "Clinch", "Block", "Schritte"]
 ));
 
 // 5 — Bonus divider
@@ -124,7 +124,7 @@ pages.push(dividerPage(
 pages.push(darkPage(`
   ${bgCircle("110mm", { bottom: "-40mm", left: "-40mm" }, "accent-tint")}
   <div class="closing-page page-fg">
-    <div class="closing-title">${brand("on-dark")}</div>
+    <div class="closing-title">${brandLogo("70mm")}</div>
     <p class="closing-text">Das PATTO Lexikon begleitet dich vom ersten Aufwärmen bis in den Ring. Nimm es mit ins Gym, auf Reisen und zum nächsten Fight – und lerne die Sprache des Muay Thai so, wie sie dort gesprochen wird, wo sie zu Hause ist.</p>
     <div class="closing-signoff">Chok Dii!</div>
   </div>
