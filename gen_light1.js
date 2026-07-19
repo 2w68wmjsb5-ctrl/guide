@@ -19,9 +19,10 @@ out.push(lexTable([["Lehrer / Trainer", "Khru", "ครู", "Lehrer, Ausbilder 
   { colWidths: [20, 18, 14, 48] }));
 out.push(`</div>`);
 
-// --- Inhaltsverzeichnis ---
-out.push(`<div class="content-section content-block">`);
+// --- Inhaltsverzeichnis (eigene Seite, damit sie nicht umbricht) ---
+out.push(`<div class="content-section chapter-start">`);
 out.push(sectionHeader("Gliederung", "Der Guide im Überblick"));
+out.push(`<p class="page-intro">Fünf Kapitel, ein System: von den Grundlagen bis zu den traditionellen Techniken des Muay Boran.</p>`);
 
 const items = [
   ["01", "compass", "Vorwort", "Ziel, Nutzung & Einstieg in die Sprache des Muay Thai"],

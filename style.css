@@ -40,7 +40,7 @@ html, body {
 p { margin: 0 0 3.6mm 0; line-height: 1.55; }
 p:last-child { margin-bottom: 0; }
 
-/* ---------- Brand wordmark (rotated-A trick, font-independent) ---------- */
+/* ---------- Brand wordmark (Λ as a Thai-roof / Muay-Thai accent) ---------- */
 .brand {
   font-weight: 700;
   letter-spacing: 2px;
@@ -49,9 +49,7 @@ p:last-child { margin-bottom: 0; }
 }
 .brand .turned-a {
   display: inline-block;
-  transform: rotate(180deg);
-  position: relative;
-  top: 0.02em;
+  color: var(--accent);
 }
 .brand.on-dark { color: var(--white); }
 .brand.on-light { color: var(--text-dark); }
@@ -70,7 +68,16 @@ p:last-child { margin-bottom: 0; }
 }
 .dark-page:last-child { break-after: auto; }
 
+/* Foreground content on dark pages must sit in its own stacking context,
+   otherwise absolutely-positioned .bg-circle elements paint above it
+   regardless of source order. */
+.page-fg {
+  position: relative;
+  z-index: 1;
+}
+
 .bg-circle {
+  z-index: 0;
   position: absolute;
   border-radius: 50%;
   background: var(--primary-light);

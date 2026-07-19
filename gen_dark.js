@@ -1,15 +1,22 @@
 const fs = require("fs");
-const { htmlShell, brand, bgCircle, darkPage } = require("./htmlkit.js");
+const { htmlShell, brand, bgCircle, darkPage, iconBadge } = require("./htmlkit.js");
 
 const EXTRA_CSS = `
+.cover-wrap { position: relative; height: 100%; }
 .cover-page { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; }
 .cover-brand { font-size: 46pt; margin-bottom: 3mm; }
 .cover-sub { font-size: 13pt; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 10mm; }
 .cover-tagline { font-size: 10.5pt; color: #9AA3B0; letter-spacing: 1px; }
-.cover-foot { position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center; font-size: 9pt; color: #6C7382; letter-spacing: 1px; }
+.cover-foot { position: absolute; bottom: 0; left: 0; right: 0; text-align: center; font-size: 9pt; color: #6C7382; letter-spacing: 0.5px; }
 
 .vorwort-tag { color: var(--accent); font-weight: 700; font-size: 10pt; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6mm; }
-.vorwort-title { font-size: 26pt; font-weight: 700; margin: 0 0 10mm 0; max-width: 140mm; line-height: 1.2; }
+.vorwort-title { font-size: 26pt; font-weight: 700; margin: 0 0 8mm 0; max-width: 140mm; line-height: 1.2; }
+
+.audience-row { display: flex; gap: 7mm; margin-top: 9mm; }
+.audience-item { flex: 1 1 0; }
+.audience-item .icon-badge { margin-bottom: 3mm; }
+.audience-item .a-title { font-weight: 700; font-size: 10pt; color: var(--white); margin-bottom: 1.2mm; }
+.audience-item .a-desc { font-size: 8.6pt; color: #9AA3B0; line-height: 1.42; }
 
 .divider-page { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: center; }
 .divider-num { font-size: 70pt; font-weight: 700; color: var(--primary-lighter); line-height: 1; margin-bottom: 2mm; }
@@ -27,10 +34,18 @@ const EXTRA_CSS = `
 .closing-signoff { font-size: 13pt; color: var(--accent); font-weight: 700; }
 `;
 
+function audienceItem(iconName, title, desc) {
+  return `<div class="audience-item">
+    ${iconBadge(iconName)}
+    <div class="a-title">${title}</div>
+    <div class="a-desc">${desc}</div>
+  </div>`;
+}
+
 function dividerPage(num, tag, title, desc, items) {
   return darkPage(`
     ${bgCircle("120mm", { top: "-40mm", right: "-40mm" }, "accent-tint")}
-    <div class="divider-page">
+    <div class="divider-page page-fg">
       <div class="divider-num">${num}</div>
       <div class="divider-tag">${tag}</div>
       <h1 class="divider-title">${title}</h1>
@@ -48,24 +63,32 @@ let pages = [];
 pages.push(darkPage(`
   ${bgCircle("160mm", { top: "-60mm", left: "-50mm" }, "accent-tint")}
   ${bgCircle("100mm", { bottom: "-30mm", right: "-30mm" })}
-  <div class="cover-page">
-    <div class="cover-brand">${brand("on-dark")}</div>
-    <div class="cover-sub">Muay Thai Lexikon</div>
-    <div class="cover-tagline">Deutsch · Phonetik · ภาษาไทย</div>
+  <div class="page-fg cover-wrap">
+    <div class="cover-page">
+      <div class="cover-brand">${brand("on-dark")}</div>
+      <div class="cover-sub">Muay Thai Lexikon</div>
+      <div class="cover-tagline">Deutsch · Phonetik · ภาษาไทย</div>
+    </div>
+    <div class="cover-foot">DEIN VOKABULAR FÜR GYM, REISE UND WETTKAMPF IN THAILAND</div>
   </div>
-  <div class="cover-foot">EIN NACHSCHLAGEWERK FÜR GYM, REISE UND WETTKAMPF</div>
 `));
 
 // 1 — Vorwort
 pages.push(darkPage(`
   ${bgCircle("90mm", { top: "-30mm", right: "-30mm" }, "accent-tint")}
-  <div class="vorwort-tag">Vorwort</div>
-  <h1 class="vorwort-title">Willkommen im PATTO Lexikon</h1>
-  <div class="intro-text">
-    <p>Muay Thai ist mehr als ein Kampfsport – es ist eine Sprache für sich. Wer im Gym trainiert, hört schnell dieselben Thai-Begriffe immer wieder: von der Zahl der Runde bis zum Namen der nächsten Technik.</p>
-    <p>Dieses Lexikon sammelt das Vokabular, das dir im Training, auf Reisen und am Wettkampftag begegnet – von Grundlagen wie Zahlen und Körperteilen bis zu den traditionellen Techniken des Muay Boran.</p>
-    <p>Jeder Eintrag verbindet die deutsche Übersetzung, die gesprochene Phonetik und die Thai-Schrift, damit du die Sprache nicht nur verstehst, sondern auch im Gym benutzen und wiedererkennen kannst.</p>
-    <p>Chok Dii – viel Glück auf deinem Weg durch die Sprache des Muay Thai.</p>
+  <div class="page-fg">
+    <div class="vorwort-tag">Vorwort</div>
+    <h1 class="vorwort-title">Willkommen im PATTO Lexikon</h1>
+    <div class="intro-text">
+      <p>Muay Thai ist mehr als ein Kampfsport – es ist eine Sprache für sich. Wer im Gym trainiert, hört schnell dieselben Thai-Begriffe immer wieder: von der Zahl der Runde bis zum Namen der nächsten Technik.</p>
+      <p>Dieses Lexikon sammelt genau dieses Vokabular – von Grundlagen wie Zahlen und Körperteilen bis zu den traditionellen Techniken des Muay Boran. Jeder Eintrag verbindet die deutsche Übersetzung, die gesprochene Phonetik und die Thai-Schrift.</p>
+      <p>Chok Dii – viel Glück auf deinem Weg durch die Sprache des Muay Thai.</p>
+    </div>
+    <div class="audience-row">
+      ${audienceItem("userGraduate", "Für Einsteiger", "Verstehe von der ersten Trainingseinheit an, was dein Trainer sagt.")}
+      ${audienceItem("mapMarked", "Für Thailand-Reisende", "Kommuniziere im Camp und im Alltag mit den richtigen Begriffen.")}
+      ${audienceItem("trophyCup", "Für Wettkämpfer", "Kenne Ritual, Ablauf und Kampfstile am Wettkampftag.")}
+    </div>
   </div>
 `));
 
@@ -100,7 +123,7 @@ pages.push(dividerPage(
 // 6 — Closing
 pages.push(darkPage(`
   ${bgCircle("110mm", { bottom: "-40mm", left: "-40mm" }, "accent-tint")}
-  <div class="closing-page">
+  <div class="closing-page page-fg">
     <div class="closing-title">${brand("on-dark")}</div>
     <p class="closing-text">Das PATTO Lexikon begleitet dich vom ersten Aufwärmen bis in den Ring. Nimm es mit ins Gym, auf Reisen und zum nächsten Fight – und lerne die Sprache des Muay Thai so, wie sie dort gesprochen wird, wo sie zu Hause ist.</p>
     <div class="closing-signoff">Chok Dii!</div>

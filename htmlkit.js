@@ -9,13 +9,26 @@ const FALLBACKS = {
   onLight: ["dark", "accent", "white"],
 };
 
-function icon(name, context = "badge") {
+function resolveIcon(name, context = "badge") {
   const order = FALLBACKS[context] || FALLBACKS.badge;
   for (const v of order) {
     const file = `${name}_${v}.png`;
-    if (fs.existsSync(path.join(ICON_DIR, file))) return `icons/${file}`;
+    if (fs.existsSync(path.join(ICON_DIR, file))) return { src: `icons/${file}`, variant: v };
   }
   throw new Error(`No icon variant found for "${name}"`);
+}
+
+function icon(name, context = "badge") {
+  return resolveIcon(name, context).src;
+}
+
+// Icon-badge circles default to an accent-orange fill. An "_accent" icon on
+// that fill would vanish, so switch the badge to navy whenever the resolved
+// PNG variant is itself accent-colored, guaranteeing contrast either way.
+function iconBadge(name) {
+  const { src, variant } = resolveIcon(name, "badge");
+  const cls = variant === "accent" ? "icon-badge circle-primary" : "icon-badge";
+  return `<div class="${cls}"><img src="${src}" alt=""></div>`;
 }
 
 function htmlShell(bodyHtml, extraCss = "", bodyClass = "light-doc") {
@@ -33,7 +46,7 @@ ${bodyHtml}
 }
 
 function brand(variant = "on-dark") {
-  return `<span class="brand ${variant}">P<span class="turned-a">A</span>TTO</span>`;
+  return `<span class="brand ${variant}">P<span class="turned-a">&Lambda;</span>TTO</span>`;
 }
 
 function bgCircle(size, pos, extraClass = "") {
@@ -52,7 +65,7 @@ function sectionHeader(tag, title) {
 
 function legendCard(iconName, title, desc) {
   return `<div class="legend-card">
-  <div class="icon-badge"><img src="${icon(iconName, "badge")}" alt=""></div>
+  ${iconBadge(iconName)}
   <div class="l-title">${title}</div>
   <div class="l-desc">${desc}</div>
 </div>`;
@@ -95,7 +108,7 @@ function lexTable(rows, opts = {}) {
 function iconDarkCard(entry) {
   const { icon: iconName, de, phon, thai, desc } = entry;
   return `<div class="dark-card">
-  <div class="icon-badge"><img src="${icon(iconName, "badge")}" alt=""></div>
+  ${iconBadge(iconName)}
   <div class="card-title">${de}</div>
   <div class="card-meta"><span class="phon">${phon}</span><span class="thai">${thai}</span></div>
   <div class="card-desc">${desc}</div>
@@ -123,7 +136,7 @@ function techRow(num, e) {
 
 function catCard(iconName, title, meta) {
   return `<div class="cat-card">
-  <div class="icon-badge"><img src="${icon(iconName, "badge")}" alt=""></div>
+  ${iconBadge(iconName)}
   <div class="cat-title">${title}</div>
   <div class="cat-meta">${meta}</div>
 </div>`;
@@ -137,7 +150,7 @@ function tipBox(iconName, label, text) {
 }
 
 module.exports = {
-  icon, htmlShell, sectionHeader, legendCard, tocRow, lexTable,
+  icon, iconBadge, htmlShell, sectionHeader, legendCard, tocRow, lexTable,
   ritualCard, kampfstilCard, techRow, catCard, tipBox,
   brand, bgCircle, darkPage,
 };
