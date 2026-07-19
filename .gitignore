@@ -1,5 +1,6 @@
 node_modules/
 *.pdf
+*.pptx
 __pycache__/
 light-*.html
 dark.html

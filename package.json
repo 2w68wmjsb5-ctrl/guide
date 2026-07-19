@@ -7,9 +7,11 @@
     "gen": "node gen_light1.js && node gen_light2.js && node gen_light3.js && node gen_light4.js && node gen_light5.js && node gen_dark.js",
     "render": "node render_light.js && node render_dark.js",
     "merge": "python3 merge.py",
-    "build": "npm run gen && npm run render && npm run merge"
+    "build": "npm run gen && npm run render && npm run merge",
+    "build:pptx": "node build_pptx.js"
   },
   "dependencies": {
-    "playwright": "^1.48.0"
+    "playwright": "^1.48.0",
+    "pptxgenjs": "^4.0.1"
   }
 }
