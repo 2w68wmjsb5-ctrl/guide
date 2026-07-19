@@ -1,0 +1,15 @@
+{
+  "name": "patto-muay-thai-lexikon",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PATTO Muay Thai Lexikon - PDF generation pipeline",
+  "scripts": {
+    "gen": "node gen_light1.js && node gen_light2.js && node gen_light3.js && node gen_light4.js && node gen_light5.js && node gen_dark.js",
+    "render": "node render_light.js && node render_dark.js",
+    "merge": "python3 merge.py",
+    "build": "npm run gen && npm run render && npm run merge"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0"
+  }
+}
