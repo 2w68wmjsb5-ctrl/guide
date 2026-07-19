@@ -1,0 +1,342 @@
+/* ===== PATTO Muay Thai Gym Guide — Design System ===== */
+
+:root {
+  --primary: #14171D;
+  --primary-light: #20242C;
+  --primary-lighter: #2B303A;
+  --accent: #E8792F;
+  --accent-deep: #B85A1E;
+  --bg-light: #F4F5F7;
+  --card-bg: #FFFFFF;
+  --row-tint: #F7F8FA;
+  --text-dark: #14171D;
+  --text-muted: #5B6472;
+  --text-on-dark-muted: #9AA3B0;
+  --white: #FFFFFF;
+  --border: #E4E6EA;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  font-family: 'Poppins', Arial, sans-serif;
+  color: var(--text-dark);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+p { margin: 0 0 3.6mm 0; line-height: 1.55; }
+p:last-child { margin-bottom: 0; }
+
+/* ---------- Brand wordmark (Λ as a Thai-roof / Muay-Thai accent) ---------- */
+.brand {
+  font-weight: 700;
+  letter-spacing: 2px;
+  display: inline-flex;
+  align-items: center;
+}
+.brand .turned-a {
+  display: inline-block;
+  color: var(--accent);
+}
+.brand.on-dark { color: var(--white); }
+.brand.on-light { color: var(--text-dark); }
+.brand .accent-dot { color: var(--accent); }
+
+/* ---------- DARK FULL-BLEED PAGES (cover, dividers) ---------- */
+.dark-page {
+  position: relative;
+  width: 210mm;
+  height: 297mm;
+  background: var(--primary);
+  color: var(--white);
+  overflow: hidden;
+  break-after: page;
+  padding: 22mm 18mm;
+}
+.dark-page:last-child { break-after: auto; }
+
+/* Foreground content on dark pages must sit in its own stacking context,
+   otherwise absolutely-positioned .bg-circle elements paint above it
+   regardless of source order. */
+.page-fg {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-circle {
+  z-index: 0;
+  position: absolute;
+  border-radius: 50%;
+  background: var(--primary-light);
+}
+.bg-circle.accent-tint { background: var(--primary-lighter); }
+
+/* Editorial intro-text block used on dark pages: clear, organized paragraphs */
+.intro-text {
+  font-size: 11pt;
+  line-height: 1.7;
+  color: #D6DAE0;
+  border-left: 0.6mm solid var(--accent);
+  padding-left: 6mm;
+}
+.intro-text p { margin-bottom: 4.5mm; }
+.intro-text p:last-child { margin-bottom: 0; }
+
+/* ---------- LIGHT FLOWING CONTENT ---------- */
+.light-doc {
+  background: var(--bg-light);
+}
+.content-section {
+  padding: 0 18mm;
+}
+.content-section.first-in-block {
+  padding-top: 16mm;
+}
+.chapter-start {
+  break-before: page;
+  padding-top: 16mm;
+}
+.content-block {
+  margin-top: 10mm;
+  padding-top: 10mm;
+  border-top: 0.3mm solid var(--border);
+}
+
+.section-tag {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 9.5pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4mm;
+}
+h1.page-title {
+  font-size: 21pt;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 4.5mm 0;
+  line-height: 1.15;
+}
+.page-intro {
+  font-size: 10.8pt;
+  color: var(--text-dark);
+  line-height: 1.55;
+  margin-bottom: 7mm;
+  max-width: 175mm;
+}
+h2.block-title {
+  font-size: 13.5pt;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 9mm 0 1.5mm 0;
+}
+.content-block > h2.block-title:first-child,
+.chapter-start > h2.block-title:first-child { margin-top: 0; }
+.block-subtitle {
+  font-size: 9pt;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 3.5mm;
+}
+
+/* ---------- Lexicon table ---------- */
+table.lex-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-bottom: 4mm;
+  font-size: 9.7pt;
+  border: 0.3mm solid var(--border);
+}
+table.lex-table thead { display: table-header-group; }
+table.lex-table tr { break-inside: avoid; }
+table.lex-table th {
+  background: var(--primary);
+  color: var(--white);
+  text-align: left;
+  padding: 3mm 3.4mm;
+  font-size: 9.3pt;
+  font-weight: 700;
+}
+table.lex-table th.col-phon { color: var(--accent); font-style: italic; font-weight: 700; }
+table.lex-table td {
+  padding: 2.8mm 3.4mm;
+  border-bottom: 0.3mm solid var(--border);
+  vertical-align: top;
+  line-height: 1.4;
+}
+table.lex-table tbody tr:nth-child(even) td { background: var(--row-tint); }
+table.lex-table tbody tr:last-child td { border-bottom: none; }
+table.lex-table td.col-de { font-weight: 700; color: var(--text-dark); overflow-wrap: break-word; }
+table.lex-table td.col-phon { color: var(--accent-deep); font-style: italic; overflow-wrap: break-word; }
+table.lex-table td.col-thai { font-family: 'PattoThai', serif; font-size: 11pt; overflow-wrap: break-word; }
+table.lex-table td.col-desc { color: var(--text-muted); font-size: 9.3pt; line-height: 1.42; }
+
+/* ---------- Cards (premium dark-on-light accents) ---------- */
+.card-grid { display: grid; gap: 5mm; margin-bottom: 4mm; }
+.card-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+.card-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.card-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+.dark-card {
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 2mm;
+  padding: 5.5mm;
+  break-inside: avoid;
+  border: 0.3mm solid var(--border);
+}
+.dark-card .card-title { color: var(--accent); font-weight: 700; font-size: 11.5pt; margin-bottom: 2mm; line-height: 1.3; }
+.dark-card .card-meta { font-size: 9pt; color: var(--text-on-dark-muted); margin-bottom: 2.5mm; }
+.dark-card .card-meta .phon { color: var(--accent); font-style: italic; }
+.dark-card .card-meta .thai { font-family: 'PattoThai', serif; font-size: 10.5pt; color: var(--white); margin-left: 2mm; }
+.dark-card .card-desc { font-size: 9pt; color: #D6DAE0; line-height: 1.45; }
+
+.icon-badge {
+  width: 9mm; height: 9mm; border-radius: 50%;
+  background: var(--accent);
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 2.5mm;
+  overflow: hidden;
+}
+.icon-badge img { width: 5mm; height: 5mm; display: block; }
+.icon-badge.circle-primary { background: var(--primary); }
+
+/* technique entry row (Mae Mai / Look Mai) — flowing premium rows on light page */
+.tech-row {
+  display: flex; align-items: center; gap: 4.5mm;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 2mm;
+  padding: 4mm 5.5mm;
+  margin-bottom: 3mm;
+  break-inside: avoid;
+  border: 0.3mm solid var(--border);
+}
+.tech-row .num-badge {
+  flex: 0 0 auto;
+  width: 9mm; height: 9mm; border-radius: 50%;
+  background: var(--accent);
+  color: var(--primary);
+  font-weight: 700; font-size: 9.5pt;
+  display: flex; align-items: center; justify-content: center;
+}
+.tech-row .tech-main { flex: 0 0 62mm; }
+.tech-row .tech-main .name { font-weight: 700; font-size: 10.3pt; margin-bottom: 1.2mm; line-height: 1.3; }
+.tech-row .tech-main .meta { font-size: 8.7pt; color: var(--text-on-dark-muted); }
+.tech-row .tech-main .meta .phon { color: var(--accent); font-style: italic; }
+.tech-row .tech-main .meta .thai { font-family: 'PattoThai', serif; font-size: 10pt; color: #C7CEDA; margin-left: 1.5mm; }
+.tech-row .tech-desc { flex: 1 1 auto; font-size: 8.9pt; color: #D6DAE0; line-height: 1.45; }
+
+/* callout / tip box */
+.tip-box {
+  background: var(--primary);
+  color: #E3E6EA;
+  border-radius: 2mm;
+  padding: 4.5mm 5.5mm;
+  font-size: 9.5pt;
+  line-height: 1.45;
+  display: flex; align-items: center; gap: 3.5mm;
+  break-inside: avoid;
+  margin: 4mm 0 7mm 0;
+  border: 0.3mm solid var(--border);
+}
+.tip-box .tip-label { color: var(--accent); font-weight: 700; }
+.tip-box img { width: 6mm; height: 6mm; flex: 0 0 auto; display: block; }
+
+/* quote / proverb callout */
+.quote-block {
+  background: var(--card-bg);
+  border-left: 0.8mm solid var(--accent);
+  border-radius: 0 2mm 2mm 0;
+  padding: 5mm 7mm;
+  margin: 5mm 0 7mm 0;
+  break-inside: avoid;
+}
+.quote-block .q-mark { font-family: Georgia, serif; font-size: 24pt; color: var(--accent); line-height: 0.6; margin-bottom: 1.5mm; display: block; }
+.quote-block .q-thai { font-family: 'PattoThai', serif; font-size: 13pt; color: var(--text-dark); margin-bottom: 1.5mm; }
+.quote-block .q-text { font-size: 10.3pt; font-style: italic; color: var(--text-dark); line-height: 1.5; }
+.quote-block .q-source { font-size: 8.5pt; color: var(--text-muted); margin-top: 2mm; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Table-of-contents style rows */
+.toc-row {
+  display: flex; align-items: center; gap: 4.5mm;
+  background: var(--card-bg);
+  border-radius: 2mm;
+  padding: 4.5mm 5.5mm;
+  margin-bottom: 3.5mm;
+  border: 0.3mm solid var(--border);
+  break-inside: avoid;
+}
+.toc-row .num-circle {
+  flex: 0 0 auto; width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--primary); color: var(--accent);
+  font-weight: 700; font-size: 11pt;
+  display: flex; align-items: center; justify-content: center;
+}
+.toc-row .toc-icon { flex: 0 0 auto; width: 8mm; height: 8mm; display: block; }
+.toc-row .toc-text .t-title { font-weight: 700; font-size: 11.5pt; color: var(--text-dark); }
+.toc-row .toc-text .t-sub { font-size: 9pt; color: var(--text-muted); margin-top: 0.8mm; line-height: 1.35; }
+
+/* legend cards (Wie benutze ich diesen Guide) */
+.legend-card {
+  background: var(--card-bg);
+  border-radius: 2mm;
+  border: 0.3mm solid var(--border);
+  padding: 6mm 4.5mm;
+  text-align: center;
+  break-inside: avoid;
+}
+.legend-card .icon-badge { margin: 0 auto 3.5mm auto; width: 11mm; height: 11mm; background: var(--primary); }
+.legend-card .icon-badge img { width: 6mm; height: 6mm; }
+.legend-card .l-title { font-weight: 700; font-size: 11pt; margin-bottom: 2mm; }
+.legend-card .l-desc { font-size: 8.7pt; color: var(--text-muted); line-height: 1.4; }
+
+/* category grid (Techniken Überblick, Kampfstile) as dark cards on light page */
+.cat-card {
+  background: var(--primary);
+  border-radius: 2mm;
+  padding: 6mm 4.5mm;
+  text-align: center;
+  break-inside: avoid;
+  border: 0.3mm solid var(--border);
+}
+.cat-card .icon-badge { margin: 0 auto 3.5mm auto; }
+.cat-card .cat-title { color: var(--white); font-weight: 700; font-size: 10.5pt; margin-bottom: 1.5mm; line-height: 1.3; }
+.cat-card .cat-meta { color: var(--accent); font-size: 8.7pt; }
+
+/* ---------- Gym-Wahl checklist (gut vs. schlecht) ---------- */
+.checklist-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-bottom: 4mm; }
+.checklist-col { border-radius: 2mm; padding: 5.5mm; break-inside: avoid; }
+.checklist-col.good { background: var(--primary); }
+.checklist-col.bad { background: var(--card-bg); border: 0.3mm solid var(--border); }
+.checklist-col .cl-title { font-weight: 700; font-size: 12pt; margin-bottom: 3.5mm; display: flex; align-items: center; gap: 2.5mm; }
+.checklist-col.good .cl-title { color: var(--white); }
+.checklist-col.bad .cl-title { color: var(--text-dark); }
+.checklist-col .cl-title .cl-dot { width: 4mm; height: 4mm; border-radius: 50%; display: inline-block; }
+.checklist-col.good .cl-title .cl-dot { background: var(--accent); }
+.checklist-col.bad .cl-title .cl-dot { background: var(--text-muted); }
+.check-item { display: flex; align-items: flex-start; gap: 2.8mm; margin-bottom: 3mm; font-size: 9.6pt; line-height: 1.42; }
+.check-item:last-child { margin-bottom: 0; }
+.check-item img { width: 4.2mm; height: 4.2mm; flex: 0 0 auto; margin-top: 0.6mm; }
+.checklist-col.good .check-item { color: #E3E6EA; }
+.checklist-col.bad .check-item { color: var(--text-dark); }
+.check-item .bullet-dash { flex: 0 0 auto; width: 2.6mm; height: 0.4mm; background: var(--text-muted); margin-top: 4.4mm; }
+
+/* ---------- Region pages ---------- */
+.region-sub-title { font-size: 11.5pt; font-weight: 700; color: var(--text-dark); margin: 5mm 0 2.5mm 0; display: flex; align-items: center; gap: 2.5mm; }
+.region-sub-title .rs-icon { width: 5mm; height: 5mm; }
+.gym-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm; margin-bottom: 2mm; }
+.gym-item {
+  display: flex; align-items: center; gap: 2.8mm;
+  background: var(--card-bg);
+  border: 0.3mm solid var(--border);
+  border-radius: 1.5mm;
+  padding: 2.6mm 3.2mm;
+  font-size: 9.3pt; font-weight: 700; color: var(--text-dark);
+  break-inside: avoid;
+}
+.gym-item img { width: 4mm; height: 4mm; flex: 0 0 auto; }
+.region-divider { border-top: 0.3mm solid var(--border); margin: 5mm 0; }
