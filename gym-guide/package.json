@@ -4,7 +4,7 @@
   "private": true,
   "description": "PATTO Muay Thai Gym Guide - PDF generation pipeline",
   "scripts": {
-    "gen": "node gen_light1.js && node gen_light2.js && node gen_dark.js",
+    "gen": "node gen_light1.js && node gen_light2.js && node gen_light3.js && node gen_light4.js && node gen_dark.js",
     "render": "node render_light.js && node render_dark.js",
     "merge": "python3 merge.py",
     "build": "npm run gen && npm run render && npm run merge"

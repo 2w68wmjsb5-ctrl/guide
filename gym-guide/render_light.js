@@ -1,7 +1,7 @@
 const { chromium } = require("playwright");
 const path = require("path");
 
-const files = ["light-1", "light-2"];
+const files = ["light-1", "light-2", "light-3", "light-4"];
 
 (async () => {
   const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });

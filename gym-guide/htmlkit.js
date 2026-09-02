@@ -2,8 +2,8 @@ const fs = require("fs");
 const path = require("path");
 
 const ICON_DIR = path.join(__dirname, "icons");
-// "badge": icon sits inside a solid accent/navy circle -> needs a light icon first.
-// "onLight": icon sits directly on a white/light background -> needs a dark icon first.
+// "badge": icon sits inside a solid accent/ink hexagon -> needs a light icon first.
+// "onLight": icon sits directly on a white/paper background -> needs a dark icon first.
 const FALLBACKS = {
   badge: ["white", "dark", "accent"],
   onLight: ["dark", "accent", "white"],
@@ -22,13 +22,18 @@ function icon(name, context = "badge") {
   return resolveIcon(name, context).src;
 }
 
-// Icon-badge circles default to an accent-orange fill. An "_accent" icon on
-// that fill would vanish, so switch the badge to navy whenever the resolved
-// PNG variant is itself accent-colored, guaranteeing contrast either way.
-function iconBadge(name) {
+// Hexagon badges default to an accent-orange fill. An "_accent" icon on that
+// fill would vanish, so switch the badge to ink whenever the resolved PNG
+// variant is itself accent-colored, guaranteeing contrast either way.
+function iconHex(name, size = "9mm") {
   const { src, variant } = resolveIcon(name, "badge");
-  const cls = variant === "accent" ? "icon-badge circle-primary" : "icon-badge";
-  return `<div class="${cls}"><img src="${src}" alt=""></div>`;
+  const cls = variant === "accent" ? "hex hex-ink" : "hex hex-accent";
+  const padded = `calc(${size} * 0.52)`;
+  return `<div class="${cls}" style="width:${size};height:${size};"><img src="${src}" alt="" style="width:${padded};height:${padded};"></div>`;
+}
+
+function numHex(num, size = "11mm") {
+  return `<div class="hex hex-ink num-hex on-light" style="width:${size};height:${size};">${num}</div>`;
 }
 
 function htmlShell(bodyHtml, extraCss = "", bodyClass = "light-doc") {
@@ -49,9 +54,18 @@ function brandLogo(widthMm = "90mm") {
   return `<img class="brand-logo" src="brand/patto-logo-white.png" alt="PATTO" style="width:${widthMm}">`;
 }
 
-function bgCircle(size, pos, extraClass = "") {
-  const style = Object.entries(pos).map(([k, v]) => `${k}:${v}`).join(";");
-  return `<div class="bg-circle ${extraClass}" style="width:${size};height:${size};${style}"></div>`;
+// Bold diagonal-cut color panel — the series' signature background motif,
+// replacing soft circles. dir controls which corner it bleeds from.
+function accentPanel(opts) {
+  const { top, left, right, bottom, w, h, tone = "accent", clip } = opts;
+  const pos = [];
+  if (top !== undefined) pos.push(`top:${top}`);
+  if (left !== undefined) pos.push(`left:${left}`);
+  if (right !== undefined) pos.push(`right:${right}`);
+  if (bottom !== undefined) pos.push(`bottom:${bottom}`);
+  const toneCls = tone === "accent" ? "" : ` ${tone}`;
+  const clipStyle = clip ? `clip-path:${clip};` : "";
+  return `<div class="accent-panel${toneCls}" style="width:${w};height:${h};${pos.join(";")};${clipStyle}"></div>`;
 }
 
 function darkPage(innerHtml) {
@@ -63,9 +77,9 @@ function sectionHeader(tag, title) {
 <h1 class="page-title">${title}</h1>`;
 }
 
-function legendCard(iconName, title, desc) {
+function legendCard(num, title, desc) {
   return `<div class="legend-card">
-  ${iconBadge(iconName)}
+  ${numHex(num)}
   <div class="l-title">${title}</div>
   <div class="l-desc">${desc}</div>
 </div>`;
@@ -73,7 +87,7 @@ function legendCard(iconName, title, desc) {
 
 function tocRow(num, iconName, title, sub) {
   return `<div class="toc-row">
-  <div class="num-circle">${num}</div>
+  ${numHex(num)}
   <img class="toc-icon" src="${icon(iconName, "onLight")}" alt="">
   <div class="toc-text">
     <div class="t-title">${title}</div>
@@ -82,19 +96,15 @@ function tocRow(num, iconName, title, sub) {
 </div>`;
 }
 
-function catCard(iconName, title, meta) {
-  return `<div class="cat-card">
-  ${iconBadge(iconName)}
-  <div class="cat-title">${title}</div>
-  <div class="cat-meta">${meta}</div>
+function tipBox(iconName, label, text) {
+  return `<div class="tip-box">
+  ${iconHex(iconName, "8mm")}
+  <div><span class="tip-label">${label}</span> ${text}</div>
 </div>`;
 }
 
-function tipBox(iconName, label, text) {
-  return `<div class="tip-box">
-  <img src="${icon(iconName, "badge")}" alt="">
-  <div><span class="tip-label">${label}</span> ${text}</div>
-</div>`;
+function disclaimer(text) {
+  return `<div class="disclaimer">${text}</div>`;
 }
 
 function quoteBlock({ text, source }) {
@@ -107,18 +117,13 @@ function quoteBlock({ text, source }) {
 
 // ---------- Gym Guide-specific components ----------
 
-// kind: "good" | "bad"
-function checklistCol(kind, title, items) {
-  const iconMark = kind === "good" ? icon("checkCircle", "onLight") : null;
-  const rows = items.map(text => {
-    const marker = iconMark
-      ? `<img src="${iconMark}" alt="">`
-      : `<span class="bullet-dash"></span>`;
-    return `<div class="check-item">${marker}<div>${text}</div></div>`;
-  }).join("\n");
-  return `<div class="checklist-col ${kind}">
-  <div class="cl-title"><span class="cl-dot"></span>${title}</div>
-  ${rows}
+// kind: "do" | "dont"
+function doDontCard(kind, title, iconName, items) {
+  const label = kind === "do" ? "&#10003;" : "&#10005;";
+  const rows = items.map(text => `<div class="dodont-item"><span class="mark">${label}</span><div>${text}</div></div>`).join("\n");
+  return `<div class="dodont-card ${kind}">
+  <div class="dodont-head">${iconHex(iconName, "7mm")}${title}</div>
+  <div class="dodont-body">${rows}</div>
 </div>`;
 }
 
@@ -131,7 +136,20 @@ function regionSubTitle(iconName, title) {
   return `<div class="region-sub-title"><img class="rs-icon" src="${icon(iconName, "onLight")}" alt="">${title}</div>`;
 }
 
+function regionCard(num, name, count, tag) {
+  return `<div class="region-card">
+  <div class="rc-num">${num}</div>
+  <div class="rc-name">${name}</div>
+  <div class="rc-count">${count} Gyms</div>
+  <div class="rc-tag">${tag}</div>
+</div>`;
+}
+
+function gymIndexItem(name, region) {
+  return `<div class="gym-index-item"><span class="gi-name">${name}</span><span class="gi-region">${region}</span></div>`;
+}
+
 module.exports = {
-  icon, iconBadge, htmlShell, sectionHeader, legendCard, tocRow, catCard, tipBox, quoteBlock,
-  brandLogo, bgCircle, darkPage, checklistCol, gymGrid, regionSubTitle,
+  icon, iconHex, numHex, htmlShell, sectionHeader, legendCard, tocRow, tipBox, disclaimer, quoteBlock,
+  brandLogo, accentPanel, darkPage, doDontCard, gymGrid, regionSubTitle, regionCard, gymIndexItem,
 };

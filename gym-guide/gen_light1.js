@@ -1,30 +1,33 @@
 const fs = require("fs");
-const { sectionHeader, checklistCol, tipBox, htmlShell } = require("./htmlkit.js");
-const data = require("./data.js");
+const { sectionHeader, legendCard, tocRow, htmlShell } = require("./htmlkit.js");
 
 let out = [];
 
-// --- Worauf solltest du bei der Gym-Wahl achten? ---
+// --- Inhaltsverzeichnis ---
 out.push(`<div class="content-section first-in-block">`);
-out.push(sectionHeader("Kapitel 1 · Vorbereitung", "Worauf solltest du bei der Gym-Wahl achten?"));
-out.push(`<p class="page-intro">${data.GYMWAHL_GUT_INTRO} / ${data.GYMWAHL_SCHLECHT_INTRO}</p>`);
-out.push(`<div class="checklist-cols">`);
-out.push(checklistCol("good", "Gutes Gym", data.GYMWAHL_GUT));
-out.push(checklistCol("bad", "Schlechtes Gym", data.GYMWAHL_SCHLECHT));
-out.push(`</div>`);
+out.push(sectionHeader("Guide-Übersicht", "Inhaltsverzeichnis"));
+out.push(`<p class="page-intro">Ein System, zwei Kapitel: von der Vorbereitung bis zum fertigen Gym-Index zum Nachschlagen.</p>`);
+const tocItems = [
+  ["01", "compass", "Vorwort", "Warum dieser Guide entstanden ist und für wen er gemacht ist"],
+  ["02", "checkCircle", "Vorbereitung", "Gutes vs. schlechtes Gym, Recherchetipps, bevor du gehst"],
+  ["03", "mapMarked", "Gym-Verzeichnis", "7 Regionen mit 58 empfohlenen Gyms"],
+  ["04", "sortNumeric", "Gym-Index A–Z", "Alle Gyms alphabetisch zum schnellen Nachschlagen"],
+];
+tocItems.forEach(it => out.push(tocRow(it[0], it[1], it[2], it[3])));
 out.push(`</div>`);
 
-// --- Recherchetipps ---
+// --- Wie benutze ich diesen Guide ---
 out.push(`<div class="content-section chapter-start">`);
-out.push(sectionHeader("Kapitel 1 · Vorbereitung", "Recherchetipps – Wie findest du das passende Gym?"));
-out.push(`<p class="page-intro">${data.RECHERCHE_INTRO}</p>`);
-out.push(`<h2 class="block-title" style="margin-top:0;">Das bedeutet in der Praxis oft:</h2>`);
-out.push(`<div class="checklist-cols" style="grid-template-columns:1fr;">`);
-out.push(checklistCol("bad", "Warnzeichen kommerzieller Gyms", data.RECHERCHE_WARN));
+out.push(sectionHeader("Guide-Übersicht", "Wie benutze ich diesen Guide?"));
+out.push(`<p class="page-intro">Jedes Kapitel folgt demselben klaren Format – damit du auf Reisen oder beim Planen sofort findest, was du brauchst.</p>`);
+out.push(`<div class="card-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4.5mm;">`);
+out.push(legendCard("1", "Regionen", "7 Regionen ganz Thailands, sortiert von Bangkok bis zu den Inseln im Süden."));
+out.push(legendCard("2", "Do / Don&#39;t", "Klare Kriterien für gute und schlechte Gyms auf einen Blick."));
+out.push(legendCard("3", "Gym-Karten", "Kompakte Empfehlungen mit Region zum schnellen Nachschlagen."));
+out.push(legendCard("4", "Index", "Alle 58 Gyms alphabetisch mit Region im Anhang."));
 out.push(`</div>`);
-out.push(tipBox("comments", "Recherche-Tipp:", data.RECHERCHE_OUTRO));
 out.push(`</div>`);
 
-const html = htmlShell(out.join("\n"), `body{background:var(--bg-light);}`);
+const html = htmlShell(out.join("\n"), `body{background:var(--paper);}`);
 fs.writeFileSync(__dirname + "/light-1.html", html);
 console.log("light-1.html written");
