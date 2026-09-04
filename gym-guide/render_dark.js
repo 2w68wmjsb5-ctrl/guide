@@ -5,6 +5,7 @@ const path = require("path");
   const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
   const page = await browser.newPage();
   await page.goto("file://" + path.resolve(__dirname, "dark.html"));
+  await page.evaluate(() => document.fonts.ready);
   await page.pdf({
     path: path.resolve(__dirname, "dark.pdf"),
     width: "210mm",

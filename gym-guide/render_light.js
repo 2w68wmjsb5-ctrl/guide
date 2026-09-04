@@ -8,6 +8,7 @@ const files = ["light-1", "light-2", "light-3", "light-4"];
   for (const f of files) {
     const page = await browser.newPage();
     await page.goto("file://" + path.resolve(__dirname, f + ".html"));
+    await page.evaluate(() => document.fonts.ready);
     await page.pdf({
       path: path.resolve(__dirname, f + ".pdf"),
       format: "A4",
