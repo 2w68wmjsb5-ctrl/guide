@@ -6,12 +6,11 @@ let out = [];
 // --- Inhaltsverzeichnis ---
 out.push(`<div class="content-section first-in-block">`);
 out.push(sectionHeader("Guide-Übersicht", "Inhaltsverzeichnis"));
-out.push(`<p class="page-intro">Ein System, zwei Kapitel: von der Vorbereitung bis zum fertigen Gym-Index zum Nachschlagen.</p>`);
 const tocItems = [
   ["01", "compass", "Vorwort", "Warum dieser Guide entstanden ist und für wen er gemacht ist"],
   ["02", "checkCircle", "Vorbereitung", "Gutes vs. schlechtes Gym, Recherchetipps, bevor du gehst"],
-  ["03", "mapMarked", "Gym-Verzeichnis", "7 Regionen mit 58 empfohlenen Gyms"],
-  ["04", "sortNumeric", "Gym-Index A–Z", "Alle Gyms alphabetisch zum schnellen Nachschlagen"],
+  ["03", "mapMarked", "Gym-Verzeichnis", "7 Regionen mit über 50 empfohlenen Gyms"],
+  ["04", "sortNumeric", "Gym-Index A–Z", "Alle Gyms alphabetisch geordnet, mit Region zum Nachschlagen"],
 ];
 tocItems.forEach(it => out.push(tocRow(it[0], it[1], it[2], it[3])));
 out.push(`</div>`);
@@ -21,10 +20,10 @@ out.push(`<div class="content-section chapter-start">`);
 out.push(sectionHeader("Guide-Übersicht", "Wie benutze ich diesen Guide?"));
 out.push(`<p class="page-intro">Jedes Kapitel folgt demselben klaren Format – damit du auf Reisen oder beim Planen sofort findest, was du brauchst.</p>`);
 out.push(`<div class="card-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4.5mm;">`);
-out.push(legendCard("1", "Regionen", "7 Regionen ganz Thailands, sortiert von Bangkok bis zu den Inseln im Süden."));
+out.push(legendCard("1", "Regionen", "7 Regionen über ganz Thailand verteilt, von Bangkok bis zu den Inseln im Süden."));
 out.push(legendCard("2", "Do / Don&#39;t", "Klare Kriterien für gute und schlechte Gyms auf einen Blick."));
 out.push(legendCard("3", "Gym-Karten", "Kompakte Empfehlungen mit Region zum schnellen Nachschlagen."));
-out.push(legendCard("4", "Index", "Alle 58 Gyms alphabetisch mit Region im Anhang."));
+out.push(legendCard("4", "Index", "Alle über 50 Gyms alphabetisch mit Region im Anhang."));
 out.push(`</div>`);
 out.push(`</div>`);
 

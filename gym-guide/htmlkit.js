@@ -36,6 +36,12 @@ function numHex(num, size = "11mm") {
   return `<div class="hex hex-ink num-hex on-light" style="width:${size};height:${size};">${num}</div>`;
 }
 
+// Text-glyph hexagon badge (e.g. an "X" cross) for cases with no matching icon PNG.
+function hexGlyph(glyph, size = "9mm") {
+  const fontSize = `calc(${size} * 0.62)`;
+  return `<div class="hex hex-accent hex-glyph" style="width:${size};height:${size};font-size:${fontSize};">${glyph}</div>`;
+}
+
 function htmlShell(bodyHtml, extraCss = "", bodyClass = "light-doc") {
   return `<!DOCTYPE html>
 <html lang="de">
@@ -117,19 +123,24 @@ function quoteBlock({ text, source }) {
 
 // ---------- Gym Guide-specific components ----------
 
-// kind: "do" | "dont"
-function doDontCard(kind, title, iconName, items) {
+// kind: "do" | "dont". iconHtml is pre-rendered badge markup (iconHex(...) or hexGlyph(...)).
+function doDontCard(kind, title, iconHtml, items) {
   const label = kind === "do" ? "&#10003;" : "&#10005;";
   const rows = items.map(text => `<div class="dodont-item"><span class="mark">${label}</span><div>${text}</div></div>`).join("\n");
   return `<div class="dodont-card ${kind}">
-  <div class="dodont-head">${iconHex(iconName, "7mm")}${title}</div>
+  <div class="dodont-head">${iconHtml}${title}</div>
   <div class="dodont-body">${rows}</div>
 </div>`;
 }
 
 function gymGrid(gyms) {
-  const items = gyms.map(name => `<div class="gym-item"><img src="${icon("mapMarked", "onLight")}" alt="">${name}</div>`).join("\n");
+  const items = gyms.map(name => `<div class="gym-item">${name}</div>`).join("\n");
   return `<div class="gym-grid">${items}</div>`;
+}
+
+function regionPageTitle(tag, name) {
+  return `<div class="section-tag">${tag}</div>
+<h1 class="page-title region-page-title"><img class="page-title-icon" src="${icon("mapMarked", "onLight")}" alt="">${name}</h1>`;
 }
 
 function regionSubTitle(iconName, title) {
@@ -150,6 +161,6 @@ function gymIndexItem(name, region) {
 }
 
 module.exports = {
-  icon, iconHex, numHex, htmlShell, sectionHeader, legendCard, tocRow, tipBox, disclaimer, quoteBlock,
-  brandLogo, accentPanel, darkPage, doDontCard, gymGrid, regionSubTitle, regionCard, gymIndexItem,
+  icon, iconHex, numHex, hexGlyph, htmlShell, sectionHeader, legendCard, tocRow, tipBox, disclaimer, quoteBlock,
+  brandLogo, accentPanel, darkPage, doDontCard, gymGrid, regionSubTitle, regionCard, gymIndexItem, regionPageTitle,
 };

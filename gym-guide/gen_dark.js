@@ -25,7 +25,7 @@ const EXTRA_CSS = `
 .divider-tag { font-family:'Barlow Condensed',sans-serif; font-weight:800; color: var(--accent); font-size: 10.5pt; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 4mm; }
 .divider-title { font-family:'Anton',sans-serif; text-transform:uppercase; font-size: 30pt; margin: 0 0 6mm 0; max-width: 150mm; line-height: 1.05; color: var(--white); }
 .divider-desc { font-size: 11pt; color: #C7C9CE; max-width: 130mm; line-height: 1.6; margin-bottom: 10mm; }
-.divider-list { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 10mm; }
+.divider-list { list-style: none; padding: 0; margin: 0; }
 .divider-list li { font-size: 10.3pt; color: #D7D6D2; padding: 2.6mm 0; border-top: 0.3mm solid var(--ink-3); display: flex; align-items: center; gap: 3.2mm; break-inside: avoid; }
 .divider-list .li-num { font-family:'Anton',sans-serif; color: var(--accent); font-size: 9.5pt; width: 6mm; flex: 0 0 auto; }
 
@@ -33,7 +33,6 @@ const EXTRA_CSS = `
 .closing-title { margin-bottom: 8mm; }
 .closing-tagline { font-family:'Anton',sans-serif; text-transform:uppercase; font-size: 22pt; color: var(--white); line-height: 1.5; }
 .closing-tagline .accent { color: var(--accent); }
-.closing-sub { font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size: 10.5pt; color: #9AA0A8; margin-top: 6mm; max-width: 110mm; line-height: 1.5; }
 `;
 
 let pages = [];
@@ -45,13 +44,13 @@ pages.push(darkPage(`
   <div class="page-fg cover-wrap">
     <div style="position:absolute; top:0; left:0;">
       <div class="cover-logo-row">${brandLogo("42mm")}</div>
-      <div class="cover-eyebrow">PATTO Guide Series</div>
+      <div class="cover-eyebrow">Kuratierter Trainingsguide</div>
       <h1 class="cover-title">Muay Thai<br><span class="line2">Gym Guide</span></h1>
-      <p class="cover-tagline">Trainieren in Thailand — kuratierte Camps in 7 Regionen, geprüft nach Trainingsqualität, Authentizität und Community-Feedback.</p>
+      <p class="cover-tagline">Trainieren in Thailand — kuratierte Camps in 7 Regionen, jedes einzelne von mir persönlich geprüft nach Trainingsqualität, Authentizität und Erfahrung vor Ort.</p>
     </div>
     <div class="cover-foot">
-      <div class="cf-text">Vol. 01 — Thailand Edition</div>
-      <div class="cf-text">58 Gyms · 7 Regionen</div>
+      <div class="cf-text">Thailand Edition</div>
+      <div class="cf-text">Über 50 Gyms · 7 Regionen</div>
     </div>
   </div>
 `));
@@ -106,7 +105,7 @@ pages.push(darkPage(`
       <div class="divider-num">02</div>
       <div class="divider-tag">Kapitel 2 · Gym-Verzeichnis</div>
       <h1 class="divider-title">Empfohlene Gyms nach Region</h1>
-      <p class="divider-desc">Von Bangkok bis zu den Inseln im Süden – sieben Regionen, kuratiert nach Trainingsqualität, Authentizität und Community-Feedback.</p>
+      <p class="divider-desc">Sieben Regionen, verteilt über ganz Thailand – kuratiert nach Trainingsqualität, Authentizität und Community-Feedback.</p>
       <ul class="divider-list">
         ${regionNames.map((n, i) => `<li><span class="li-num">${String(i + 1).padStart(2, "0")}</span>${n}</li>`).join("\n")}
       </ul>
@@ -121,7 +120,6 @@ pages.push(darkPage(`
   <div class="closing-page page-fg">
     <div class="closing-title">${brandLogo("60mm")}</div>
     <div class="closing-tagline">Train hard.<br>Stay humble.<br><span class="accent">Choose wisely.</span></div>
-    <div class="closing-sub">Alle Empfehlungen basieren auf Community-Feedback, persönlicher Erfahrung und Recherche. Bedingungen können sich ändern — kontaktiere dein Gym vor der Anreise.</div>
   </div>
 `));
 

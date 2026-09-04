@@ -1,6 +1,7 @@
 const fs = require("fs");
-const { sectionHeader, gymGrid, regionSubTitle, regionCard, htmlShell } = require("./htmlkit.js");
-const { REGIONS } = require("./data.js");
+const { sectionHeader, gymGrid, regionSubTitle, regionCard, regionPageTitle, tipBox, htmlShell } = require("./htmlkit.js");
+const data = require("./data.js");
+const { REGIONS } = data;
 
 function regionGymCount(region) {
   let n = 0;
@@ -17,8 +18,8 @@ const REGION_TAGS = {
   "Chiang Mai": "Qualität, Ruhe & Tiefe im Training ohne unnötigen Druck",
   "Isaan": "Maximale Authentizität & bodenständiges, hartes Training",
   "Inselregion: Koh Samui, Koh Phangan & Koh Tao": "Training kombiniert mit Strand, Sonne & Erholung",
-  "Pattaya": "Gute Infrastruktur, kurze Wege & intensives Training",
-  "Phuket": "Trainingsvielfalt abseits der kommerzialisierten Zone",
+  "Pattaya": "Gute Infrastruktur, kurze Wege, intensives Training & Strand",
+  "Phuket": "Trainingsvielfalt & Strand abseits der kommerzialisierten Zone",
   "Weitere Orte": "Ruhe, Authentizität & unverfälschtes Training abseits des Trubels",
 };
 
@@ -27,18 +28,19 @@ let out = [];
 // --- Regionen im Überblick ---
 out.push(`<div class="content-section chapter-start">`);
 out.push(sectionHeader("Kapitel 2 · Gym-Verzeichnis", "Regionen im Überblick"));
-out.push(`<p class="page-intro">58 empfohlene Gyms, sieben Regionen – auf einen Blick, welche zu deinem Trainingsstil passt.</p>`);
+out.push(`<p class="page-intro">Über 50 empfohlene Gyms, sieben Regionen – auf einen Blick, welche zu deinem Trainingsstil passt.</p>`);
 out.push(`<div class="region-cards">`);
 REGIONS.forEach((r, i) => {
   out.push(regionCard(String(i + 1).padStart(2, "0"), r.name, regionGymCount(r), REGION_TAGS[r.name] || ""));
 });
 out.push(`</div>`);
+out.push(tipBox("trophyCup", "Möglichkeiten zu kämpfen:", data.KAEMPFEN_TIPP));
 out.push(`</div>`);
 
 // --- Einzelne Regionen ---
 REGIONS.forEach((region, i) => {
   out.push(`<div class="content-section chapter-start">`);
-  out.push(sectionHeader("Kapitel 2 · Gym-Verzeichnis", region.name));
+  out.push(regionPageTitle("Kapitel 2 · Gym-Verzeichnis", region.name));
   region.paragraphs.forEach(p => {
     out.push(`<p class="page-intro">${p.replace(/\n/g, "<br>")}</p>`);
   });

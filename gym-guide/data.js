@@ -10,13 +10,14 @@ const GYMWAHL_SCHLECHT = ["HIIT-Workouts ohne Bezug zum Muay Thai", "keinem vorg
 
 const RECHERCHE_INTRO = "Viele Gyms posten regelmäßig auf Instagram, TikTok oder Facebook. Dort kannst du dir einen ersten Eindruck vom Training, den Kämpfern und der Atmosphäre verschaffen. Aber Achtung: Nicht alles, was auf Social Media gut aussieht, ist auch gut im echten Leben. Kommerzielle Gyms investieren oft mehr in ihre Außenwirkung und Marketing als in echtes, strukturiertes Training. Das bedeutet in der Praxis oft:";
 const RECHERCHE_WARN = ["Training wird stark vereinfacht, um es für Anfänger „angenehm“ zu halten – dadurch fehlt Tiefgang, Technikfokus oder Drill", "statt individueller Korrektur geht man unter in großen Gruppen, ohne persönliches Feedback", "die Trainer sind oft ausgelaugt, demotiviert oder beschäftigen sich mehr mit neuen Kunden als mit echten Lernfortschritten", "statt echter Wettkampfatmosphäre herrscht eher ein „Retreat-Flair“ – mit Fokus auf Wellness, Proteinshakes und Community-Vibes"];
-const RECHERCHE_OUTRO = "Wenn ein Gym auf Instagram, TikTok oder Facebook fast nur Selfies, HIIT-Workouts und Sonnenuntergänge postet, statt Sparring, Clinch oder Jogging – sei kritisch. Gute Gyms posten das Training selbst, ihre Kämpfer, Resultate und echte Szenen aus dem Camp. Auch Reddit ist eine sehr wertvolle Quelle. Gib z. B. „Chiang Mai Muay Thai Reddit“ ein – dort findest du ehrliche Erfahrungsberichte, Sparring-Videos und auch Warnungen vor Mogelpackungen.";
+const RECHERCHE_OUTRO = "Social Media ist nur ein Hinweis – keine Qualitätsgarantie. Gerade bei Muay-Thai-Gyms solltest du dich nicht von einer starken Online-Präsenz blenden lassen. Die echten Goldgruben haben teilweise kaum oder gar kein Social Media und sind trotzdem sportlich hervorragend.<br><br>Eine der besten Quellen für ehrliche Einschätzungen ist deshalb Reddit. Such zum Beispiel nach „Chiang Mai Muay Thai Reddit“. Dort findest du Erfahrungsberichte von Trainierenden, Empfehlungen, Erfahrungen mit Sparring und Training sowie Warnungen vor Gyms, die ihrem Ruf nicht gerecht werden.";
+const KAEMPFEN_TIPP = "Viele Gyms bieten die Möglichkeit, an lokalen oder überregionalen Fights teilzunehmen – von kleinen Stadion-Kämpfen bis zu größeren Promotions. Sprich dein Gym frühzeitig darauf an: Die meisten Trainer helfen gerne bei der Vermittlung eines passenden Kampfes, wenn dein Trainingsstand es zulässt.";
 
 const REGIONS = [
   {
     name: "Bangkok",
     paragraphs: ["Bangkok ist der Ursprung und das pulsierende Zentrum des modernen Muay Thai. In der thailändischen Hauptstadt findest du eine hohe Dichte an traditionellen Gyms, aktiven Wettkämpfern und erfahrenen Trainern. Viele bekannte Profis stammen aus Camps in Bangkok – hier wird täglich unter echten Bedingungen trainiert, meist in enger Verbindung zur lokalen Kampfszene.", "Wer authentisches Muay Thai sucht, ist hier genau richtig: Die Trainings sind fordernd, technisch fokussiert und tief in der Kultur verankert. Gleichzeitig bietet Bangkok eine große Auswahl – von ruhigen Local-Gyms bis zu etablierten Wettkampfschmieden.\nPerfekt für alle, die mittendrin statt nur dabei sein wollen."],
-    gyms: ["Dejrat Gym", "F.A.GROUP Muaythai Gym", "Kiatsongrit Muay Thai Gym", "Looknongsaeng Muay Thai", "Rithirit Gym Academy", "Sangmorakot Muay Thai Academy", "Sasiprapa Muay Thai Gym", "Sitsongpeenong Muay Thai Camp", "TDED99 Muay Thai Gym", "Wor.Auracha Muay Thai Gym", "Pinsinchai Muay Thai Gym"],
+    gyms: ["Dejrat Gym", "F.A.GROUP Muaythai Gym", "Jitmuangnon Muay Thai Gym", "Kiatsongrit Muay Thai Gym", "Looknongsaeng Muay Thai", "Rithirit Gym Academy", "Sangmorakot Muay Thai Academy", "Sasiprapa Muay Thai Gym", "Sitsongpeenong Muay Thai Camp", "TDED99 Muay Thai Gym", "Wor.Auracha Muay Thai Gym", "Pinsinchai Muay Thai Gym"],
     sub: { title: "Auch außerhalb der Metropole", intro: "Wer denkt, das Beste gäbe es nur mitten in Bangkok, liegt falsch. Auch außerhalb der Metropole – in den angrenzenden Provinzen oder am Stadtrand – verbergen sich echte Trainingsschätze. Hier findest du Gyms, die nicht auf Massentourismus setzen, sondern auf authentisches Training, familiäre Atmosphäre und persönliche Betreuung.", gyms: ["Captainken Boxing Gym", "Kiatphontip Gym", "Sangtiennoi Gym", "Sitmonchai Gym", "Sit Palan Muay Thai Gym"] },
   },
   {
@@ -40,7 +41,7 @@ const REGIONS = [
   },
   {
     name: "Pattaya",
-    paragraphs: ["Pattaya ist mehr als nur Nachtleben und Tourismus – es hat sich zu einem soliden Standort für Muay Thai Training entwickelt. Inmitten der geschäftigen Küstenstadt finden sich einige authentische Gyms, die mit erfahrenen Trainern und einer klaren Struktur überzeugen. Wer gezielt nach Qualität sucht, kann hier echtes Training erleben – abseits vom Massentourismus.", "Pattaya eignet sich besonders für alle, die eine gute Infrastruktur, kurze Wege und intensives Training verbinden wollen – mit der Möglichkeit, auch mal durchzuatmen oder am Meer zu entspannen."],
+    paragraphs: ["Pattaya ist mehr als nur Nachtleben und Tourismus – es hat sich zu einem soliden Standort für Muay Thai Training entwickelt. Inmitten der geschäftigen Küstenstadt finden sich einige authentische Gyms, die mit erfahrenen Trainern und einer klaren Struktur überzeugen. Wer gezielt nach Qualität sucht, kann hier echtes Training erleben – abseits vom Massentourismus.", "Pattaya eignet sich besonders für alle, die eine gute Infrastruktur, kurze Wege, intensives Training und Strand verbinden wollen – mit der Möglichkeit, auch mal durchzuatmen oder am Meer zu entspannen."],
     gyms: ["Ban Rambaa Gym", "Phetchrungruang Gym", "Rage Fight Academy", "Silk Muay Thai", "Sityodtong Muay Thai Camp", "Sor.Klinmee Gym"],
   },
   {
@@ -64,5 +65,5 @@ const REGIONS = [
 
 module.exports = {
   VORWORT, GYMWAHL_GUT_INTRO, GYMWAHL_GUT, GYMWAHL_SCHLECHT_INTRO, GYMWAHL_SCHLECHT,
-  RECHERCHE_INTRO, RECHERCHE_WARN, RECHERCHE_OUTRO, REGIONS,
+  RECHERCHE_INTRO, RECHERCHE_WARN, RECHERCHE_OUTRO, KAEMPFEN_TIPP, REGIONS,
 };
