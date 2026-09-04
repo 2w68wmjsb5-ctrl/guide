@@ -196,7 +196,7 @@ h2.block-title {
 
 /* ---------- DO / DON'T cards (Gym-Wahl) ---------- */
 .dodont-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-bottom: 4mm; }
-.dodont-card { border-radius: 1mm; overflow: hidden; break-inside: avoid; border: 0.3mm solid var(--line); }
+.dodont-card { display: flex; flex-direction: column; border-radius: 1mm; overflow: hidden; break-inside: avoid; border: 0.3mm solid var(--line); }
 .dodont-card.do, .dodont-card.dont { border-color: var(--ink); }
 .dodont-head {
   font-family: 'Anton', Arial, sans-serif;
@@ -209,7 +209,7 @@ h2.block-title {
 .dodont-card.do .dodont-head { background: var(--ink); color: var(--accent); }
 .dodont-card.dont .dodont-head { background: var(--paper); color: var(--steel); border-bottom: 0.3mm solid var(--line); }
 .dodont-head .hex { width: 7mm; height: 7mm; flex: 0 0 auto; }
-.dodont-body { background: var(--card); padding: 5mm 5.5mm; }
+.dodont-body { background: var(--card); padding: 5mm 5.5mm; flex: 1 1 auto; }
 .dodont-item { display: flex; align-items: flex-start; gap: 2.8mm; margin-bottom: 3mm; font-size: 9.6pt; line-height: 1.42; color: var(--text); }
 .dodont-item:last-child { margin-bottom: 0; }
 .dodont-item .mark { flex: 0 0 auto; font-family: 'Anton', Arial, sans-serif; font-size: 10pt; width: 4.5mm; }

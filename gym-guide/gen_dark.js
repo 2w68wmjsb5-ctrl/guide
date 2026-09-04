@@ -44,9 +44,8 @@ pages.push(darkPage(`
   <div class="page-fg cover-wrap">
     <div style="position:absolute; top:0; left:0;">
       <div class="cover-logo-row">${brandLogo("42mm")}</div>
-      <div class="cover-eyebrow">Kuratierter Trainingsguide</div>
       <h1 class="cover-title">Muay Thai<br><span class="line2">Gym Guide</span></h1>
-      <p class="cover-tagline">Trainieren in Thailand — kuratierte Camps in 7 Regionen, jedes einzelne von mir persönlich geprüft nach Trainingsqualität, Authentizität und Erfahrung vor Ort.</p>
+      <p class="cover-tagline">Trainieren in Thailand — kuratierte Camps in 7 Regionen, ausgewählt nach Trainingsqualität, Authentizität, Community-Feedback und eigener Erfahrung vor Ort.</p>
     </div>
     <div class="cover-foot">
       <div class="cf-text">Thailand Edition</div>

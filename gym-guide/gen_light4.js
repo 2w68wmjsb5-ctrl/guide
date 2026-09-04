@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { sectionHeader, gymIndexItem, htmlShell } = require("./htmlkit.js");
+const { sectionHeader, gymIndexItem, tipBox, htmlShell } = require("./htmlkit.js");
 const { REGIONS } = require("./data.js");
 
 function allGyms(regions) {
@@ -18,10 +18,11 @@ const gyms = allGyms(REGIONS);
 let out = [];
 out.push(`<div class="content-section chapter-start">`);
 out.push(sectionHeader("Anhang", "Gym-Index A–Z"));
-out.push(`<p class="page-intro" style="margin-bottom:4mm;">Alle ${gyms.length} empfohlenen Gyms dieses Guides, alphabetisch geordnet mit ihrer Region. Tipp: Nutze in deinem PDF-Reader Strg+F (Windows) bzw. Cmd+F (Mac), um gezielt nach einem Gym-Namen zu suchen.</p>`);
+out.push(`<p class="page-intro" style="margin-bottom:4mm;">Alle über 50 Gyms alphabetisch mit Region zum Nachschlagen.</p>`);
 out.push(`<div class="gym-index">`);
 gyms.forEach(g => out.push(gymIndexItem(g.name, g.region)));
 out.push(`</div>`);
+out.push(tipBox("lightbulb", "Tipp:", "Nutze in deinem PDF-Reader Strg+F (Windows) bzw. Cmd+F (Mac), um gezielt nach einem Gym-Namen zu suchen."));
 out.push(`</div>`);
 
 const html = htmlShell(out.join("\n"), `body{background:var(--paper);}`);
