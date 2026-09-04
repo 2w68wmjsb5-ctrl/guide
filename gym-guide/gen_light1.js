@@ -23,7 +23,7 @@ out.push(`<div class="card-grid" style="display:grid;grid-template-columns:repea
 out.push(legendCard("1", "Regionen", "7 Regionen, die ganz Thailand abdecken – vom Norden bis in den Süden."));
 out.push(legendCard("2", "Do / Don&#39;t", "Klare Kriterien für gute und schlechte Gyms auf einen Blick."));
 out.push(legendCard("3", "Gym-Karten", "Kompakte Empfehlungen mit Region zum schnellen Nachschlagen."));
-out.push(legendCard("4", "Index", "Alle über 50 Gyms alphabetisch mit Region im Anhang."));
+out.push(legendCard("4", "Index", "Alle über 50 Gyms alphabetisch mit Region zum Nachschlagen."));
 out.push(`</div>`);
 out.push(`</div>`);
 

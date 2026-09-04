@@ -17,9 +17,8 @@ const gyms = allGyms(REGIONS);
 
 let out = [];
 out.push(`<div class="content-section chapter-start">`);
-out.push(sectionHeader("Anhang", "Gym-Index A–Z"));
-out.push(`<p class="page-intro" style="margin-bottom:4mm;">Alle über 50 Gyms alphabetisch mit Region zum Nachschlagen.</p>`);
-out.push(`<div class="gym-index">`);
+out.push(sectionHeader("Kapitel 2 · Gym-Verzeichnis", "Gym-Index A–Z"));
+out.push(`<div class="gym-index" style="margin-top:6mm;">`);
 gyms.forEach(g => out.push(gymIndexItem(g.name, g.region)));
 out.push(`</div>`);
 out.push(tipBox("lightbulb", "Tipp:", "Nutze in deinem PDF-Reader Strg+F (Windows) bzw. Cmd+F (Mac), um gezielt nach einem Gym-Namen zu suchen."));
