@@ -45,7 +45,7 @@ pages.push(darkPage(`
     <div style="position:absolute; top:0; left:0;">
       <div class="cover-logo-row">${brandLogo("42mm")}</div>
       <h1 class="cover-title">Muay Thai<br><span class="line2">Gym Guide</span></h1>
-      <p class="cover-tagline">Trainieren in Thailand — kuratierte Camps in 7 Regionen, ausgewählt nach Trainingsqualität, Authentizität, Community-Feedback und eigener Erfahrung vor Ort.</p>
+      <p class="cover-tagline">Kuratierte Muay-Thai-Camps in 7 Regionen Thailands, ausgewählt nach Trainingsqualität, Authentizität, Community-Feedback und eigener Erfahrung vor Ort.</p>
     </div>
     <div class="cover-foot">
       <div class="cf-text">Thailand Edition</div>
@@ -104,7 +104,7 @@ pages.push(darkPage(`
       <div class="divider-num">02</div>
       <div class="divider-tag">Kapitel 2 · Gym-Verzeichnis</div>
       <h1 class="divider-title">Empfohlene Gyms nach Region</h1>
-      <p class="divider-desc">Sieben Regionen, verteilt über ganz Thailand – kuratiert nach Trainingsqualität, Authentizität und Community-Feedback.</p>
+      <p class="divider-desc">Sieben Regionen, verteilt über ganz Thailand, kuratiert nach Trainingsqualität, Authentizität und Community-Feedback.</p>
       <ul class="divider-list">
         ${regionNames.map((n, i) => `<li><span class="li-num">${String(i + 1).padStart(2, "0")}</span>${n}</li>`).join("\n")}
       </ul>

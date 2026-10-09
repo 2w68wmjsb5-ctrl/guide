@@ -14,7 +14,7 @@ function regionGymCount(region) {
 // Short "ideal für" tags, paraphrased from each region's own source text
 // (not new claims) — a scannable at-a-glance summary, not fabricated data.
 const REGION_TAGS = {
-  "Bangkok": "Authentizität & Wettkampf-Niveau — mittendrin statt nur dabei",
+  "Bangkok": "Authentizität & Wettkampf-Niveau, mittendrin statt nur dabei",
   "Chiang Mai": "Qualität, Ruhe & Tiefe im Training ohne unnötigen Druck",
   "Isaan": "Maximale Authentizität & bodenständiges, hartes Training",
   "Inselregion: Koh Samui, Koh Phangan & Koh Tao": "Training kombiniert mit Strand, Sonne & Erholung",
@@ -28,7 +28,7 @@ let out = [];
 // --- Regionen im Überblick ---
 out.push(`<div class="content-section chapter-start">`);
 out.push(sectionHeader("Kapitel 2 · Gym-Verzeichnis", "Regionen im Überblick"));
-out.push(`<p class="page-intro">Über 50 empfohlene Gyms, sieben Regionen – auf einen Blick, welche zu deinem Trainingsstil passt.</p>`);
+out.push(`<p class="page-intro">Über 50 empfohlene Gyms in sieben Regionen, auf einen Blick, welche zu deinem Trainingsstil passt.</p>`);
 out.push(`<div class="region-cards">`);
 REGIONS.forEach((r, i) => {
   out.push(regionCard(String(i + 1).padStart(2, "0"), r.name, regionGymCount(r), REGION_TAGS[r.name] || ""));
