@@ -37,7 +37,7 @@ out.push(`<h2 class="block-title" style="margin-top:7mm;">Verletzungen vorbeugen
 out.push(`<p class="page-intro">Die meisten Ausfälle entstehen durch Überlastung, nicht durch einen einzelnen Treffer. Muskeln passen sich in Wochen an, Sehnen und Bänder brauchen Monate. Krafttraining gibt ihnen diese Zeit und macht dich belastbarer.</p>`);
 out.push(`<div class="region-cards" style="grid-template-columns:1fr 1fr 1fr;">`);
 out.push(infoCard("01", "Belastbarkeit", "Gelenke &amp; Sehnen", "Kräftige Beine und Waden stabilisieren Knie und Sprunggelenk bei Drehungen, Checks und im Clinch."));
-out.push(infoCard("02", "Balance", "Ziehen gleicht Drücken aus", "Muay Thai ist drucklastig. Zugübungen schützen Schultern, Nacken und Haltung."));
+out.push(infoCard("02", "Balance", "Gleichgewicht &amp; Ausgleich", "Stabiles Gleichgewicht auf einem Bein schützt bei Kicks und Checks vor Umknicken. Zugübungen gleichen das viele Drücken aus und schonen Schultern und Nacken."));
 out.push(infoCard("03", "Kontrolle", "Landen &amp; Bremsen", "Saubere Landungen und eine stabile Rumpf- und Hüftmuskulatur entlasten Knie und unteren Rücken."));
 out.push(`</div>`);
 out.push(tipBox("kneeBandage", "Schmerz ist ein Signal:", "Muskelkater ist normal, stechender oder anhaltender Gelenkschmerz nicht. Dann Belastung reduzieren und bei Bedarf ärztlich abklären lassen."));
