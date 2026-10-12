@@ -35,8 +35,9 @@ werden. Alle Texte sind eigenständig formuliert.
 - `data.js` — Übungsdaten (einzige Datei für Programmänderungen)
 - `chapters.js` — Kapitelliste für Inhaltsverzeichnis, Trennseiten und Reihenfolge
 - `htmlkit.js` / `style.css` — PATTO-Tactical-Bausteine aus dem Gym Guide plus S&C-Komponenten (Übungstabelle, Finisher, Wochenraster, Tracker)
-- `gen_dark.js` — Cover, Vorwort, 5 Kapiteltrenner, Abschluss
+- `gen_dark.js` — Cover, Vorwort, 4 Kapiteltrenner + Bonus-Trenner, Abschluss
 - `gen_light1.js` — Inhaltsverzeichnis, „Wie benutze ich diesen Guide?“
-- `gen_light2.js` … `gen_light6.js` — Kapitel 1–5
+- `gen_light2.js` … `gen_light5.js` — Kapitel 1–4 (Grundlagen, Planung, Programm, Kondition)
+- `gen_light6.js` — Bonus-Kapitel Mobilität (Stretching, Hüftmobilität)
 - `gen_light7.js` — Anhang: Übungs-Index A–Z, Trainings-Tracker
 - `merge.py` — fügt dunkle und helle Seiten zusammen und setzt Fußzeile und Seitenzahlen

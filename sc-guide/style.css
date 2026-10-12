@@ -434,3 +434,5 @@ h2.block-title {
 .zone-detail .zd-title span { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 700; font-size: 9pt; color: var(--accent-deep); letter-spacing: 0.4px; margin-left: 2mm; }
 .zone-detail .zd-text { font-size: 9pt; line-height: 1.45; color: var(--text); }
 .zone-detail .zd-use { font-size: 8.4pt; color: var(--text-muted); margin-top: 1.2mm; }
+.region-card .hr-line { margin-top: 2.5mm; padding-top: 2.2mm; border-top: 0.3mm solid var(--ink-3); font-size: 8.3pt; color: #C7C9CE; line-height: 1.4; }
+.region-card .hr-line b { color: var(--accent); font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }

@@ -88,8 +88,8 @@ CHAPTERS.forEach((ch, i) => {
   pages.push(darkPage(`
     ${accentPanel({ top: "-40mm", right: "-40mm", w: "125mm", h: "125mm", tone, clip: "polygon(30% 0,100% 0,100% 100%,0 70%)" })}
     <div class="divider-page page-fg">
-      <div class="divider-num">${ch.num}</div>
-      <div class="divider-tag">Kapitel ${Number(ch.num)}</div>
+      <div class="divider-num">${ch.label ? "Bonus" : ch.num}</div>
+      <div class="divider-tag">${ch.label || `Kapitel ${Number(ch.num)}`}</div>
       <h1 class="divider-title">${ch.title}</h1>
       <p class="divider-desc">${ch.desc}</p>
       <ul class="divider-list">

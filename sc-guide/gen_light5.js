@@ -1,8 +1,9 @@
 const fs = require("fs");
+const hrLine = (t) => `<div class="hr-line"><b>Herzfrequenz:</b> ${t}</div>`;
 const { sectionHeader, iconPageTitle, tipBox, htmlShell, exTable, infoCard, blockTitle, tocRow, zoneChip } = require("./htmlkit.js");
-const { EINHEIT_A, EINHEIT_C, STRETCHING, HIP_MOBILITY } = require("./data.js");
+const { EINHEIT_A, EINHEIT_C } = require("./data.js");
 
-const TAG = "Kapitel 4 · Kondition &amp; Mobilität";
+const TAG = "Kapitel 4 · Kondition";
 let out = [];
 
 // --- Energiesysteme ---
@@ -10,18 +11,21 @@ out.push(`<div class="content-section chapter-start">`);
 out.push(sectionHeader(TAG, "Die drei Energiesysteme"));
 out.push(`<p class="page-intro">Dein Körper hat drei Wege, Energie für die Muskeln bereitzustellen. Sie arbeiten nie einzeln, sondern immer gleichzeitig. Je nachdem, wie lang und wie intensiv eine Belastung ist, übernimmt aber eines von ihnen den Hauptteil. Für den Kampfsport brauchst du alle drei.</p>`);
 out.push(`<div class="region-cards" style="grid-template-columns:1fr 1fr 1fr;">`);
-out.push(infoCard("01", "Alaktazid", "0 bis ca. 10 Sek. · Explosivität", "Liefert sofort Energie für einzelne explosive Aktionen: Kick, Knie, schnelle Kombination, Sprung. Sehr stark, aber nach wenigen Sekunden leer. In Pausen füllen sich die Speicher innerhalb von ein bis drei Minuten wieder auf."));
-out.push(infoCard("02", "Laktazid", "ca. 10 Sek. bis 2 Min. · Druckphasen", "Übernimmt bei langen, intensiven Schlagabtäuschen, im Clinch-Gerangel und wenn du Druck machst. Hohe Leistung, aber es entsteht Laktat: Die Muskeln brennen, die Arme werden schwer."));
-out.push(infoCard("03", "Aerob", "ab ca. 2 Min. · Grundlage", "Trägt dich durch alle Runden. Es versorgt dich zwischen den Aktionen und füllt in Pausen die schnellen Speicher wieder auf. Je besser es ist, desto schneller erholst du dich."));
+out.push(infoCard("01", "Alaktazid", "0 bis ca. 10 Sek. · Explosivität", "Liefert sofort Energie für einzelne explosive Aktionen: Kick, Knie, schnelle Kombination, Sprung. Sehr stark, aber nach wenigen Sekunden leer. In Pausen füllen sich die Speicher innerhalb von ein bis drei Minuten wieder auf." + hrLine("Maximale Leistung, der Puls steigt aber erst verzögert, oft erst nach dem Sprint auf 90 bis 100&nbsp;% HFmax (Zone 5). Steuern über Gefühl und Leistung.")));
+out.push(infoCard("02", "Laktazid", "ca. 10 Sek. bis 2 Min. · Druckphasen", "Übernimmt bei langen, intensiven Schlagabtäuschen, im Clinch-Gerangel und wenn du Druck machst. Hohe Leistung, aber es entsteht Laktat: Die Muskeln brennen, die Arme werden schwer." + hrLine("80 bis 100&nbsp;% HFmax, Zone 4 bis 5. Bei HFmax 190 etwa 152 bis 190 Schläge pro Minute.")));
+out.push(infoCard("03", "Aerob", "ab ca. 2 Min. · Grundlage", "Trägt dich durch alle Runden. Es versorgt dich zwischen den Aktionen und füllt in Pausen die schnellen Speicher wieder auf. Je besser es ist, desto schneller erholst du dich." + hrLine("50 bis 80&nbsp;% HFmax, Zone 1 bis 3. Die Basis baust du in Zone 2 auf, bei HFmax 190 etwa 114 bis 133 Schläge pro Minute.")));
 out.push(`</div>`);
-out.push(`<h2 class="block-title">Was das für Muay Thai bedeutet</h2>`);
+out.push(tipBox("lightbulb", "Warum „ab ca. 2 Minuten“?", "Die Zeitangaben beschreiben, ab wann ein System bei einer durchgehenden, maximalen Belastung den Hauptteil der Energie liefert. Nach etwa zwei Minuten Vollgas hat das aerobe System die Führung übernommen. Das ist etwas anderes als die Dauer einer Trainingseinheit: Um dein aerobes System gezielt zu verbessern, trainierst du 20 bis 40 Minuten oder länger locker in Zone 2. Die Grenzen sind fließend, alle drei Systeme arbeiten immer gleichzeitig."));
+out.push(`</div>`);
+out.push(`<div class="content-section chapter-start">`);
+out.push(sectionHeader(TAG, "Energiesysteme im Ring"));
 out.push(`<p class="page-intro">Eine Runde dauert drei Minuten. Über den ganzen Kampf gesehen kommt der größte Teil der Energie aus dem aeroben System. Die entscheidenden Momente, der harte Kick, die schnelle Kombination, die Druckphase am Ende der Runde, laufen aber über die beiden anaeroben Systeme. Ein Kämpfer braucht deshalb eine breite aerobe Basis und die Fähigkeit, explosive Aktionen immer wieder abzurufen.</p>`);
 out.push(exTable(
-  [{ label: "System", cls: "w-ex" }, { label: "Im Ring", cls: "w-ex" }, { label: "So trainierst du es", cls: "w-ex" }, { label: "In diesem Guide", cls: "w-ex" }],
+  [{ label: "System", cls: "w-ex" }, { label: "Herzfrequenz" }, { label: "Im Ring", cls: "w-ex" }, { label: "So trainierst du es", cls: "w-ex" }, { label: "In diesem Guide", cls: "w-ex" }],
   [
-    { cells: ["Alaktazid", "einzelne Explosivaktionen", "kurze Vollgas-Belastungen, lange Pausen", "Kontrastsätze, Finisher Einheit A"] },
-    { cells: ["Laktazid", "lange Exchanges, Druckphasen", "harte Intervalle, kurze Pausen", "Finisher Einheit C, Einheit B"] },
-    { cells: ["Aerob", "Erholung zwischen Aktionen und Runden", "lockere Läufe, Seilspringen, Pratzenrunden", "Muay-Thai-Training, lockerer Lauf"] },
+    { cells: ["Alaktazid", zoneChip(5), "einzelne Explosivaktionen", "kurze Vollgas-Belastungen, lange Pausen", "Kontrastsätze, Finisher Einheit A"] },
+    { cells: ["Laktazid", zoneChip(4) + " " + zoneChip(5), "lange Exchanges, Druckphasen", "harte Intervalle, kurze Pausen", "Finisher Einheit C, Einheit B"] },
+    { cells: ["Aerob", zoneChip(1) + " " + zoneChip(2) + " " + zoneChip(3), "Erholung zwischen Aktionen und Runden", "lockere Läufe, Seilspringen, Pratzenrunden", "Muay-Thai-Training, lockerer Lauf"] },
   ], "compact"
 ));
 out.push(`</div>`);
@@ -85,28 +89,6 @@ out.push(`<p class="page-intro" style="margin-bottom:3mm;">Der kurze Vollgas-Spr
 out.push(blockTitle("C", `Einheit C: ${EINHEIT_C.finisher.work} / ${EINHEIT_C.finisher.rest}`, `${EINHEIT_C.finisher.rounds} · laktazid`));
 out.push(`<p class="page-intro" style="margin-bottom:3mm;">Hier ist die Pause kürzer als die Belastung. Die Speicher können sich nicht mehr erholen, Laktat sammelt sich an und das laktazide System übernimmt. Du trainierst, unter Ermüdung weiter Leistung zu bringen, so wie in einem harten Schlagabtausch oder in der Schlussphase einer Runde.</p>`);
 out.push(tipBox("stopwatch", "Warum Airbike?", "Es fordert Arme und Beine gleichzeitig, ohne Aufprall und ohne Technikrisiko unter Ermüdung. Die Intensität lässt sich sofort hochfahren und deine Beine werden geschont, die du fürs Muay Thai brauchst. Vollgas heißt dabei Vollgas: Kannst du das Tempo nicht mehr halten, beende den Finisher lieber eine Runde früher. Kein Airbike? Ruderergometer, Bergsprints oder Vollgas-Runden am Sandsack funktionieren nach demselben Schema."));
-out.push(`</div>`);
-
-// --- Stretching ---
-const stretchSec = STRETCHING.reduce((n, r) => n + r[3], 0);
-out.push(`<div class="content-section chapter-start">`);
-out.push(iconPageTitle(TAG, "highKick", "Stretching"));
-out.push(`<p class="page-intro">Hohe Kicks, ein tiefer Stand und schnelle Hüftrotation brauchen Beweglichkeit. Dieser Stretching-Flow dauert ${Math.round(stretchSec / 60)} Minuten und eignet sich ideal für den Abend oder einen trainingsfreien Tag. Geh die Positionen der Reihe nach durch und atme ruhig weiter.</p>`);
-out.push(exTable(
-  [{ label: "Übung", cls: "w-ex" }, { label: "Körperpartie", cls: "w-ex" }, { label: "Ausführung", cls: "w-ex" }, { label: "Zeit" }],
-  STRETCHING.map(r => ({ cells: [r[0], `<span style="color:var(--text-muted)">${r[1]}</span>`, r[2], `${r[3]} Sek.`] })), "xcompact"
-));
-out.push(`</div>`);
-
-// --- Hüftmobilität ---
-out.push(`<div class="content-section chapter-start">`);
-out.push(iconPageTitle(TAG, "kneeCap", "Hüftmobilität"));
-out.push(`<p class="page-intro">Die Hüfte ist das Kraftzentrum für Kicks und Knie. Diese Übungen verbessern Rotation und Kontrolle im Hüftgelenk und machen dich am Boden und in der Kampfstellung beweglicher. Nutze sie als Ergänzung zum Warm-up oder an trainingsfreien Tagen.</p>`);
-out.push(exTable(
-  [{ label: "Übung", cls: "w-ex" }, { label: "Sätze" }, { label: "Wdh." }, { label: "Ausführung", cls: "w-ex" }],
-  HIP_MOBILITY.map(r => ({ cells: [r[0], r[1], r[2], `<span style="font-size:8.5pt;color:var(--text-muted)">${r[3]}</span>`] }))
-));
-out.push(tipBox("lightbulb", "Langsam ist schnell:", "Mobilitätsübungen leben von Kontrolle, nicht von Schwung. Beweg dich nur so weit, wie du die Position aktiv halten kannst."));
 out.push(`</div>`);
 
 const html = htmlShell(out.join("\n"), `body{background:var(--paper);}`);

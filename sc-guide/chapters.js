@@ -19,16 +19,16 @@ const CHAPTERS = [
     items: ["Warm-up", "Einheit A: Kraft &amp; Power", "Einheit B: Circuit", "Einheit C: Kraft &amp; Power"],
   },
   {
-    num: "04", title: "Kondition &amp; Mobilität", icon: "stopwatch", file: "light-5",
-    toc: "Energiesysteme, Herzfrequenzzonen, Kondition, Stretching und Hüftmobilität",
-    desc: "Welche Ausdauer ein Kämpfer braucht, was dein Muay-Thai-Training davon schon abdeckt, was du gezielt ergänzt und wie du für hohe Kicks beweglich bleibst.",
-    items: ["Die drei Energiesysteme", "Herzfrequenzzonen", "Kondition gezielt ergänzen", "Stretching", "Hüftmobilität"],
+    num: "04", title: "Kondition", icon: "stopwatch", file: "light-5",
+    toc: "Energiesysteme, Herzfrequenzzonen und gezielte Konditionsarbeit",
+    desc: "Welche Ausdauer ein Kämpfer braucht, in welchen Herzfrequenzzonen du sie trainierst und was du neben dem Muay Thai gezielt ergänzt.",
+    items: ["Die drei Energiesysteme", "Energiesysteme im Ring", "Herzfrequenzzonen", "Die Zonen im Detail", "Kondition gezielt ergänzen"],
   },
   {
-    num: "05", title: "Regeneration &amp; Ernährung", icon: "medal", file: "light-6",
-    toc: "Schlaf, Deload-Wochen, Ernährung und Trinken bei Hitze",
-    desc: "Stärker wirst du nicht im Training, sondern in der Erholung danach. So sorgst du dafür, dass beides zusammenpasst.",
-    items: ["Schlaf &amp; Erholung", "Deload-Wochen", "Ernährung für Kämpfer"],
+    num: "+", label: "Bonus-Kapitel", title: "Mobilität", icon: "highKick", file: "light-6",
+    toc: "Bonus: Stretching-Flow und Hüftmobilität für hohe Kicks",
+    desc: "Hohe Kicks, ein tiefer Stand und schnelle Hüftrotation brauchen Beweglichkeit. Zwei Einheiten, die du flexibel an trainingsfreien Tagen oder nach dem Training einbaust.",
+    items: ["Stretching", "Hüftmobilität"],
   },
 ];
 
