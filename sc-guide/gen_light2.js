@@ -35,16 +35,11 @@ out.push(tipBox("punchingBag", "Im Programm:", "Kontrastsätze, Rotationsübunge
 // --- Verletzungen vorbeugen (same page) ---
 out.push(`<h2 class="block-title" style="margin-top:7mm;">Verletzungen vorbeugen</h2>`);
 out.push(`<p class="page-intro">Die meisten Ausfälle entstehen durch Überlastung, nicht durch einen einzelnen Treffer. Muskeln passen sich in Wochen an, Sehnen und Bänder brauchen Monate. Krafttraining gibt ihnen diese Zeit und macht dich belastbarer.</p>`);
-out.push(exTable(
-  [{ label: "Bereich", cls: "w-ex" }, { label: "Belastung im Muay Thai", cls: "w-ex" }, { label: "Was schützt", cls: "w-ex" }],
-  [
-    { cells: ["Sprunggelenk &amp; Fuß", "Drehen auf dem Fußballen, Federn", "Sprünge mit sauberer Landung, Wadenkraft"] },
-    { cells: ["Knie", "Rotation unter Last, Checks, Clinch", "kräftige Ober- und Rückseite der Beine"] },
-    { cells: ["Hüfte &amp; Leiste", "hohe Kicks, Teeps", "Mobilität mit Kontrolle"] },
-    { cells: ["Unterer Rücken", "Rotation, Ziehen im Clinch", "Rumpfkraft, saubere Hebetechnik"] },
-    { cells: ["Schulter &amp; Nacken", "Schläge, Rahmen und Halten im Clinch", "Zugübungen als Ausgleich zum Drücken"] },
-  ], "compact"
-));
+out.push(`<div class="region-cards" style="grid-template-columns:1fr 1fr 1fr;">`);
+out.push(infoCard("01", "Belastbarkeit", "Gelenke &amp; Sehnen", "Kräftige Beine und Waden stabilisieren Knie und Sprunggelenk bei Drehungen, Checks und im Clinch."));
+out.push(infoCard("02", "Balance", "Ziehen gleicht Drücken aus", "Muay Thai ist drucklastig. Zugübungen schützen Schultern, Nacken und Haltung."));
+out.push(infoCard("03", "Kontrolle", "Landen &amp; Bremsen", "Saubere Landungen und eine stabile Rumpf- und Hüftmuskulatur entlasten Knie und unteren Rücken."));
+out.push(`</div>`);
 out.push(tipBox("kneeBandage", "Schmerz ist ein Signal:", "Muskelkater ist normal, stechender oder anhaltender Gelenkschmerz nicht. Dann Belastung reduzieren und bei Bedarf ärztlich abklären lassen."));
 out.push(`</div>`);
 
