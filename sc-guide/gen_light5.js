@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { sectionHeader, iconPageTitle, tipBox, htmlShell, exTable, infoCard, blockTitle } = require("./htmlkit.js");
+const { sectionHeader, iconPageTitle, tipBox, htmlShell, exTable, infoCard, blockTitle, tocRow, zoneChip } = require("./htmlkit.js");
 const { EINHEIT_A, EINHEIT_C, STRETCHING, HIP_MOBILITY } = require("./data.js");
 
 const TAG = "Kapitel 4 · Kondition &amp; Mobilität";
@@ -26,14 +26,58 @@ out.push(exTable(
 ));
 out.push(`</div>`);
 
+// --- Herzfrequenzzonen ---
+const HFMAX_EX = 190;
+const ZONES = [
+  { n: 1, name: "Regeneration", lo: 50, hi: 60, talk: "mühelos plaudern", sys: "aerob", use: "Cool-down, aktive Erholung am Ruhetag" },
+  { n: 2, name: "Grundlage", lo: 60, hi: 70, talk: "ganze Sätze sprechen", sys: "aerob", use: "lockerer Lauf, Seilspringen, Technikrunden" },
+  { n: 3, name: "Tempo", lo: 70, hi: 80, talk: "nur noch kurze Sätze", sys: "aerob, Übergang", use: "zügige Pratzen- und Sandsackrunden" },
+  { n: 4, name: "Schwelle", lo: 80, hi: 90, talk: "nur noch einzelne Worte", sys: "laktazid", use: "harte Sparring- und Pratzenrunden, Einheit B" },
+  { n: 5, name: "Maximal", lo: 90, hi: 100, talk: "Sprechen unmöglich", sys: "alaktazid und laktazid", use: "Airbike-Finisher, Sprints, Vollgas-Kombinationen" },
+];
+const bpm = (pct) => Math.round(HFMAX_EX * pct / 100);
+
+out.push(`<div class="content-section chapter-start tight">`);
+out.push(sectionHeader(TAG, "Herzfrequenzzonen"));
+out.push(`<p class="page-intro">Mit deiner Herzfrequenz kannst du steuern, wie intensiv eine Ausdauereinheit wirklich ist. Sie wird in fünf Zonen eingeteilt. Jede Zone ist ein Prozentbereich deiner maximalen Herzfrequenz (HFmax) und trainiert etwas anderes.</p>`);
+out.push(`<div class="zone-bar">${ZONES.map(z => `<div class="z${z.n}">Zone ${z.n}<small>${z.name} · ${z.lo}–${z.hi} %</small></div>`).join("")}</div>`);
+out.push(`<h2 class="block-title">So bestimmst du deine HFmax</h2>`);
+[
+  ["1", "sortNumeric", "Faustformel", "220 minus dein Alter. Mit 30 Jahren also etwa 190 Schläge pro Minute. Etwas genauer ist 208 minus 0,7 × Alter. Beide Formeln sind nur Schätzungen, bei vielen liegt der echte Wert um zehn Schläge oder mehr daneben."],
+  ["2", "stopwatch", "Messen im Training", "Am genauesten ist der höchste Wert, den deine Pulsuhr oder dein Brustgurt bei maximaler Belastung anzeigt, etwa am Ende eines Airbike-Finishers oder einer harten Sparringrunde. Brustgurte messen zuverlässiger als Uhren."],
+].forEach(t => out.push(tocRow(t[0], t[1], t[2], t[3])));
+out.push(`<h2 class="block-title">Die fünf Zonen auf einen Blick</h2>`);
+out.push(exTable(
+  [{ label: "Zone" }, { label: "% HFmax" }, { label: `Bei HFmax ${HFMAX_EX}` }, { label: "Sprechtest", cls: "w-ex" }, { label: "Energiesystem", cls: "w-ex" }],
+  ZONES.map(z => ({ cells: [zoneChip(z.n), `${z.lo}–${z.hi}&nbsp;%`, `${bpm(z.lo)}–${bpm(z.hi)}`, z.talk, z.sys] })), "compact"
+));
+out.push(tipBox("commentDots", "Keine Pulsuhr?", "Der Sprechtest funktioniert erstaunlich gut. Wenn du dich beim lockeren Lauf noch in ganzen Sätzen unterhalten kannst, bist du in Zone 2. Wenn nur noch einzelne Worte gehen, bist du in Zone 4 oder höher."));
+out.push(`</div>`);
+
+// --- Zonen im Detail ---
+out.push(`<div class="content-section chapter-start tight">`);
+out.push(sectionHeader(TAG, "Die Zonen im Detail"));
+const ZONE_TEXT = {
+  1: "Sehr locker, fast wie Spazierengehen. Fördert die Durchblutung und beschleunigt die Erholung, ohne den Körper zusätzlich zu ermüden. Ideal nach harten Tagen und zum Auslaufen.",
+  2: "Die wichtigste Zone für deine Ausdauerbasis. Hier wird das aerobe System effizienter: Herz und Muskeln lernen, mehr Sauerstoff zu nutzen. Je besser deine Zone 2, desto schneller erholst du dich zwischen Aktionen und Runden. Fühlt sich fast zu leicht an, und genau so ist es richtig.",
+  3: "Zügig und schon anstrengend, aber noch gleichmäßig durchzuhalten. Ein großer Teil des normalen Muay-Thai-Trainings spielt sich hier ab. Zusätzlich musst du diese Zone kaum trainieren.",
+  4: "Hier beginnt sich Laktat anzusammeln, die Muskeln fangen an zu brennen. Du trainierst, ein hohes Tempo länger zu halten, so wie in einer intensiven Runde. Sehr wirksam, aber auch sehr ermüdend: lieber gezielt und dosiert.",
+  5: "Alles, was geht, nur für Sekunden bis wenige Minuten haltbar. Trainiert Explosivität und die Fähigkeit, Vollgas-Aktionen zu wiederholen. Bei kurzen Sprints steigt der Puls oft erst gegen Ende in diese Zone. Steuere hier über Leistung und Gefühl, nicht über die Uhr.",
+};
+ZONES.forEach(z => {
+  out.push(`<div class="zone-detail">${zoneChip(z.n)}<div><div class="zd-title">${z.name} <span>${z.lo}–${z.hi}&nbsp;% HFmax · ${bpm(z.lo)}–${bpm(z.hi)} bpm bei HFmax ${HFMAX_EX}</span></div><div class="zd-text">${ZONE_TEXT[z.n]}</div><div class="zd-use"><b>Typisch:</b> ${z.use}</div></div></div>`);
+});
+out.push(tipBox("bullseye", "Die richtige Verteilung:", "Gute Ausdauer entsteht vor allem aus viel lockerem und wenig, dafür richtig hartem Training. Dein Muay-Thai-Training liefert dir bereits reichlich Zone 3 bis 5. Was zusätzlich am meisten bringt, sind deshalb lockere Einheiten in Zone 2 und kurze, harte Finisher in Zone 5. Die anstrengende, aber nicht harte Mitte brauchst du nicht extra."));
+out.push(`</div>`);
+
 // --- Kondition ---
 out.push(`<div class="content-section chapter-start">`);
 out.push(sectionHeader(TAG, "Kondition gezielt ergänzen"));
 out.push(`<p class="page-intro">Die gute Nachricht: Die aerobe Basis und einen großen Teil der anaeroben Ausdauer trainierst du bereits im Muay Thai. Pratzenrunden, Sandsack, Clinch und Sparring sind hartes Intervalltraining. Zusätzliche Konditionsarbeit brauchst du deshalb nur gezielt und in kleiner Dosis.</p>`);
 out.push(`<div class="region-cards" style="grid-template-columns:1fr 1fr 1fr;">`);
-out.push(infoCard("01", "Sprint-Finisher", "In Einheit A und C", "Kurze Airbike-Intervalle am Ende der Krafteinheit. Sie trainieren gezielt die beiden anaeroben Systeme."));
-out.push(infoCard("02", "Lockerer Lauf", "Optional · aerobe Basis", "20 bis 40 Minuten in einem Tempo, in dem du dich noch unterhalten kannst. Ideal als aktive Erholung oder morgens vor dem Training, wie in vielen Camps in Thailand üblich."));
-out.push(infoCard("03", "Seilspringen", "Optional · 5 bis 15 Min.", "Der Muay-Thai-Klassiker verbessert Fußarbeit, Rhythmus und die Ausdauer der Waden und passt in jedes Warm-up."));
+out.push(infoCard("01", "Sprint-Finisher", "Einheit A und C · Zone 5", "Kurze Airbike-Intervalle am Ende der Krafteinheit. Sie trainieren gezielt die beiden anaeroben Systeme."));
+out.push(infoCard("02", "Lockerer Lauf", "Optional · Zone 2", "20 bis 40 Minuten in einem Tempo, in dem du dich noch unterhalten kannst. Ideal als aktive Erholung oder morgens vor dem Training, wie in vielen Camps in Thailand üblich."));
+out.push(infoCard("03", "Seilspringen", "Optional · Zone 2 bis 3", "5 bis 15 Minuten. Der Muay-Thai-Klassiker verbessert Fußarbeit, Rhythmus und die Ausdauer der Waden und passt in jedes Warm-up."));
 out.push(`</div>`);
 out.push(`<h2 class="block-title">Warum diese Airbike-Intervalle?</h2>`);
 out.push(blockTitle("A", `Einheit A: ${EINHEIT_A.finisher.work} / ${EINHEIT_A.finisher.rest}`, `${EINHEIT_A.finisher.rounds} · alaktazid`));

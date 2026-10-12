@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { sectionHeader, doDontCard, tipBox, tocRow, htmlShell, iconHex, hexGlyph, infoCard, exTable } = require("./htmlkit.js");
+const { sectionHeader, doDontCard, tipBox, tocRow, htmlShell, iconHex, hexGlyph, infoCard, exTable, chainRow } = require("./htmlkit.js");
 
 const TAG = "Kapitel 1 · Grundlagen";
 let out = [];
@@ -7,15 +7,58 @@ let out = [];
 // --- Warum S&C ---
 out.push(`<div class="content-section chapter-start">`);
 out.push(sectionHeader(TAG, "Warum S&amp;C für Muay Thai?"));
-out.push(`<p class="page-intro">Im Ring gewinnt nicht, wer am meisten stemmen kann. Entscheidend ist Athletik: wie schnell du Kraft abrufen kannst, wie explosiv du dich bewegst und wie lange du das durchhältst. Ein Kick ist nur so hart, wie deine Hüfte ihn beschleunigt. Ein Clinch ist nur so stabil, wie dein Rumpf und deine Beine dagegenhalten.</p>`);
-out.push(`<p class="page-intro">Das Hauptziel dieses Guides ist deshalb <b>Explosivkraft</b>. Maximalkraft ist dafür kein Selbstzweck, sondern das Fundament: Wer mehr Kraft hat, kann auch mehr davon schnell abrufen. Strength &amp; Conditioning, kurz S&amp;C, verbindet vier Fähigkeiten:</p>`);
+out.push(`<p class="page-intro">Muay Thai ist ein Vollkontaktsport. Jeder Kick, jedes Knie und jeder Clinch belastet Gelenke, Sehnen und Muskeln, und das Woche für Woche. Gutes Athletiktraining macht dich deshalb nicht nur explosiver, sondern vor allem belastbarer: Du trainierst konstanter, fällst seltener aus und kannst deine Technik mit mehr Wucht umsetzen.</p>`);
+out.push(`<p class="page-intro">Dabei geht es nicht darum, möglichst viel Gewicht zu bewegen. Kraft ist die Grundlage, aber erst wenn du lernst, sie schnell abzurufen und über den ganzen Körper in die Technik zu übertragen, wird sie im Ring wirksam. Dieser Guide verfolgt deshalb vier Ziele:</p>`);
 out.push(`<div class="region-cards">`);
-out.push(infoCard("01", "Explosivkraft", "Das Hauptziel", "Wie schnell du deine Kraft abrufen kannst. Sie macht Kicks, Knie und Schläge hart und schnell zugleich."));
-out.push(infoCard("02", "Maximalkraft", "Das Fundament", "Die Basis für Explosivkraft und Stabilität. Je mehr Kraft du hast, desto mehr kannst du schnell übertragen."));
-out.push(infoCard("03", "Kraftausdauer", "Bis zur letzten Runde", "Die Fähigkeit, deine Kraft über alle Runden zu halten, statt nach der ersten abzubauen."));
-out.push(infoCard("04", "Kondition", "Der Motor", "Ausdauer und schnelle Erholung zwischen einzelnen Aktionen und zwischen den Runden."));
+out.push(infoCard("01", "Kraft aufbauen", "Das Fundament", "Mehr Kraft in Beinen, Hüfte, Rumpf und Oberkörper. Sie ist die Basis für alles andere und macht dich im Clinch standfest."));
+out.push(infoCard("02", "Kraft übertragen", "Vom Boden in die Technik", "Kraft entsteht in den Beinen und muss über Hüfte und Rumpf ohne Verlust bis ins Schienbein oder die Faust gelangen."));
+out.push(infoCard("03", "Explosivkraft", "Kraft × Tempo", "Wie schnell du deine Kraft abrufen kannst. Sie macht Kicks, Knie und Schläge hart und schnell zugleich."));
+out.push(infoCard("04", "Verletzungen vorbeugen", "Belastbar bleiben", "Starke Muskeln, Sehnen und Bänder fangen Belastung ab. Wer seltener ausfällt, trainiert konstanter und wird schneller besser."));
 out.push(`</div>`);
-out.push(tipBox("kneeBandage", "Weniger Ausfälle:", "Starke Muskeln, Sehnen und Bänder fangen Belastungen besser ab. Wer regelmäßig Kraft trainiert, fällt seltener verletzt aus und kann dadurch konstanter Muay Thai trainieren. Auch das ist ein Leistungsvorteil."));
+out.push(tipBox("stopwatch", "Und die Ausdauer?", "Kraftausdauer und Kondition sorgen dafür, dass du all das bis in die letzte Runde abrufen kannst. Welche Ausdauer du brauchst und wie du sie gezielt ergänzt, erfährst du in Kapitel 4."));
+out.push(`</div>`);
+
+// --- Kraftübertragung ---
+out.push(`<div class="content-section chapter-start">`);
+out.push(sectionHeader(TAG, "Kraft richtig übertragen"));
+out.push(`<p class="page-intro">Ein harter Roundhouse-Kick entsteht nicht im Bein, das trifft. Er beginnt mit dem Druck des Standfußes in den Boden, wird über Hüftrotation beschleunigt, vom Rumpf weitergeleitet und landet erst am Ende im Schienbein. Diese Abfolge heißt <b>kinetische Kette</b>. Bei Schlägen, Knien und Teeps funktioniert sie genauso.</p>`);
+out.push(chainRow([
+  ["Boden", "Standfuß drückt in den Boden"],
+  ["Beine", "Streckung erzeugt die Kraft"],
+  ["Hüfte", "Rotation beschleunigt"],
+  ["Rumpf", "überträgt ohne Verlust"],
+  ["Ziel", "Schienbein, Knie oder Faust"],
+]));
+out.push(`<p class="page-intro">Jedes Glied muss stark und stabil sein. Ist der Rumpf zu weich oder der Standfuß instabil, versickert Kraft auf dem Weg, ganz egal wie stark deine Beine sind. Krafttraining für Kämpfer heißt deshalb immer auch: lernen, Kraft durch den ganzen Körper zu leiten.</p>`);
+[
+  ["1", "footsteps", "Im Stand und vom Boden aus", "Übungen im Stand mit festem Fußdruck, statt im Sitzen oder Liegen an der Maschine. So trainierst du die Kette so, wie du sie im Ring brauchst."],
+  ["2", "muscularTorso", "Rumpf als Brücke", "Ein starker Rumpf hält Rotation aus und leitet sie gezielt weiter. Trainiert wird er durch Übungen, die Rotation erzeugen, und durch Übungen, die ihr widerstehen."],
+  ["3", "highKick", "Rotation und Stabilität auf einem Bein", "Kicks und Knie schlägst du auf einem Bein. Rotationsübungen, Würfe und einbeinige Stabilität übertragen deine Kraft direkt in diese Bewegungen."],
+  ["4", "punchingBag", "Vom Gym in die Technik", "Kontrastsätze und Medizinballwürfe verbinden schwere Kraft mit schneller Bewegung. Am Sandsack setzt du das dann in Technik um."],
+].forEach(t => out.push(tocRow(t[0], t[1], t[2], t[3])));
+out.push(`</div>`);
+
+// --- Verletzungen vorbeugen ---
+out.push(`<div class="content-section chapter-start">`);
+out.push(sectionHeader(TAG, "Verletzungen vorbeugen"));
+out.push(`<p class="page-intro">Die meisten Trainingsausfälle im Muay Thai entstehen nicht durch einen einzelnen Treffer, sondern durch Überlastung: zu viel, zu schnell, auf einen Körper, der nicht vorbereitet ist. Muskeln passen sich in wenigen Wochen an, Sehnen, Bänder und Knochen brauchen dafür Monate. Gezieltes Krafttraining gibt ihnen diese Zeit und macht dich Stück für Stück belastbarer.</p>`);
+out.push(exTable(
+  [{ label: "Bereich", cls: "w-ex" }, { label: "Belastung im Muay Thai", cls: "w-ex" }, { label: "Was schützt", cls: "w-ex" }],
+  [
+    { cells: ["Sprunggelenk &amp; Fuß", "Drehen auf dem Fußballen beim Kick, ständiges Federn", "Sprünge mit sauberer Landung, Wadenkraft, einbeinige Stabilität"] },
+    { cells: ["Knie", "Rotation unter Last, Checks, Knie im Clinch", "Kraft in Ober- und Rückseite der Beine, kontrollierte Landungen"] },
+    { cells: ["Hüfte &amp; Leiste", "Hohe Kicks, Teeps, weite Ausfallbewegungen", "Mobilität mit Kontrolle, Kraft in tiefen und weiten Positionen"] },
+    { cells: ["Unterer Rücken", "Rotation, Ziehen und Drücken im Clinch", "Rumpfkraft, saubere Hebetechnik, Hüftbeweglichkeit"] },
+    { cells: ["Schulter", "Tausende Schläge, Rahmen und Kontrolle im Clinch", "Zugübungen als Ausgleich zum Drücken, Schulterblattkontrolle"] },
+    { cells: ["Nacken", "Ziehen und Halten im Clinch", "Kräftige Nacken- und obere Rückenmuskulatur"] },
+  ], "compact"
+));
+out.push(`<div class="region-cards" style="grid-template-columns:1fr 1fr 1fr;">`);
+out.push(infoCard("01", "Balance", "Ziehen gleicht Drücken aus", "Muay Thai ist drucklastig. Zugübungen halten Schultern und Haltung im Gleichgewicht."));
+out.push(infoCard("02", "Kontrolle", "Bremsen lernen", "Saubere Landungen und kontrolliertes Absenken stärken Sehnen und schützen Knie und Sprunggelenk."));
+out.push(infoCard("03", "Dosierung", "Langsam steigern", "Belastung in kleinen Schritten erhöhen und Erholung einplanen, damit das Gewebe mitwachsen kann."));
+out.push(`</div>`);
+out.push(tipBox("kneeBandage", "Schmerz ist ein Signal:", "Muskelkater ist normal, stechender oder anhaltender Schmerz in einem Gelenk nicht. Dann Belastung reduzieren, die Übung anpassen und bei Bedarf einen Arzt oder Physiotherapeuten fragen, statt durchzuziehen."));
 out.push(`</div>`);
 
 // --- Smart vs. falsch ---

@@ -2,9 +2,9 @@
 const CHAPTERS = [
   {
     num: "01", title: "Grundlagen", icon: "book", file: "light-2",
-    toc: "Warum S&amp;C, smartes vs. falsches Training, Intensität und Progression",
-    desc: "Bevor du loslegst: was Athletiktraining dir im Ring bringt, worauf es ankommt und wie du dich Woche für Woche steigerst.",
-    items: ["Warum S&amp;C für Muay Thai?", "Smartes vs. falsches S&amp;C", "Intensität richtig wählen", "So steigerst du dich"],
+    toc: "Ziele, Kraftübertragung, Verletzungsvorbeugung, Intensität und Progression",
+    desc: "Bevor du loslegst: was Athletiktraining dir im Ring bringt, wie du Kraft richtig überträgst, wie du Verletzungen vorbeugst und wie du dich Woche für Woche steigerst.",
+    items: ["Warum S&amp;C für Muay Thai?", "Kraft richtig übertragen", "Verletzungen vorbeugen", "Smartes vs. falsches S&amp;C", "Intensität richtig wählen", "So steigerst du dich"],
   },
   {
     num: "02", title: "Planung", icon: "layerGroup", file: "light-3",
@@ -20,9 +20,9 @@ const CHAPTERS = [
   },
   {
     num: "04", title: "Kondition &amp; Mobilität", icon: "stopwatch", file: "light-5",
-    toc: "Die drei Energiesysteme, Kondition gezielt ergänzen, Stretching und Hüftmobilität",
+    toc: "Energiesysteme, Herzfrequenzzonen, Kondition, Stretching und Hüftmobilität",
     desc: "Welche Ausdauer ein Kämpfer braucht, was dein Muay-Thai-Training davon schon abdeckt, was du gezielt ergänzt und wie du für hohe Kicks beweglich bleibst.",
-    items: ["Die drei Energiesysteme", "Kondition gezielt ergänzen", "Stretching", "Hüftmobilität"],
+    items: ["Die drei Energiesysteme", "Herzfrequenzzonen", "Kondition gezielt ergänzen", "Stretching", "Hüftmobilität"],
   },
   {
     num: "05", title: "Regeneration &amp; Ernährung", icon: "medal", file: "light-6",

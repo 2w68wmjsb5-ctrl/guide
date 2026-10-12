@@ -235,7 +235,18 @@ function trackerBlock(rows = 6) {
 </div>`;
 }
 
+// Kinetic-chain row: numbered steps joined by arrows.
+function chainRow(steps) {
+  const items = steps.map(([t, d], i) => `<div class="chain-step">${numHex(String(i + 1), "9mm")}<div class="cs-title">${t}</div><div class="cs-desc">${d}</div></div>`);
+  return `<div class="chain">${items.join('<div class="chain-arrow">&#9654;</div>')}</div>`;
+}
+
+function zoneChip(n) {
+  return `<span class="zone-chip z${n}">Zone ${n}</span>`;
+}
+
 module.exports = {
+  chainRow, zoneChip,
   icon, iconHex, numHex, hexGlyph, htmlShell, sectionHeader, legendCard, tocRow, tipBox, disclaimer, quoteBlock,
   brandLogo, accentPanel, darkPage, doDontCard, gymGrid, regionSubTitle, regionCard, gymIndexItem, regionPageTitle,
   iconPageTitle, blockTitle, exTable, contrastLegend, finisherBox, factRow, weekGrid, weekLegend, infoCard, trackerBlock,

@@ -34,7 +34,7 @@ out.push(infoCard("02", "Kohlenhydrate", "Dein Treibstoff", "Reis, Kartoffeln, H
 out.push(infoCard("03", "Fette", "Für Hormone &amp; Gesundheit", "Nüsse, Avocado, Olivenöl und fetter Fisch. Wichtig für deinen Körper, aber besser nicht in großen Mengen direkt vor dem Training."));
 out.push(infoCard("04", "Timing", "Vor &amp; nach dem Training", "Zwei bis drei Stunden vorher eine leicht verdauliche Mahlzeit, danach Protein und Kohlenhydrate, um die Erholung zu starten."));
 out.push(`</div>`);
-out.push(tipBox("comments", "Wie viele Kalorien brauche ich?", "Das hängt von Körpergewicht, Trainingsumfang und Ziel ab. Ein Online-Kalorienrechner gibt dir einen ersten Richtwert. Beobachte danach dein Gewicht über zwei bis drei Wochen und passe die Menge an."));
+out.push(tipBox("commentDots", "Wie viele Kalorien brauche ich?", "Das hängt von Körpergewicht, Trainingsumfang und Ziel ab. Ein Online-Kalorienrechner gibt dir einen ersten Richtwert. Beobachte danach dein Gewicht über zwei bis drei Wochen und passe die Menge an."));
 out.push(tipBox("flame", "Trinken bei Hitze:", "Im tropischen Klima verlierst du beim Training schnell ein bis zwei Liter Schweiß pro Stunde. Trink über den ganzen Tag verteilt, nicht nur im Training, und ergänze bei langen Einheiten Elektrolyte. Ein einfacher Check: Dein Urin sollte hellgelb sein."));
 out.push(disclaimer("<b>Wichtiger Hinweis:</b> Dieser Guide ersetzt keine ärztliche, physiotherapeutische oder ernährungswissenschaftliche Beratung. Kläre bei Vorerkrankungen, Verletzungen oder Beschwerden vor Trainingsbeginn mit einem Arzt, ob das Training für dich geeignet ist. Das Training erfolgt auf eigene Verantwortung."));
 out.push(`</div>`);
