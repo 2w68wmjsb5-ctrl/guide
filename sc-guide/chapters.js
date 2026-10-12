@@ -22,7 +22,7 @@ const CHAPTERS = [
     num: "04", title: "Kondition", icon: "stopwatch", file: "light-5",
     toc: "Energiesysteme, Herzfrequenzzonen und gezielte Konditionsarbeit",
     desc: "Welche Ausdauer ein Kämpfer braucht, in welchen Herzfrequenzzonen du sie trainierst und was du neben dem Muay Thai gezielt ergänzt.",
-    items: ["Die drei Energiesysteme", "Energiesysteme im Ring", "Herzfrequenzzonen", "Die Zonen im Detail", "Kondition gezielt ergänzen"],
+    items: ["Die drei Energiesysteme", "Herzfrequenzzonen", "Die Zonen im Detail", "Kondition gezielt ergänzen"],
   },
   {
     num: "+", label: "Bonus-Kapitel", title: "Mobilität", icon: "highKick", file: "light-6",

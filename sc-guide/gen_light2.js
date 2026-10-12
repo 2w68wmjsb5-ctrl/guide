@@ -19,9 +19,9 @@ out.push(tipBox("stopwatch", "Und die Ausdauer?", "Kraftausdauer und Kondition s
 out.push(`</div>`);
 
 // --- Kraftübertragung ---
-out.push(`<div class="content-section chapter-start">`);
+out.push(`<div class="content-section chapter-start tight">`);
 out.push(sectionHeader(TAG, "Kraft richtig übertragen"));
-out.push(`<p class="page-intro">Ein harter Roundhouse-Kick entsteht nicht im Bein, das trifft. Er beginnt mit dem Druck des Standfußes in den Boden, wird über Hüftrotation beschleunigt, vom Rumpf weitergeleitet und landet erst am Ende im Schienbein. Diese Abfolge heißt <b>kinetische Kette</b>. Bei Schlägen, Knien und Teeps funktioniert sie genauso.</p>`);
+out.push(`<p class="page-intro">Ein harter Kick entsteht nicht im Bein, das trifft. Er beginnt mit dem Druck des Standfußes in den Boden, wird über die Hüfte beschleunigt und vom Rumpf bis ins Schienbein weitergeleitet. Diese Abfolge heißt <b>kinetische Kette</b>, bei Schlägen, Knien und Teeps funktioniert sie genauso.</p>`);
 out.push(chainRow([
   ["Boden", "Standfuß drückt in den Boden"],
   ["Beine", "Streckung erzeugt die Kraft"],
@@ -29,36 +29,23 @@ out.push(chainRow([
   ["Rumpf", "überträgt ohne Verlust"],
   ["Ziel", "Schienbein, Knie oder Faust"],
 ]));
-out.push(`<p class="page-intro">Jedes Glied muss stark und stabil sein. Ist der Rumpf zu weich oder der Standfuß instabil, versickert Kraft auf dem Weg, ganz egal wie stark deine Beine sind. Krafttraining für Kämpfer heißt deshalb immer auch: lernen, Kraft durch den ganzen Körper zu leiten.</p>`);
-[
-  ["1", "footsteps", "Im Stand und vom Boden aus", "Übungen im Stand mit festem Fußdruck, statt im Sitzen oder Liegen an der Maschine. So trainierst du die Kette so, wie du sie im Ring brauchst."],
-  ["2", "muscularTorso", "Rumpf als Brücke", "Ein starker Rumpf hält Rotation aus und leitet sie gezielt weiter. Trainiert wird er durch Übungen, die Rotation erzeugen, und durch Übungen, die ihr widerstehen."],
-  ["3", "highKick", "Rotation und Stabilität auf einem Bein", "Kicks und Knie schlägst du auf einem Bein. Rotationsübungen, Würfe und einbeinige Stabilität übertragen deine Kraft direkt in diese Bewegungen."],
-  ["4", "punchingBag", "Vom Gym in die Technik", "Kontrastsätze und Medizinballwürfe verbinden schwere Kraft mit schneller Bewegung. Am Sandsack setzt du das dann in Technik um."],
-].forEach(t => out.push(tocRow(t[0], t[1], t[2], t[3])));
-out.push(`</div>`);
+out.push(`<p class="page-intro">Ist ein Glied schwach, etwa ein weicher Rumpf oder ein instabiler Standfuß, versickert Kraft auf dem Weg. Deshalb trainierst du im Stand, mit Rotation und auf einem Bein.</p>`);
+out.push(tipBox("punchingBag", "Im Programm:", "Kontrastsätze, Rotationsübungen und Medizinballwürfe verbinden Kraft mit schneller Bewegung. Am Sandsack setzt du das dann in Technik um."));
 
-// --- Verletzungen vorbeugen ---
-out.push(`<div class="content-section chapter-start">`);
-out.push(sectionHeader(TAG, "Verletzungen vorbeugen"));
-out.push(`<p class="page-intro">Die meisten Trainingsausfälle im Muay Thai entstehen nicht durch einen einzelnen Treffer, sondern durch Überlastung: zu viel, zu schnell, auf einen Körper, der nicht vorbereitet ist. Muskeln passen sich in wenigen Wochen an, Sehnen, Bänder und Knochen brauchen dafür Monate. Gezieltes Krafttraining gibt ihnen diese Zeit und macht dich Stück für Stück belastbarer.</p>`);
+// --- Verletzungen vorbeugen (same page) ---
+out.push(`<h2 class="block-title" style="margin-top:7mm;">Verletzungen vorbeugen</h2>`);
+out.push(`<p class="page-intro">Die meisten Ausfälle entstehen durch Überlastung, nicht durch einen einzelnen Treffer. Muskeln passen sich in Wochen an, Sehnen und Bänder brauchen Monate. Krafttraining gibt ihnen diese Zeit und macht dich belastbarer.</p>`);
 out.push(exTable(
   [{ label: "Bereich", cls: "w-ex" }, { label: "Belastung im Muay Thai", cls: "w-ex" }, { label: "Was schützt", cls: "w-ex" }],
   [
-    { cells: ["Sprunggelenk &amp; Fuß", "Drehen auf dem Fußballen beim Kick, ständiges Federn", "Sprünge mit sauberer Landung, Wadenkraft, einbeinige Stabilität"] },
-    { cells: ["Knie", "Rotation unter Last, Checks, Knie im Clinch", "Kraft in Ober- und Rückseite der Beine, kontrollierte Landungen"] },
-    { cells: ["Hüfte &amp; Leiste", "Hohe Kicks, Teeps, weite Ausfallbewegungen", "Mobilität mit Kontrolle, Kraft in tiefen und weiten Positionen"] },
-    { cells: ["Unterer Rücken", "Rotation, Ziehen und Drücken im Clinch", "Rumpfkraft, saubere Hebetechnik, Hüftbeweglichkeit"] },
-    { cells: ["Schulter", "Tausende Schläge, Rahmen und Kontrolle im Clinch", "Zugübungen als Ausgleich zum Drücken, Schulterblattkontrolle"] },
-    { cells: ["Nacken", "Ziehen und Halten im Clinch", "Kräftige Nacken- und obere Rückenmuskulatur"] },
+    { cells: ["Sprunggelenk &amp; Fuß", "Drehen auf dem Fußballen, Federn", "Sprünge mit sauberer Landung, Wadenkraft"] },
+    { cells: ["Knie", "Rotation unter Last, Checks, Clinch", "kräftige Ober- und Rückseite der Beine"] },
+    { cells: ["Hüfte &amp; Leiste", "hohe Kicks, Teeps", "Mobilität mit Kontrolle"] },
+    { cells: ["Unterer Rücken", "Rotation, Ziehen im Clinch", "Rumpfkraft, saubere Hebetechnik"] },
+    { cells: ["Schulter &amp; Nacken", "Schläge, Rahmen und Halten im Clinch", "Zugübungen als Ausgleich zum Drücken"] },
   ], "compact"
 ));
-out.push(`<div class="region-cards" style="grid-template-columns:1fr 1fr 1fr;">`);
-out.push(infoCard("01", "Balance", "Ziehen gleicht Drücken aus", "Muay Thai ist drucklastig. Zugübungen halten Schultern und Haltung im Gleichgewicht."));
-out.push(infoCard("02", "Kontrolle", "Bremsen lernen", "Saubere Landungen und kontrolliertes Absenken stärken Sehnen und schützen Knie und Sprunggelenk."));
-out.push(infoCard("03", "Dosierung", "Langsam steigern", "Belastung in kleinen Schritten erhöhen und Erholung einplanen, damit das Gewebe mitwachsen kann."));
-out.push(`</div>`);
-out.push(tipBox("kneeBandage", "Schmerz ist ein Signal:", "Muskelkater ist normal, stechender oder anhaltender Schmerz in einem Gelenk nicht. Dann Belastung reduzieren, die Übung anpassen und bei Bedarf einen Arzt oder Physiotherapeuten fragen, statt durchzuziehen."));
+out.push(tipBox("kneeBandage", "Schmerz ist ein Signal:", "Muskelkater ist normal, stechender oder anhaltender Gelenkschmerz nicht. Dann Belastung reduzieren und bei Bedarf ärztlich abklären lassen."));
 out.push(`</div>`);
 
 // --- Smart vs. falsch ---

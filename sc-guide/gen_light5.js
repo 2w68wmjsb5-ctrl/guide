@@ -7,26 +7,24 @@ const TAG = "Kapitel 4 · Kondition";
 let out = [];
 
 // --- Energiesysteme ---
-out.push(`<div class="content-section chapter-start">`);
+out.push(`<div class="content-section chapter-start tight">`);
 out.push(sectionHeader(TAG, "Die drei Energiesysteme"));
-out.push(`<p class="page-intro">Dein Körper hat drei Wege, Energie für die Muskeln bereitzustellen. Sie arbeiten nie einzeln, sondern immer gleichzeitig. Je nachdem, wie lang und wie intensiv eine Belastung ist, übernimmt aber eines von ihnen den Hauptteil. Für den Kampfsport brauchst du alle drei.</p>`);
+out.push(`<p class="page-intro">Dein Körper hat drei Wege, Energie bereitzustellen. Sie arbeiten immer gleichzeitig, je nach Dauer und Intensität übernimmt aber eines den Hauptteil. Für den Kampfsport brauchst du alle drei.</p>`);
 out.push(`<div class="region-cards" style="grid-template-columns:1fr 1fr 1fr;">`);
-out.push(infoCard("01", "Alaktazid", "0 bis ca. 10 Sek. · Explosivität", "Liefert sofort Energie für einzelne explosive Aktionen: Kick, Knie, schnelle Kombination, Sprung. Sehr stark, aber nach wenigen Sekunden leer. In Pausen füllen sich die Speicher innerhalb von ein bis drei Minuten wieder auf." + hrLine("Maximale Leistung, der Puls steigt aber erst verzögert, oft erst nach dem Sprint auf 90 bis 100&nbsp;% HFmax (Zone 5). Steuern über Gefühl und Leistung.")));
-out.push(infoCard("02", "Laktazid", "ca. 10 Sek. bis 2 Min. · Druckphasen", "Übernimmt bei langen, intensiven Schlagabtäuschen, im Clinch-Gerangel und wenn du Druck machst. Hohe Leistung, aber es entsteht Laktat: Die Muskeln brennen, die Arme werden schwer." + hrLine("80 bis 100&nbsp;% HFmax, Zone 4 bis 5. Bei HFmax 190 etwa 152 bis 190 Schläge pro Minute.")));
-out.push(infoCard("03", "Aerob", "ab ca. 2 Min. · Grundlage", "Trägt dich durch alle Runden. Es versorgt dich zwischen den Aktionen und füllt in Pausen die schnellen Speicher wieder auf. Je besser es ist, desto schneller erholst du dich." + hrLine("50 bis 80&nbsp;% HFmax, Zone 1 bis 3. Die Basis baust du in Zone 2 auf, bei HFmax 190 etwa 114 bis 133 Schläge pro Minute.")));
+out.push(infoCard("01", "Alaktazid", "0 bis ca. 10 Sek. · Explosivität", "Sofortige Energie für einzelne explosive Aktionen wie Kick, Knie oder Sprung. Nach wenigen Sekunden leer, in Pausen nach ein bis drei Minuten wieder voll." + hrLine("Zone 5, 90–100&nbsp;% HFmax. Der Puls steigt verzögert, steuere über Gefühl.")));
+out.push(infoCard("02", "Laktazid", "ca. 10 Sek. bis 2 Min. · Druckphasen", "Für lange, harte Schlagabtausche und Druckphasen im Clinch. Hohe Leistung, aber Laktat entsteht: Die Muskeln brennen." + hrLine("Zone 4–5, 80–100&nbsp;% HFmax, bei HFmax 190 ca. 152–190.")));
+out.push(infoCard("03", "Aerob", "ab ca. 2 Min. · Grundlage", "Trägt dich durch alle Runden und füllt zwischen den Aktionen die schnellen Speicher wieder auf. Je besser es ist, desto schneller erholst du dich." + hrLine("Zone 1–3, 50–80&nbsp;% HFmax. Basis in Zone 2, bei HFmax 190 ca. 114–133.")));
 out.push(`</div>`);
-out.push(tipBox("lightbulb", "Warum „ab ca. 2 Minuten“?", "Die Zeitangaben beschreiben, ab wann ein System bei einer durchgehenden, maximalen Belastung den Hauptteil der Energie liefert. Nach etwa zwei Minuten Vollgas hat das aerobe System die Führung übernommen. Das ist etwas anderes als die Dauer einer Trainingseinheit: Um dein aerobes System gezielt zu verbessern, trainierst du 20 bis 40 Minuten oder länger locker in Zone 2. Die Grenzen sind fließend, alle drei Systeme arbeiten immer gleichzeitig."));
-out.push(`</div>`);
-out.push(`<div class="content-section chapter-start">`);
-out.push(sectionHeader(TAG, "Energiesysteme im Ring"));
-out.push(`<p class="page-intro">Eine Runde dauert drei Minuten. Über den ganzen Kampf gesehen kommt der größte Teil der Energie aus dem aeroben System. Die entscheidenden Momente, der harte Kick, die schnelle Kombination, die Druckphase am Ende der Runde, laufen aber über die beiden anaeroben Systeme. Ein Kämpfer braucht deshalb eine breite aerobe Basis und die Fähigkeit, explosive Aktionen immer wieder abzurufen.</p>`);
+out.push(tipBox("lightbulb", "Warum „ab ca. 2 Minuten“?", "Gemeint ist, ab wann das aerobe System bei durchgehender Vollgas-Belastung den Hauptteil der Energie liefert. Um es zu trainieren, läufst du dagegen 20 bis 40 Minuten locker in Zone 2. Die Grenzen sind fließend."));
+out.push(`<h2 class="block-title" style="margin-top:5mm;">Was das für Muay Thai bedeutet</h2>`);
+out.push(`<p class="page-intro">Eine Runde dauert im Durchschnitt drei Minuten, je nach Regelwerk und Veranstaltung kann das variieren. Über den ganzen Kampf kommt der größte Teil der Energie aus dem aeroben System. Die entscheidenden Momente, der harte Kick, die schnelle Kombination, die Druckphase am Rundenende, laufen aber anaerob.</p>`);
 out.push(exTable(
-  [{ label: "System", cls: "w-ex" }, { label: "Herzfrequenz" }, { label: "Im Ring", cls: "w-ex" }, { label: "So trainierst du es", cls: "w-ex" }, { label: "In diesem Guide", cls: "w-ex" }],
+  [{ label: "System", cls: "w-ex" }, { label: "Im Ring", cls: "w-ex" }, { label: "So trainierst du es", cls: "w-ex" }, { label: "In diesem Guide", cls: "w-ex" }],
   [
-    { cells: ["Alaktazid", zoneChip(5), "einzelne Explosivaktionen", "kurze Vollgas-Belastungen, lange Pausen", "Kontrastsätze, Finisher Einheit A"] },
-    { cells: ["Laktazid", zoneChip(4) + " " + zoneChip(5), "lange Exchanges, Druckphasen", "harte Intervalle, kurze Pausen", "Finisher Einheit C, Einheit B"] },
-    { cells: ["Aerob", zoneChip(1) + " " + zoneChip(2) + " " + zoneChip(3), "Erholung zwischen Aktionen und Runden", "lockere Läufe, Seilspringen, Pratzenrunden", "Muay-Thai-Training, lockerer Lauf"] },
-  ], "compact"
+    { cells: ["Alaktazid", "einzelne Explosivaktionen", "kurze Vollgas-Belastungen, lange Pausen", "Kontrastsätze, Finisher Einheit A"] },
+    { cells: ["Laktazid", "lange Exchanges, Druckphasen", "harte Intervalle, kurze Pausen", "Finisher Einheit C, Einheit B"] },
+    { cells: ["Aerob", "Erholung zwischen Aktionen und Runden", "lockere Läufe, Seilspringen, Pratzenrunden", "Muay-Thai-Training, lockerer Lauf"] },
+  ], "xcompact"
 ));
 out.push(`</div>`);
 
