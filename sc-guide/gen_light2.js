@@ -7,11 +7,11 @@ let out = [];
 // --- Warum S&C ---
 out.push(`<div class="content-section chapter-start">`);
 out.push(sectionHeader(TAG, "Warum S&amp;C für Muay Thai?"));
-out.push(`<p class="page-intro">Im Ring entscheidet nicht nur deine Technik, sondern auch, wie viel Kraft du in sie legen kannst und wie lange du das durchhältst. Ein Kick ist nur so hart, wie deine Hüfte ihn beschleunigt. Ein Clinch ist nur so stabil, wie dein Rumpf und deine Beine dagegenhalten. Gezieltes Krafttraining verbessert genau diese Grundlagen und macht deinen Körper gleichzeitig widerstandsfähiger.</p>`);
-out.push(`<p class="page-intro">Strength &amp; Conditioning, kurz S&amp;C, steht für vier Fähigkeiten, die im Ring zusammenspielen:</p>`);
+out.push(`<p class="page-intro">Im Ring gewinnt nicht, wer am meisten stemmen kann. Entscheidend ist Athletik: wie schnell du Kraft abrufen kannst, wie explosiv du dich bewegst und wie lange du das durchhältst. Ein Kick ist nur so hart, wie deine Hüfte ihn beschleunigt. Ein Clinch ist nur so stabil, wie dein Rumpf und deine Beine dagegenhalten.</p>`);
+out.push(`<p class="page-intro">Das Hauptziel dieses Guides ist deshalb <b>Explosivkraft</b>. Maximalkraft ist dafür kein Selbstzweck, sondern das Fundament: Wer mehr Kraft hat, kann auch mehr davon schnell abrufen. Strength &amp; Conditioning, kurz S&amp;C, verbindet vier Fähigkeiten:</p>`);
 out.push(`<div class="region-cards">`);
-out.push(infoCard("01", "Maximalkraft", "Die Basis", "Je mehr Kraft du hast, desto mehr kannst du in Schläge, Tritte, Knie und den Clinch übertragen."));
-out.push(infoCard("02", "Explosivkraft", "Kraft × Tempo", "Wie schnell du deine Kraft abrufen kannst. Sie macht Techniken hart und schnell zugleich."));
+out.push(infoCard("01", "Explosivkraft", "Das Hauptziel", "Wie schnell du deine Kraft abrufen kannst. Sie macht Kicks, Knie und Schläge hart und schnell zugleich."));
+out.push(infoCard("02", "Maximalkraft", "Das Fundament", "Die Basis für Explosivkraft und Stabilität. Je mehr Kraft du hast, desto mehr kannst du schnell übertragen."));
 out.push(infoCard("03", "Kraftausdauer", "Bis zur letzten Runde", "Die Fähigkeit, deine Kraft über alle Runden zu halten, statt nach der ersten abzubauen."));
 out.push(infoCard("04", "Kondition", "Der Motor", "Ausdauer und schnelle Erholung zwischen einzelnen Aktionen und zwischen den Runden."));
 out.push(`</div>`);
@@ -25,13 +25,13 @@ out.push(`<p class="page-intro">Mehr ist nicht automatisch besser. Gerade wenn d
 out.push(`<div class="dodont-cols">`);
 out.push(doDontCard("do", "Smartes S&amp;C", iconHex("checkCircle", "7mm"), [
   "kurze, fokussierte Einheiten mit klarem Ziel",
-  "schwere Grundübungen und explosive Bewegungen, die zum Kampfsport passen",
+  "explosive Bewegungen auf Basis solider Grundübungen",
   "saubere Technik vor mehr Gewicht",
   "Einheiten so gelegt, dass dein Muay Thai nicht darunter leidet",
   "jede Einheit notieren und dich langsam, aber stetig steigern",
 ]));
 out.push(doDontCard("dont", "Falsches S&amp;C", hexGlyph("&#10005;", "7mm"), [
-  "stundenlanges „Pumpen“ einzelner Muskeln wie im Bodybuilding",
+  "Gewichte stemmen um der Zahlen willen oder stundenlanges „Pumpen“ einzelner Muskeln",
   "jede Einheit bis zur völligen Erschöpfung",
   "eine harte Beineinheit am Tag vor dem Sparring",
   "ständig wechselnde Übungen ohne Plan",

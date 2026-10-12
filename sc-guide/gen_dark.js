@@ -54,7 +54,7 @@ pages.push(darkPage(`
     <div style="position:absolute; top:0; left:0;">
       <div class="cover-logo-row">${brandLogo("42mm")}</div>
       <h1 class="cover-title">Muay Thai<br><span class="line3">Strength &amp;<br>Conditioning</span></h1>
-      <p class="cover-tagline">Das Minimum an Kraft- und Konditionstraining, das dich im Ring besser macht. Für Kämpfer mit wenig Zeit, als Ergänzung zu deinem Muay-Thai-Training.</p>
+      <p class="cover-tagline">Das Minimum an Athletiktraining, das dich im Ring explosiver und belastbarer macht. Für Kämpfer mit wenig Zeit, als Ergänzung zu deinem Muay-Thai-Training.</p>
     </div>
     <div class="cover-foot">
       <div class="cf-text">Fighter Edition</div>
@@ -70,9 +70,9 @@ pages.push(darkPage(`
     <div class="section-tag" style="color:var(--accent);">Vorwort</div>
     <h1 class="vorwort-title">Stärker im Ring, nicht länger im Gym</h1>
     <div class="intro-text">
-      <p>Muay Thai verlangt dir alles ab: Schlagkraft in der ersten Runde, Standfestigkeit im Clinch in der dritten und genug Reserven, um in der fünften noch Druck zu machen. Technik und Timing holst du dir auf der Matte, an den Pratzen und am Sandsack. Daran ändert kein Trainingsplan etwas. Was dort aber oft zu kurz kommt, ist gezieltes Kraft- und Konditionstraining.</p>
+      <p>Muay Thai verlangt dir alles ab: Schlagkraft in der ersten Runde, Standfestigkeit im Clinch in der dritten und genug Reserven, um in der fünften noch Druck zu machen. Technik und Timing holst du dir auf der Matte, an den Pratzen und am Sandsack. Daran ändert kein Trainingsplan etwas. Was dort aber oft zu kurz kommt, ist gezieltes Athletiktraining: Explosivkraft, eine solide Kraftbasis und die richtige Ausdauer für harte Runden.</p>
       <p>Genau hier setzt dieser Guide an. Er ist für alle gemacht, die neben Job, Alltag und Muay Thai wenig Zeit haben und trotzdem das Beste aus jeder Einheit holen wollen. Statt dich mit endlosen Plänen zu überladen, zeige ich dir das Minimum, das wirklich etwas bringt: wenige, kurze Einheiten, klar aufgebaut und auf die Anforderungen im Ring abgestimmt.</p>
-      <p>Eines vorweg: Strength &amp; Conditioning ersetzt kein Muay-Thai-Training. Es ist eine wertvolle Ergänzung, die dich robuster, explosiver und belastbarer macht. Dein Muay Thai bleibt immer die Hauptsache.</p>
+      <p>Eines vorweg: Strength &amp; Conditioning ersetzt kein Muay-Thai-Training. Es ist eine wertvolle Ergänzung, die dich explosiver, robuster und belastbarer macht. Dein Muay Thai bleibt immer die Hauptsache.</p>
     </div>
     <div class="audience-row">
       ${audienceItem("01", "Wenig Zeit", "Zwei bis drei kurze Einheiten pro Woche reichen aus.")}
