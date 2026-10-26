@@ -3,6 +3,7 @@
 import random
 from datetime import date, datetime, timedelta
 
+from . import tasks
 from .sources.finance_import import Transaction
 
 RULES = {
@@ -91,3 +92,26 @@ def events(today: date | None = None) -> list[dict]:
     ]
     return [{"titel": t, "start": s, "ende": None, "ganztags": a, "ort": o, "kalender": "Familie", "label": l}
             for t, s, a, o, l in raw]
+
+
+def seed_tasks(conn, players: list[str], today: date | None = None) -> None:
+    today = today or date.today()
+    day = lambda n: (today + timedelta(days=n)).isoformat()
+    tasks.seed_defaults(conn, today=today)
+    # Some chores done recently, some overdue
+    done = {"Staubsaugen": (-3, 0), "Bad putzen": (-9, 1), "Küche wischen": (-1, 1), "Müll rausbringen": (-3, 0),
+            "Wäsche waschen": (-2, 1), "Bettwäsche wechseln": (-6, 0), "Pflanzen gießen": (-5, 1)}
+    for row in conn.execute("SELECT id, title FROM tasks").fetchall():
+        if row["title"] in done:
+            offset, who = done[row["title"]]
+            tasks.complete(conn, row["id"], players[who % len(players)], today + timedelta(days=offset))
+    # Older history so the players have levels
+    for i in range(14):
+        conn.execute("INSERT INTO task_log VALUES (0, ?, ?, ?)", (players[i % len(players)], day(-20 - i), 20 + i % 3 * 5))
+    conn.commit()
+    for title, due in [("Beim Kinderarzt anrufen (Impftermin)", day(0)), ("Geschenk für Oma besorgen", day(3)),
+                       ("Kfz-Versicherung vergleichen", day(10)), ("Handwerker für Heizung anfragen", day(-1)),
+                       ("Fotos fürs Fotobuch aussuchen", None)]:
+        tasks.add(conn, "todo", title, due=due, today=today)
+    done_id = tasks.add(conn, "todo", "Fahrradschloss kaufen", today=today)
+    tasks.complete(conn, done_id, players[0], today)

@@ -8,6 +8,7 @@ Die Daten kommen automatisch aus euren Apps, nichts wird von Hand eingetragen.
 | Einkaufsliste | Bring! (abhaken und hinzufügen geht auch im Dashboard) | alle 5 Min. |
 | Termine | TimeTree, dazu optional iCal-Links (Müllabfuhr, Ferien …) | alle 30 Min. |
 | Fixkosten, Einnahmen, Rücklagen | Export eurer Finanz-App (CSV/Excel) | sobald eine Datei im Import-Ordner liegt |
+| Haushalts-Quests & To-dos | direkt im Dashboard (abhaken, hinzufügen, löschen) | sofort |
 
 ## Starten (Raspberry Pi / NAS mit Docker)
 
@@ -42,6 +43,18 @@ für eure eigenen Geräte, nicht für das Internet. Diese Adresse installiert ih
 HTTPS hat, funktioniert dort auch der Offline-Modus. Über `http://<IP>:8080` im Heim-WLAN klappt
 das Installieren auf dem iPhone ebenfalls, Android legt dann aber nur eine Verknüpfung an, und
 offline geht nichts.
+
+## Haushalts-Quests und To-dos
+
+- **Haushalts-Quests** sind wiederkehrende Hausarbeiten (z. B. „Bad putzen, wöchentlich“). Wer eine
+  erledigt, tippt auf seinen Knopf (✓ mit Anfangsbuchstaben) und bekommt Erfahrungspunkte. Seltene
+  Aufgaben bringen mehr XP. Alle 100 XP steigt man ein Level auf, und wer diese Woche die meisten XP
+  hat, trägt die Krone. Danach rutscht die Aufgabe nach hinten, bis sie wieder fällig ist.
+- **To-dos** sind einmalige Aufgaben wie „Beim Arzt anrufen“, optional mit Datum. Erledigte bleiben
+  bis zum Ende des Tages durchgestrichen stehen (zum Rückgängigmachen) und verschwinden dann.
+
+Eure Namen tragt ihr in `config.yaml` unter `familie` ein. Beim allerersten Start legt das Dashboard
+eine Standardliste an Hausarbeiten an. Wollt ihr eine eigene, tragt sie vorher unter `haushalt` ein.
 
 ## Wie die Finanzdaten reinkommen
 

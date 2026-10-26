@@ -239,6 +239,67 @@ function renderTransactions(f) {
     <td class="num ${t.betrag > 0 ? "pos" : ""}">${eur.format(t.betrag)}</td></tr>`).join("");
 }
 
+const PLAYER_COLORS = ["blue", "pink"];
+
+function dueTag(days, never = false) {
+  if (never) return tag("Neu", "purple", true);
+  if (days < 0) return tag(days === -1 ? "Seit gestern" : `Seit ${-days} Tagen`, "red", true);
+  if (days === 0) return tag("Heute", "orange", true);
+  if (days === 1) return tag("Morgen", "yellow", true);
+  return tag(`In ${days} Tagen`, "gray", true);
+}
+
+function everyLabel(days) {
+  return { 1: "täglich", 7: "wöchentlich", 14: "alle 2 Wochen", 30: "monatlich" }[days] || `alle ${days} Tage`;
+}
+
+function renderPlayers(players) {
+  const best = Math.max(...players.map((p) => p.woche_xp));
+  $("players").innerHTML = players.map((p, i) => `
+    <div class="player">
+      <canvas width="8" height="13" data-p="${i}"></canvas>
+      <div class="pinfo">
+        <div class="pname">${esc(p.name)} ${best > 0 && p.woche_xp === best ? '<span title="Meiste XP diese Woche">👑</span>' : ""}</div>
+        <div class="plevel">Lv. ${p.level} <span class="muted">· ${p.xp} XP</span></div>
+        <div class="xpbar" title="${p.fortschritt} / ${p.pro_level} XP bis Level ${p.level + 1}"><span style="width:${(p.fortschritt / p.pro_level) * 100}%"></span></div>
+        <div class="pweek">+${p.woche_xp} XP diese Woche</div>
+      </div>
+    </div>`).join("");
+  $("players").querySelectorAll("canvas").forEach((cv) => Pixel.player(cv, +cv.dataset.p));
+}
+
+// Initials on the "done by" buttons, or numbers when two names share one
+function playerBadges(players) {
+  const initials = players.map((p) => p.name.trim().slice(0, 1).toUpperCase());
+  return new Set(initials).size === initials.length ? initials : players.map((_, i) => String(i + 1));
+}
+
+function renderChores(aufgaben) {
+  renderPlayers(aufgaben.spieler);
+  const badges = playerBadges(aufgaben.spieler);
+  $("haushalt").innerHTML = aufgaben.haushalt.map((c) => `
+    <li class="quest ${c.faellig_in <= 0 ? "due" : ""}">
+      <div class="qmain">
+        <div class="qtitle">${esc(c.titel)} ${tag("+" + c.xp + " XP", "yellow")}</div>
+        <div class="qmeta">${dueTag(c.faellig_in, !c.zuletzt)} <span>${everyLabel(c.alle_tage)}${c.zuletzt_von ? " · zuletzt " + esc(c.zuletzt_von) : ""}</span></div>
+      </div>
+      <div class="qdone">
+        ${aufgaben.spieler.map((p, i) => `<button class="pbtn ${PLAYER_COLORS[i % 2]}" data-done="${c.id}" data-who="${esc(p.name)}" title="Erledigt von ${esc(p.name)}" aria-label="${esc(c.titel)} erledigt von ${esc(p.name)}">✓ ${esc(badges[i])}</button>`).join("")}
+        <button class="xbtn" data-del="${c.id}" data-title="${esc(c.titel)}" aria-label="${esc(c.titel)} löschen">×</button>
+      </div>
+    </li>`).join("") || `<li class="empty">Noch keine Hausarbeiten. Unten eine hinzufügen.</li>`;
+}
+
+function renderTodos(todos) {
+  $("todos").innerHTML = todos.map((t) => `
+    <li class="${t.erledigt ? "done" : ""}">
+      <input type="checkbox" data-todo="${t.id}" ${t.erledigt ? "checked" : ""} aria-label="${esc(t.titel)} erledigt">
+      <span class="ttitle">${esc(t.titel)}</span>
+      ${t.faellig && !t.erledigt ? dueTag(t.faellig_in) : ""}
+      <button class="xbtn" data-del="${t.id}" data-title="${esc(t.titel)}" aria-label="${esc(t.titel)} löschen">×</button>
+    </li>`).join("") || `<li class="empty">Nichts zu tun 🎉</li>`;
+}
+
 function renderWeek(events) {
   const now = new Date();
   const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - ((now.getDay() + 6) % 7) + weekOffset * 7);
@@ -266,6 +327,8 @@ function render(data) {
   renderOverview(data.finanzen);
   renderShopping(data.einkauf);
   renderReminders(data.termine);
+  renderChores(data.aufgaben);
+  renderTodos(data.aufgaben.todos);
   renderFixed(data.finanzen);
   renderGoals(data.finanzen);
   renderChart(data.finanzen);
@@ -285,9 +348,9 @@ async function load() {
   }
 }
 
-async function post(url, body) {
+async function post(url, body, method = "POST") {
   try {
-    const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body ?? {}) });
     if (!res.ok) throw new Error(res.status);
   } catch {
     alert("Hat nicht geklappt. Seid ihr online? Bitte gleich nochmal versuchen.");
@@ -328,8 +391,41 @@ $("cal-tabs").addEventListener("click", (e) => {
   selectTab($("cal-tabs"), b);
   if (lastData) renderWeek(lastData.termine);
 });
+$("chore-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const titel = $("chore-name").value.trim();
+  if (!titel) return;
+  $("chore-name").value = "";
+  post("/api/aufgaben", { art: "haushalt", titel, alle_tage: +$("chore-every").value });
+});
+$("todo-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const titel = $("todo-name").value.trim();
+  if (!titel) return;
+  const faellig = $("todo-due").value || null;
+  $("todo-name").value = "";
+  $("todo-due").value = "";
+  post("/api/aufgaben", { art: "todo", titel, faellig });
+});
+$("haushalt").addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (b?.dataset.done) post(`/api/aufgaben/${b.dataset.done}/erledigt`, { wer: b.dataset.who });
+});
+$("todos").addEventListener("change", (e) => {
+  const id = e.target.dataset.todo;
+  if (id) post(`/api/aufgaben/${id}/${e.target.checked ? "erledigt" : "offen"}`, {});
+});
+for (const list of ["haushalt", "todos"]) {
+  $(list).addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-del]");
+    if (b && confirm(`„${b.dataset.title}“ löschen?`)) post(`/api/aufgaben/${b.dataset.del}`, null, "DELETE");
+  });
+}
+
 document.querySelector(".actions").addEventListener("click", (e) => {
   const action = e.target.closest("button")?.dataset.action;
+  if (action === "todo") { $("panel-todo").scrollIntoView({ behavior: "smooth" }); $("todo-name").focus({ preventScroll: true }); }
+  if (action === "haushalt") $("panel-haushalt").scrollIntoView({ behavior: "smooth" });
   if (action === "einkauf") { $("panel-einkauf").scrollIntoView({ behavior: "smooth" }); $("add-name").focus({ preventScroll: true }); }
   if (action === "upload") $("upload").click();
   if (action === "termine") $("panel-termine").scrollIntoView({ behavior: "smooth" });

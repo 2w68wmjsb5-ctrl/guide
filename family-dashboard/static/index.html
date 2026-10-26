@@ -44,6 +44,8 @@
           <h2 class="spaced">Schnellzugriff</h2>
           <div class="actions">
             <button class="action" data-action="einkauf"><span class="ico">🛒</span>Neuer Artikel</button>
+            <button class="action" data-action="todo"><span class="ico">✎</span>Neues To-do</button>
+            <button class="action" data-action="haushalt"><span class="ico">⚔</span>Haushalts-Quests</button>
             <button class="action" data-action="upload"><span class="ico">⬆</span>Export hochladen</button>
             <button class="action" data-action="termine"><span class="ico">🗓</span>Wochenkalender</button>
             <button class="action" data-action="fixkosten"><span class="ico">📄</span>Fixkosten</button>
@@ -87,6 +89,37 @@
           <section class="panel">
             <h2 class="spaced">Termine / Erinnerungen</h2>
             <ul class="reminders" id="termine"></ul>
+          </section>
+        </div>
+
+        <div class="two-col">
+          <section class="panel" id="panel-haushalt">
+            <h2 class="spaced">Haushalts-Quests</h2>
+            <div class="players" id="players"></div>
+            <ul class="quests" id="haushalt"></ul>
+            <form id="chore-form" class="add-row">
+              <span class="ico">⚔</span>
+              <input id="chore-name" placeholder="Neue Hausarbeit" autocomplete="off" aria-label="Neue Hausarbeit">
+              <select id="chore-every" aria-label="Wie oft">
+                <option value="1">täglich</option>
+                <option value="3">alle 3 Tage</option>
+                <option value="7" selected>wöchentlich</option>
+                <option value="14">alle 2 Wochen</option>
+                <option value="30">monatlich</option>
+              </select>
+              <button type="submit">+</button>
+            </form>
+          </section>
+
+          <section class="panel" id="panel-todo">
+            <h2 class="spaced">To-dos</h2>
+            <form id="todo-form" class="add-row">
+              <span class="ico">✎</span>
+              <input id="todo-name" placeholder="z. B. Beim Arzt anrufen" autocomplete="off" aria-label="Neues To-do">
+              <input id="todo-due" type="date" aria-label="Fällig am (optional)">
+              <button type="submit">+</button>
+            </form>
+            <ul class="todo todos" id="todos"></ul>
           </section>
         </div>
 

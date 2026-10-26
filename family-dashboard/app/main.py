@@ -13,7 +13,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import config, demo, finance
+from . import config, demo, finance, tasks
 from .sources import finance_import
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -68,22 +68,47 @@ async def sync_import() -> None:
         _mark("Finanzen", error, f"{summary['new']} neue Umsätze" if summary["files"] else "")
 
 
+def _tasks_db() -> Path:
+    # Demo mode gets a throwaway database so it never mixes with real chores
+    return config.DATA_DIR / "demo.db" if config.DEMO else config.DB_PATH
+
+
+def _players() -> list[str]:
+    names = [str(n) for n in config.load_rules().get("familie") or [] if str(n).strip()]
+    return names or ["Spieler 1", "Spieler 2"]
+
+
+def _prepare_tasks() -> None:
+    db = _tasks_db()
+    if config.DEMO:
+        db.unlink(missing_ok=True)
+    conn = tasks.connect(db)
+    try:
+        if config.DEMO:
+            demo.seed_tasks(conn, _players())
+        else:
+            tasks.seed_defaults(conn, config.load_rules().get("haushalt"))
+    finally:
+        conn.close()
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    tasks = []
+    jobs = []
+    _prepare_tasks()
     if config.DEMO:
         state["einkauf"], state["termine"] = demo.shopping(), demo.events()
         for source in ("Bring!", "Kalender", "Finanzen"):
             _mark(source, note="Demo-Daten")
     else:
         if config.BRING_EMAIL:
-            tasks.append(asyncio.create_task(_loop("Bring!", config.BRING_INTERVAL, sync_bring)))
+            jobs.append(asyncio.create_task(_loop("Bring!", config.BRING_INTERVAL, sync_bring)))
         if config.TIMETREE_EMAIL or config.EXTRA_ICS_URLS:
-            tasks.append(asyncio.create_task(_loop("Kalender", config.CALENDAR_INTERVAL, sync_calendar)))
-        tasks.append(asyncio.create_task(_loop("Finanzen", config.IMPORT_INTERVAL, sync_import)))
+            jobs.append(asyncio.create_task(_loop("Kalender", config.CALENDAR_INTERVAL, sync_calendar)))
+        jobs.append(asyncio.create_task(_loop("Finanzen", config.IMPORT_INTERVAL, sync_import)))
     yield
-    for task in tasks:
-        task.cancel()
+    for job in jobs:
+        job.cancel()
 
 
 app = FastAPI(title="Familien-Dashboard", lifespan=lifespan)
@@ -116,10 +141,19 @@ def _finances() -> dict:
     return finance.analyse(transactions, config.load_rules())
 
 
+def _tasks_overview() -> dict:
+    conn = tasks.connect(_tasks_db())
+    try:
+        return tasks.overview(conn, _players())
+    finally:
+        conn.close()
+
+
 @app.get("/api/dashboard")
 async def dashboard():
     return {
         "finanzen": await asyncio.to_thread(_finances),
+        "aufgaben": _tasks_overview(),
         "einkauf": state["einkauf"],
         "termine": state["termine"],
         "status": state["status"],
@@ -155,6 +189,57 @@ async def complete_item(item: Item):
 
     await bring.complete(item.name)
     await sync_bring()
+    return {"ok": True}
+
+
+class NewTask(BaseModel):
+    art: str            # "haushalt" or "todo"
+    titel: str
+    alle_tage: int | None = None
+    faellig: str | None = None
+
+
+class Done(BaseModel):
+    wer: str = ""
+
+
+def _with_tasks(fn, *args):
+    conn = tasks.connect(_tasks_db())
+    try:
+        return fn(conn, *args)
+    finally:
+        conn.close()
+
+
+@app.post("/api/aufgaben")
+async def add_task(task: NewTask):
+    if not task.titel.strip():
+        raise HTTPException(400, "Titel fehlt")
+    try:
+        task_id = _with_tasks(tasks.add, task.art, task.titel, task.alle_tage, task.faellig)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+    return {"id": task_id}
+
+
+@app.post("/api/aufgaben/{task_id}/erledigt")
+async def complete_task(task_id: int, done: Done):
+    try:
+        _with_tasks(tasks.complete, task_id, done.wer)
+    except KeyError:
+        raise HTTPException(404, "Aufgabe nicht gefunden")
+    return {"ok": True}
+
+
+@app.post("/api/aufgaben/{task_id}/offen")
+async def reopen_task(task_id: int):
+    _with_tasks(tasks.reopen, task_id)
+    return {"ok": True}
+
+
+@app.delete("/api/aufgaben/{task_id}")
+async def delete_task(task_id: int):
+    _with_tasks(tasks.delete, task_id)
     return {"ok": True}
 
 

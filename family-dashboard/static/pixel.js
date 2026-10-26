@@ -356,5 +356,17 @@ const Pixel = (() => {
     ctx.fillRect(8, 12, 1, 1);
   }
 
-  return { cover, scene, icon, phase };
+  const PLAYER_LOOKS = [
+    { rows: PERSON_A, colors: { h: "#4a2e1f", s: "#f2c39b", e: "#2b2b3a", c: "#3f7fd6", p: "#36405e", b: "#2b2b3a" } },
+    { rows: PERSON_B, colors: { h: "#c2702f", s: "#f2c39b", e: "#2b2b3a", c: "#d65f8a", b: "#2b2b3a" } },
+  ];
+
+  // The cover characters as player avatars (8x13 canvas)
+  function player(canvas, index) {
+    const ctx = canvas.getContext("2d");
+    const look = PLAYER_LOOKS[index % PLAYER_LOOKS.length];
+    sprite(ctx, look.rows, look.colors, 1, 1);
+  }
+
+  return { cover, scene, icon, phase, player };
 })();

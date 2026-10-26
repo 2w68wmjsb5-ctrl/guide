@@ -1,6 +1,17 @@
 # Kopieren nach config.yaml. Alles hier ist optional: Fixkosten und Einnahmen
 # werden automatisch aus den Umsätzen erkannt. Hier korrigierst du nur.
 
+# Eure Namen für die Haushalts-Quests (wer was erledigt hat, XP und Level)
+familie:
+  - "Spieler 1"
+  - "Spieler 2"
+
+# Start-Hausarbeiten beim allerersten Start. Danach im Dashboard hinzufügen/löschen.
+# Weglassen = eine Standardliste (Staubsaugen, Bad, Küche, Müll, Wäsche …).
+# haushalt:
+#   - { titel: "Staubsaugen", alle_tage: 7, xp: 20 }
+#   - { titel: "Katzenklo", alle_tage: 2, xp: 5 }
+
 finanzen:
   # Umsätze, deren Empfänger/Verwendungszweck einen dieser Begriffe enthält,
   # werden komplett ignoriert (z. B. Umbuchungen zwischen euren eigenen Girokonten).
