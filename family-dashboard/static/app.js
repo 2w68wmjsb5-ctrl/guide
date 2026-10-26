@@ -234,7 +234,7 @@ function renderChart(f) {
 
 function renderTransactions(f) {
   $("umsaetze").innerHTML = f.leer ? "" : f.letzte_umsaetze.map((t) => `
-    <tr><td class="name"><span class="ico">⇄</span>${esc(t.name)}</td>
+    <tr><td class="name"><span class="ico">⇄</span>${esc(t.name)} ${t.konto === "Amex" ? tag("Amex", "blue") : ""}</td>
     <td class="date">${fmtDate(t.datum, { day: "numeric", month: "short" })}</td>
     <td class="num ${t.betrag > 0 ? "pos" : ""}">${eur.format(t.betrag)}</td></tr>`).join("");
 }

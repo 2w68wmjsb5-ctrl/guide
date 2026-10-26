@@ -37,6 +37,14 @@ HEADER_ALIASES = {
 }
 
 
+AMEX = "Amex"
+# Columns only American Express exports have (German and English online banking)
+AMEX_HEADERS = {"erscheint auf ihrer abrechnung als", "appears on your statement as",
+                "erweiterte details", "extended details"}
+# Your own payments towards the card bill, not spending
+AMEX_PAYMENT = re.compile(r"zahlung erhalten|besten dank|payment received|thank you|lastschrifteinzug", re.I)
+
+
 @dataclass
 class Transaction:
     day: date
@@ -125,15 +133,18 @@ def _rows_from_xlsx(path: Path) -> list[list]:
     return [list(row) for row in sheet.iter_rows(values_only=True)]
 
 
-def parse_rows(rows: list[list]) -> list[Transaction]:
+def parse_rows(rows: list[list], filename: str = "") -> list[Transaction]:
     """Find the header line (bank exports often have a preamble) and parse rows below it."""
     for idx, row in enumerate(rows[:40]):
-        mapping = map_headers([str(c) if c is not None else "" for c in row])
+        headers = [str(c) if c is not None else "" for c in row]
+        mapping = map_headers(headers)
         has_amount = "amount" in mapping or ("debit" in mapping and "credit" in mapping)
         if "date" in mapping and has_amount:
             break
     else:
         raise ValueError("Keine Spalten für Datum und Betrag gefunden")
+    # Amex lists purchases as positive amounts and also contains the card payments
+    is_amex = bool(AMEX_HEADERS & {_norm(h) for h in headers}) or "amex" in filename.lower()
 
     def cell(row, field):
         i = mapping.get(field)
@@ -150,21 +161,28 @@ def parse_rows(rows: list[list]) -> list[Transaction]:
             amount = credit - abs(debit) if (debit or credit) else None
         if day is None or amount is None:
             continue
+        counterparty = str(cell(row, "counterparty")).strip()
+        purpose = str(cell(row, "purpose")).strip()
+        account = str(cell(row, "account")).strip()
+        if is_amex:
+            if amount < 0 and AMEX_PAYMENT.search(f"{counterparty} {purpose}"):
+                continue
+            amount, account = -amount, AMEX
         result.append(Transaction(
             day=day,
             amount=round(amount, 2),
-            counterparty=str(cell(row, "counterparty")).strip(),
-            purpose=str(cell(row, "purpose")).strip(),
+            counterparty=counterparty,
+            purpose=purpose,
             category=str(cell(row, "category")).strip(),
-            account=str(cell(row, "account")).strip(),
+            account=account,
         ))
     return result
 
 
 def parse_file(path: Path) -> list[Transaction]:
     if path.suffix.lower() in (".xlsx", ".xlsm"):
-        return parse_rows(_rows_from_xlsx(path))
-    return parse_rows(_rows_from_csv(path.read_bytes()))
+        return parse_rows(_rows_from_xlsx(path), path.name)
+    return parse_rows(_rows_from_csv(path.read_bytes()), path.name)
 
 
 # --- storage -----------------------------------------------------------------

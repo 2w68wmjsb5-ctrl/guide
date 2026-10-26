@@ -5,7 +5,10 @@ from collections import Counter, defaultdict
 from datetime import date, timedelta
 from statistics import median
 
-from .sources.finance_import import Transaction
+from .sources.finance_import import AMEX, Transaction
+
+# How the monthly card bill shows up on the current account
+CARD_BILL_TERMS = ["american express", "amex"]
 
 INTERVALS = [  # (name, months, min days, max days)
     ("monatlich", 1, 25, 38),
@@ -104,6 +107,13 @@ def analyse(transactions: list[Transaction], rules: dict, today: date | None = N
         savings_terms += goal.get("begriffe") or []
 
     txs = [t for t in transactions if not _contains(t, ignore)]
+    # With the Amex purchases imported, the monthly Amex debit on the current
+    # account would count the same money twice
+    amex_days = [t.day for t in txs if t.account == AMEX]
+    if amex_days:
+        card_terms = finance_rules.get("kreditkarten_abbuchung") or CARD_BILL_TERMS
+        first = min(amex_days)
+        txs = [t for t in txs if t.account == AMEX or t.day < first or not _contains(t, card_terms)]
     if not txs:
         return {"leer": True, "sparziele": _goals([], rules)}
 
@@ -114,7 +124,10 @@ def analyse(transactions: list[Transaction], rules: dict, today: date | None = N
     savings_ids = {id(t) for t in window if t.amount < 0 and _contains(t, savings_terms)}
     spending = [t for t in window if id(t) not in savings_ids]
 
-    recurring = detect_recurring(spending, reference)
+    # Card refunds are not income
+    refund_keys = {_key(t) for t in spending if t.account == AMEX and t.amount > 0}
+    recurring = [r for r in detect_recurring(spending, reference)
+                 if not (r["eingang"] and r["key"] in refund_keys)]
     excluded = finance_rules.get("fixkosten_ausschliessen") or []
     fixed = [r for r in recurring if not r["eingang"]
              and not any(e.lower() in r["name"].lower() for e in excluded)]
@@ -144,6 +157,8 @@ def analyse(transactions: list[Transaction], rules: dict, today: date | None = N
             continue
         if id(t) in savings_ids:
             bucket["gespart"] += -t.amount
+        elif t.account == AMEX:
+            bucket["ausgaben"] += -t.amount  # refunds lower the spending
         elif t.amount > 0:
             bucket["einnahmen"] += t.amount
         else:
@@ -184,7 +199,7 @@ def analyse(transactions: list[Transaction], rules: dict, today: date | None = N
         "ruecklage_posten": irregular,
         "sparziele": _goals(txs, rules),
         "letzte_umsaetze": [
-            {"datum": t.day.isoformat(), "betrag": t.amount, "name": t.counterparty or t.purpose}
+            {"datum": t.day.isoformat(), "betrag": t.amount, "name": t.counterparty or t.purpose, "konto": t.account}
             for t in sorted(txs, key=lambda t: t.day, reverse=True)[:8]
         ],
     }

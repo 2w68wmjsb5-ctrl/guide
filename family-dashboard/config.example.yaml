@@ -18,6 +18,10 @@ finanzen:
   ignorieren:
     - "Umbuchung"
 
+  # So heißt die monatliche Kreditkarten-Abbuchung auf dem Girokonto. Sobald ihr den
+  # Amex-Export importiert, wird sie ignoriert, damit nichts doppelt zählt.
+  # kreditkarten_abbuchung: ["American Express", "AMEX"]
+
   # Überweisungen auf diese Konten/Empfänger zählen als Rücklage, nicht als Ausgabe.
   ruecklagen_begriffe:
     - "Tagesgeld"

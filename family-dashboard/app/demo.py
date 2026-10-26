@@ -4,7 +4,7 @@ import random
 from datetime import date, datetime, timedelta
 
 from . import tasks
-from .sources.finance_import import Transaction
+from .sources.finance_import import AMEX, Transaction
 
 RULES = {
     "finanzen": {"ruecklagen_begriffe": ["Tagesgeld"]},
@@ -31,10 +31,10 @@ def transactions(today: date | None = None) -> list[Transaction]:
     ]
     month = start
     while month <= today:
-        def booking(day, amount, name, purpose):
+        def booking(day, amount, name, purpose, account=""):
             d = month.replace(day=min(day, 28))
             if d <= today:
-                txs.append(Transaction(d, amount, name, purpose))
+                txs.append(Transaction(d, amount, name, purpose, account=account))
 
         booking(27, 3150.00, "Arbeitgeber A GmbH", "Gehalt")
         booking(27, 1980.00, "Arbeitgeber B AG", "Gehalt")
@@ -49,9 +49,18 @@ def transactions(today: date | None = None) -> list[Transaction]:
             booking(1, -480.00, "HUK-Coburg", "Kfz-Versicherung")
         if month.month == 11:
             booking(1, -120.00, "ADAC", "Mitgliedschaft")
+        # Everyday card payments run over the Amex; its bill is debited from the
+        # current account in the following month (and ignored, see finance.py)
+        card_total = 0.0
         for _ in range(14):
             shop = rnd.choice(["REWE", "Edeka", "dm", "Aldi", "Amazon", "Tankstelle"])
-            booking(rnd.randint(1, 28), -round(rnd.uniform(8, 95), 2), shop, "Kartenzahlung")
+            amount = round(rnd.uniform(8, 95), 2)
+            card_total += amount
+            booking(rnd.randint(1, 28), -amount, shop, "Kartenzahlung", AMEX)
+        booking(18, 23.90, "Amazon", "Erstattung", AMEX)
+        next_month = (month + timedelta(days=32)).replace(day=5)
+        if next_month <= today:
+            txs.append(Transaction(next_month, -round(card_total - 23.90, 2), "American Express Europe S.A.", "Lastschrift"))
         month = (month + timedelta(days=32)).replace(day=1)
     # Last year's yearly bills so they are detected as recurring
     txs.append(Transaction(date(today.year - 1, 3, 1), -470.00, "HUK-Coburg", "Kfz-Versicherung"))

@@ -74,3 +74,39 @@ def test_import_folder_moves_files_and_dedupes(tmp_path):
     assert summary["new"] == 1 and len(summary["errors"]) == 1
     assert len(list((imp / "done").iterdir())) == 2 and len(list((imp / "fehler").iterdir())) == 1
     assert [t.counterparty for t in load_all(connect(db))] == ["Stadtwerke"]
+
+
+def test_amex_export_is_flipped_and_payments_dropped():
+    # Layout of the American Express online export (German)
+    rows = [
+        ["Datum", "Beschreibung", "Betrag", "Erweiterte Details", "Erscheint auf Ihrer Abrechnung als", "Kategorie"],
+        ["03/10/2026", "REWE MARKT GMBH", "54,20", "", "REWE", "Einkaufen-Lebensmittel"],
+        ["05/10/2026", "ZAHLUNG ERHALTEN. BESTEN DANK.", "-812,00", "", "", ""],
+        ["07/10/2026", "AMAZON EU", "-23,90", "Gutschrift", "AMAZON", "Einkaufen"],
+    ]
+    txs = parse_rows(rows, "activity.csv")
+    assert [(t.day, t.amount, t.purpose, t.account) for t in txs] == [
+        (date(2026, 10, 3), -54.20, "REWE MARKT GMBH", "Amex"),
+        (date(2026, 10, 7), 23.90, "AMAZON EU", "Amex"),
+    ]
+
+
+def test_amex_detected_by_filename():
+    rows = [["Datum", "Beschreibung", "Betrag"], ["03.10.2026", "Edeka", "12,00"]]
+    assert parse_rows(rows, "Amex_Oktober.csv")[0].amount == -12.0
+    assert parse_rows(rows, "giro.csv")[0].amount == 12.0
+
+
+def test_amex_bill_on_current_account_is_not_counted_twice():
+    today = date(2026, 10, 26)
+    result = finance.analyse(demo.transactions(today), demo.RULES, today)
+    names = {f["name"] for f in result["fixkosten"]}
+    assert not any("American Express" in n for n in names)
+    sep = next(m for m in result["monate"] if m["monat"] == "2026-09")
+    txs = demo.transactions(today)
+    card = sum(-t.amount for t in txs if t.account == "Amex" and t.day.strftime("%Y-%m") == "2026-09")
+    fixed = sum(-t.amount for t in txs if not t.account and t.amount < 0 and t.day.strftime("%Y-%m") == "2026-09"
+                and "American Express" not in t.counterparty and t.counterparty not in ("Tagesgeld", "Urlaub Unterkonto"))
+    assert round(sep["ausgaben"], 2) == round(card + fixed, 2)
+    # The refund lowers spending and does not appear as income
+    assert "Amazon" not in {i["name"] for i in result["einnahmen_regelmaessig"]}
