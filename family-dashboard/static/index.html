@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f2">
+  <title>Familien-Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1 id="greeting">Hallo!</h1>
+      <p id="today" class="muted"></p>
+    </div>
+    <div id="status" class="status" aria-label="Status der Datenquellen"></div>
+  </header>
+
+  <p id="demo-banner" class="banner" hidden>Demo-Modus: Es werden Beispieldaten angezeigt.</p>
+
+  <section class="kpis" id="kpis" aria-label="Kennzahlen"></section>
+
+  <main class="grid">
+    <article class="card" id="card-termine">
+      <h2>Termine</h2>
+      <ul class="events" id="termine"></ul>
+    </article>
+
+    <article class="card" id="card-einkauf">
+      <h2>Einkaufsliste <span class="muted small" id="liste-name"></span></h2>
+      <form id="add-form" class="add">
+        <input id="add-name" placeholder="Was fehlt?" autocomplete="off" aria-label="Artikel">
+        <button type="submit">Hinzufügen</button>
+      </form>
+      <ul class="shopping" id="einkauf"></ul>
+      <div class="chips" id="zuletzt"></div>
+    </article>
+
+    <article class="card" id="card-fixkosten">
+      <h2>Fixkosten</h2>
+      <p class="muted small" id="fix-sum"></p>
+      <table class="list" id="fixkosten"></table>
+    </article>
+
+    <article class="card" id="card-ruecklagen">
+      <h2>Rücklagen</h2>
+      <div id="sparziele"></div>
+      <div id="empfehlung" class="hint"></div>
+    </article>
+
+    <article class="card wide" id="card-verlauf">
+      <h2>Einnahmen &amp; Ausgaben</h2>
+      <div class="legend" id="legend"></div>
+      <div class="chart" id="chart" role="img" aria-label="Einnahmen, Ausgaben und Gespartes der letzten sechs Monate"></div>
+      <details class="table-view">
+        <summary>Als Tabelle</summary>
+        <table class="list" id="chart-table"></table>
+      </details>
+    </article>
+
+    <article class="card" id="card-umsaetze">
+      <h2>Letzte Umsätze</h2>
+      <table class="list" id="umsaetze"></table>
+      <label class="upload">
+        <input type="file" id="upload" accept=".csv,.txt,.xlsx" hidden>
+        <span>Export aus der Finanz-App hochladen</span>
+      </label>
+      <p class="muted small" id="upload-status"></p>
+    </article>
+  </main>
+
+  <div id="tooltip" class="tooltip" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

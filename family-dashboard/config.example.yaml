@@ -1,0 +1,35 @@
+# Kopieren nach config.yaml. Alles hier ist optional: Fixkosten und Einnahmen
+# werden automatisch aus den Umsätzen erkannt. Hier korrigierst du nur.
+
+finanzen:
+  # Umsätze, deren Empfänger/Verwendungszweck einen dieser Begriffe enthält,
+  # werden komplett ignoriert (z. B. Umbuchungen zwischen euren eigenen Girokonten).
+  ignorieren:
+    - "Umbuchung"
+
+  # Überweisungen auf diese Konten/Empfänger zählen als Rücklage, nicht als Ausgabe.
+  ruecklagen_begriffe:
+    - "Tagesgeld"
+    - "Sparkonto"
+
+  # Falls die automatische Erkennung etwas übersieht oder falsch benennt:
+  fixkosten_manuell:
+    # - name: "Kita"
+    #   betrag: 180
+    #   intervall: monatlich   # monatlich | quartal | jaehrlich
+  fixkosten_ausschliessen:
+    # - "Amazon"
+
+# Sparziele. "start" ist der Kontostand zum Zeitpunkt "seit"; Überweisungen,
+# die einen der Begriffe enthalten, werden danach automatisch dazugerechnet.
+sparziele:
+  - name: "Notgroschen"
+    ziel: 10000
+    start: 4000
+    seit: "2026-01-01"
+    begriffe: ["Tagesgeld"]
+  - name: "Urlaub"
+    ziel: 3000
+    start: 0
+    seit: "2026-01-01"
+    begriffe: ["Urlaub"]

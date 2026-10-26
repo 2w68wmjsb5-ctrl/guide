@@ -1,0 +1,11 @@
+services:
+  dashboard:
+    build: .
+    container_name: familien-dashboard
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file: .env
+    volumes:
+      - ./data:/data
+      - ./config.yaml:/srv/config.yaml:ro
