@@ -166,6 +166,7 @@ async function load() {
     const res = await fetch("/api/dashboard");
     if (!res.ok) throw new Error(res.status);
     lastData = await res.json();
+    $("offline-banner").hidden = !res.headers.get("X-Offline");
     render(lastData);
   } catch (err) {
     console.error("Dashboard konnte nicht geladen werden", err);
@@ -184,7 +185,12 @@ function render(data) {
 }
 
 async function post(url, body) {
-  await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  try {
+    const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    if (!res.ok) throw new Error(res.status);
+  } catch {
+    alert("Hat nicht geklappt. Seid ihr online? Bitte gleich nochmal versuchen.");
+  }
   await load();
 }
 
@@ -214,6 +220,9 @@ $("upload").addEventListener("change", async (e) => {
   load();
 });
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => lastData && render(lastData));
+
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});
+addEventListener("online", load);
 
 load();
 setInterval(load, 60_000);

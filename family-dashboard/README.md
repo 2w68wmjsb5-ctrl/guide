@@ -20,6 +20,29 @@ docker compose up -d --build
 Danach im Browser `http://<ip-des-pi>:8080` öffnen. Zum Ausprobieren ohne Zugangsdaten
 `DEMO=true` in die `.env` schreiben.
 
+## Als App aufs Handy
+
+Das Dashboard ist eine Web-App (PWA): Ihr installiert sie aus dem Browser, dann hat sie ein
+eigenes Icon und öffnet sich im Vollbild wie eine normale App. Ohne Netz zeigt sie den zuletzt
+geladenen Stand, die Einkaufsliste habt ihr also auch im Supermarkt.
+
+- **iPhone:** In Safari öffnen → Teilen-Symbol → „Zum Home-Bildschirm“.
+- **Android:** In Chrome öffnen → Menü ⋮ → „App installieren“ (oder „Zum Startbildschirm hinzufügen“).
+
+**Auch unterwegs (außerhalb des WLANs):** Am einfachsten mit [Tailscale](https://tailscale.com)
+(kostenlos für Privatnutzer). Tailscale auf dem Raspi/NAS und auf beiden Handys installieren und
+mit demselben Konto anmelden. Danach auf dem Raspi:
+
+```bash
+sudo tailscale serve --bg 8080
+```
+
+Jetzt ist das Dashboard unter `https://<geraetename>.<euer-tailnet>.ts.net` erreichbar, aber nur
+für eure eigenen Geräte, nicht für das Internet. Diese Adresse installiert ihr als App. Weil sie
+HTTPS hat, funktioniert dort auch der Offline-Modus. Über `http://<IP>:8080` im Heim-WLAN klappt
+das Installieren auf dem iPhone ebenfalls, Android legt dann aber nur eine Verknüpfung an, und
+offline geht nichts.
+
 ## Wie die Finanzdaten reinkommen
 
 Die Finanz-App exportiert eure Umsätze als CSV oder Excel. Das Dashboard liest jede Datei ein,
@@ -57,9 +80,9 @@ Fixkosten, Umbuchungen ignorieren). Änderungen gelten ohne Neustart.
 - **Bring!** nutzt ebenfalls eine inoffizielle API (die gleiche wie Home Assistant).
 - Zugangsdaten stehen nur in der `.env` auf eurem Gerät. Wenn das Dashboard aus dem Internet
   erreichbar sein soll, setzt `DASHBOARD_USER`/`DASHBOARD_PASSWORD` und nutzt einen VPN-Zugang
-  (z. B. Tailscale/WireGuard), statt den Port freizugeben.
-- Für ein Wandtablet: Seite im Browser öffnen und „Zum Startbildschirm hinzufügen“. Die Seite
-  aktualisiert sich jede Minute selbst und folgt dem Dark Mode des Geräts.
+  (Tailscale, siehe oben), statt den Port im Router freizugeben.
+- Für ein Wandtablet: genauso als App installieren. Die Seite aktualisiert sich jede Minute
+  selbst und folgt dem Dark Mode des Geräts.
 
 ## Entwicklung
 

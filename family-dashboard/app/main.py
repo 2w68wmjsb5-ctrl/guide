@@ -175,4 +175,11 @@ async def index():
     return FileResponse(STATIC_DIR / "index.html")
 
 
+@app.get("/sw.js")
+async def service_worker():
+    # Served from the root so it may control the whole app, not just /static
+    return FileResponse(STATIC_DIR / "sw.js", media_type="text/javascript",
+                        headers={"Cache-Control": "no-cache"})
+
+
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
