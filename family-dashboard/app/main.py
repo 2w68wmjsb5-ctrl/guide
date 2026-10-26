@@ -75,7 +75,7 @@ def _tasks_db() -> Path:
 
 def _players() -> list[str]:
     names = [str(n) for n in config.load_rules().get("familie") or [] if str(n).strip()]
-    return names or ["Spieler 1", "Spieler 2"]
+    return names or ["Patrick", "Gioia"]
 
 
 def _prepare_tasks() -> None:
@@ -111,7 +111,7 @@ async def lifespan(_: FastAPI):
         job.cancel()
 
 
-app = FastAPI(title="Familien-Dashboard", lifespan=lifespan)
+app = FastAPI(title="Familie Schneider", lifespan=lifespan)
 
 
 @app.middleware("http")

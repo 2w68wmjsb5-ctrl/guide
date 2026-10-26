@@ -3,8 +3,8 @@
 
 # Eure Namen für die Haushalts-Quests (wer was erledigt hat, XP und Level)
 familie:
-  - "Spieler 1"
-  - "Spieler 2"
+  - "Patrick"
+  - "Gioia"
 
 # Start-Hausarbeiten beim allerersten Start. Danach im Dashboard hinzufügen/löschen.
 # Weglassen = eine Standardliste (Staubsaugen, Bad, Küche, Müll, Wäsche …).

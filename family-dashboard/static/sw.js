@@ -1,6 +1,6 @@
 // Network first, falling back to the last copy, so the shopping list
 // still opens in the supermarket without signal.
-const CACHE = "dashboard-v6";
+const CACHE = "dashboard-v7";
 const SHELL = ["/", "/static/app.js", "/static/style.css", "/static/pixel.js", "/static/fonts/PixelifySans-latin.woff2", "/static/fonts/VT323-latin.woff2", "/static/manifest.webmanifest", "/static/icons/icon-192.png"];
 
 self.addEventListener("install", (event) => {
