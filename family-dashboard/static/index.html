@@ -3,82 +3,136 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f6f5f2" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
-  <title>Familien-Dashboard</title>
+  <meta name="theme-color" content="#14142b">
+  <title>Familien OS</title>
   <link rel="manifest" href="/static/manifest.webmanifest">
   <link rel="icon" href="/static/icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/static/icons/icon-180.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Zuhause">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <header class="top">
-    <div>
-      <h1 id="greeting">Hallo!</h1>
-      <p id="today" class="muted"></p>
-    </div>
-    <div id="status" class="status" aria-label="Status der Datenquellen"></div>
+  <header class="cover">
+    <canvas id="cover" width="320" height="64" aria-hidden="true"></canvas>
   </header>
 
-  <p id="demo-banner" class="banner" hidden>Demo-Modus: Es werden Beispieldaten angezeigt.</p>
-  <p id="offline-banner" class="banner" hidden>Offline: Ihr seht den zuletzt geladenen Stand. Ändern geht erst wieder mit Verbindung.</p>
+  <div class="page">
+    <div class="page-head">
+      <div class="page-icon" aria-hidden="true"><canvas id="page-icon" width="16" height="16"></canvas></div>
+      <h1>Familien OS</h1>
+      <p class="muted" id="greeting"></p>
+    </div>
 
-  <section class="kpis" id="kpis" aria-label="Kennzahlen"></section>
+    <p id="demo-banner" class="notice" hidden>Demo-Modus: Es werden Beispieldaten angezeigt.</p>
+    <p id="offline-banner" class="notice" hidden>Offline: Ihr seht den zuletzt geladenen Stand. Ändern geht erst wieder mit Verbindung.</p>
 
-  <main class="grid">
-    <article class="card" id="card-termine">
-      <h2>Termine</h2>
-      <ul class="events" id="termine"></ul>
-    </article>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="side-block clock-widget">
+          <div class="clock">
+            <span class="phase" id="c-phase"></span>
+            <span class="time" id="c-time"></span>
+            <span class="date" id="c-date"></span>
+          </div>
+          <div class="progress-list" id="time-progress"></div>
+        </div>
 
-    <article class="card" id="card-einkauf">
-      <h2>Einkaufsliste <span class="muted small" id="liste-name"></span></h2>
-      <form id="add-form" class="add">
-        <input id="add-name" placeholder="Was fehlt?" autocomplete="off" aria-label="Artikel">
-        <button type="submit">Hinzufügen</button>
-      </form>
-      <ul class="shopping" id="einkauf"></ul>
-      <div class="chips" id="zuletzt"></div>
-    </article>
+        <section class="side-block">
+          <h2 class="spaced">Schnellzugriff</h2>
+          <div class="actions">
+            <button class="action" data-action="einkauf"><span class="ico">🛒</span>Neuer Artikel</button>
+            <button class="action" data-action="upload"><span class="ico">⬆</span>Export hochladen</button>
+            <button class="action" data-action="termine"><span class="ico">🗓</span>Wochenkalender</button>
+            <button class="action" data-action="fixkosten"><span class="ico">📄</span>Fixkosten</button>
+          </div>
+        </section>
 
-    <article class="card" id="card-fixkosten">
-      <h2>Fixkosten</h2>
-      <p class="muted small" id="fix-sum"></p>
-      <table class="list" id="fixkosten"></table>
-    </article>
+        <section class="side-block">
+          <h2 class="spaced">Spar-Quests</h2>
+          <div id="sparziele"></div>
+          <p class="side-hint" id="empfehlung"></p>
+        </section>
 
-    <article class="card" id="card-ruecklagen">
-      <h2>Rücklagen</h2>
-      <div id="sparziele"></div>
-      <div id="empfehlung" class="hint"></div>
-    </article>
+        <section class="side-block">
+          <h2 class="spaced">Daten-Quellen</h2>
+          <ul class="sources" id="status"></ul>
+          <label class="ghost-btn">
+            <input type="file" id="upload" accept=".csv,.txt,.xlsx" hidden>+ Export hochladen
+          </label>
+          <p class="muted small" id="upload-status"></p>
+        </section>
+      </aside>
 
-    <article class="card wide" id="card-verlauf">
-      <h2>Einnahmen &amp; Ausgaben</h2>
-      <div class="legend" id="legend"></div>
-      <div class="chart" id="chart" role="img" aria-label="Einnahmen, Ausgaben und Gespartes der letzten sechs Monate"></div>
-      <details class="table-view">
-        <summary>Als Tabelle</summary>
-        <table class="list" id="chart-table"></table>
-      </details>
-    </article>
+      <main class="content">
+        <section class="panel">
+          <h2 class="spaced">Überblick <span class="muted small" id="overview-month"></span></h2>
+          <div class="gallery" id="overview"></div>
+        </section>
 
-    <article class="card" id="card-umsaetze">
-      <h2>Letzte Umsätze</h2>
-      <table class="list" id="umsaetze"></table>
-      <label class="upload">
-        <input type="file" id="upload" accept=".csv,.txt,.xlsx" hidden>
-        <span>Export aus der Finanz-App hochladen</span>
-      </label>
-      <p class="muted small" id="upload-status"></p>
-    </article>
-  </main>
+        <div class="two-col">
+          <section class="panel" id="panel-einkauf">
+            <h2 class="spaced">Einkaufs-Liste <span class="muted small" id="liste-name"></span></h2>
+            <form id="add-form" class="add-row">
+              <span class="ico">☰</span>
+              <input id="add-name" placeholder="Neuer Artikel" autocomplete="off" aria-label="Artikel hinzufügen">
+              <button type="submit">Hinzufügen</button>
+            </form>
+            <ul class="todo" id="einkauf"></ul>
+            <div class="chips" id="zuletzt"></div>
+          </section>
+
+          <section class="panel">
+            <h2 class="spaced">Termine / Erinnerungen</h2>
+            <ul class="reminders" id="termine"></ul>
+          </section>
+        </div>
+
+        <section class="panel" id="panel-fixkosten">
+          <h2 class="spaced">Fixkosten-Manager</h2>
+          <div class="tabs" role="tablist" id="fix-tabs">
+            <button role="tab" data-tab="alle" aria-selected="true">☰ Alle</button>
+            <button role="tab" data-tab="faellig" aria-selected="false">◷ Noch fällig</button>
+            <button role="tab" data-tab="selten" aria-selected="false">▦ Quartal &amp; Jahr</button>
+          </div>
+          <div class="table-wrap"><table class="db" id="fixkosten"></table></div>
+          <p class="muted small" id="fix-sum"></p>
+        </section>
+
+        <div class="two-col">
+          <section class="panel">
+            <h2 class="spaced">Einnahmen &amp; Ausgaben</h2>
+            <div class="legend" id="legend"></div>
+            <div class="chart" id="chart" role="img" aria-label="Einnahmen, Ausgaben und Gespartes der letzten sechs Monate"></div>
+            <details class="table-view">
+              <summary>Als Tabelle</summary>
+              <table class="db" id="chart-table"></table>
+            </details>
+          </section>
+
+          <section class="panel">
+            <h2 class="spaced">Letzte Umsätze</h2>
+            <table class="db" id="umsaetze"></table>
+          </section>
+        </div>
+
+        <section class="panel" id="panel-termine">
+          <h2 class="spaced">Familien-Kalender</h2>
+          <div class="tabs" role="tablist" id="cal-tabs">
+            <button role="tab" data-week="0" aria-selected="true">▭ Diese Woche</button>
+            <button role="tab" data-week="1" aria-selected="false">▭ Nächste Woche</button>
+          </div>
+          <p class="cal-range" id="cal-range"></p>
+          <div class="week" id="week"></div>
+        </section>
+      </main>
+    </div>
+  </div>
 
   <div id="tooltip" class="tooltip" hidden></div>
+  <script src="/static/pixel.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>
