@@ -1,0 +1,61 @@
+name: Notion-Abgleich (Bring!, TimeTree, Finanzen)
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"   # alle 15 Minuten (GitHub startet geplante Läufe manchmal etwas später)
+  workflow_dispatch:                # „Run workflow“-Knopf für einen sofortigen Lauf
+  pull_request:
+    paths:
+      - "family-notion-sync/**"
+      - ".github/workflows/notion-sync.yml"
+
+concurrency:
+  group: notion-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: family-notion-sync
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: family-notion-sync/requirements.txt
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -t . -v
+
+  sync:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: family-notion-sync
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: family-notion-sync/requirements.txt
+      - run: pip install -r requirements.txt
+      - name: Abgleich
+        run: python -m sync
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          BRING_EMAIL: ${{ secrets.BRING_EMAIL }}
+          BRING_PASSWORD: ${{ secrets.BRING_PASSWORD }}
+          BRING_LIST: ${{ vars.BRING_LIST }}
+          TIMETREE_EMAIL: ${{ secrets.TIMETREE_EMAIL }}
+          TIMETREE_PASSWORD: ${{ secrets.TIMETREE_PASSWORD }}
+          TIMETREE_CALENDAR_CODES: ${{ vars.TIMETREE_CALENDAR_CODES }}
+          EXTRA_ICS_URLS: ${{ secrets.EXTRA_ICS_URLS }}
